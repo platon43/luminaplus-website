@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Über uns | LuminaPlus eG — Ambulanter Pflegedienst Hamburg</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --green-soft: #d4f5db;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: #333;
+      line-height: 1.7;
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+      transition: box-shadow 0.3s;
+    }
+    .navbar.scrolled { box-shadow: 0 2px 20px rgba(8,55,107,0.08); }
+    .navbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-img { height: 44px; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--navy);
+      letter-spacing: 0.03em;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--light-blue);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--dark-blue); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--light-blue);
+      color: white !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--dark-blue); transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+
+    /* ===== HERO (Split-Screen) ===== */
+    .hero {
+      min-height: 85vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 3rem 4rem 5%;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .hero-img::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 25%;
+      height: 100%;
+      background: linear-gradient(to right, var(--navy), transparent);
+      z-index: 2;
+    }
+    .hero-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(to top, var(--navy), transparent);
+      z-index: 2;
+    }
+    .hero .deco-circle {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(53,192,237,0.1);
+      top: -100px;
+      left: -100px;
+      z-index: 1;
+    }
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-img { height: 300px; }
+      .hero-text { padding: 6rem 2rem 2rem; }
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(53,192,237,0.15) 0%, transparent 70%);
+      animation: float 8s ease-in-out infinite;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -5%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(154,235,166,0.1) 0%, transparent 70%);
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* Decorative leaves */
+    .hero-leaves {
+      position: absolute;
+      top: 50%;
+      right: 5%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 0;
+      opacity: 0.12;
+    }
+    .leaf {
+      width: 60px;
+      height: 180px;
+      border-radius: 50% 50% 50% 0;
+      margin-left: -20px;
+    }
+    .leaf:nth-child(1) { background: var(--green); transform: rotate(-15deg); }
+    .leaf:nth-child(2) { background: var(--dark-blue); transform: rotate(-8deg); }
+    .leaf:nth-child(3) { background: var(--light-blue); transform: rotate(0deg); }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(154,235,166,0.2);
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(154,235,166,0.3);
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease-out;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--white);
+      line-height: 1.15;
+      max-width: 700px;
+      margin-bottom: 1.2rem;
+      animation: fadeInUp 0.8s ease-out 0.1s both;
+    }
+    .hero h1 span {
+      color: var(--light-blue);
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 550px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease-out 0.3s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--light-blue);
+      color: white;
+      box-shadow: 0 4px 15px rgba(53,192,237,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--dark-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(47,144,176,0.4);
+    }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .btn-outline:hover {
+      border-color: var(--light-blue);
+      background: rgba(53,192,237,0.1);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      animation: fadeInUp 0.8s ease-out 0.5s both;
+    }
+    .stat-item h3 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--light-blue);
+    }
+    .stat-item p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SECTIONS COMMON ===== */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dark-blue);
+      background: rgba(47,144,176,0.08);
+      padding: 0.35rem 0.9rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--navy);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray);
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    /* ===== WER WIR SIND ===== */
+    .about-section {
+      background: var(--off-white);
+      padding: 6rem 2rem;
+    }
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-image-wrapper {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(8,55,107,0.1);
+    }
+    .about-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      min-height: 400px;
+    }
+    .about-image-quote {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(8,55,107,0.85) 0%, transparent 100%);
+    }
+    .about-image-quote blockquote {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: white;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+    .about-image-quote cite {
+      font-style: normal;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .about-text p {
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      color: #444;
+    }
+    .about-text p:first-of-type {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    /* ===== WERTE ===== */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .value-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid var(--light-gray);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .value-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(8,55,107,0.08);
+      border-color: transparent;
+    }
+    .value-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--dark-blue), var(--light-blue));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+    .value-card:hover::after { transform: scaleX(1); }
+    .value-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .value-icon.green { background: rgba(154,235,166,0.15); color: #4a9a5a; }
+    .value-icon.blue { background: rgba(53,192,237,0.12); color: var(--dark-blue); }
+    .value-icon.navy { background: rgba(8,55,107,0.08); color: var(--navy); }
+    .value-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+    }
+    .value-card p {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* ===== TEAM ===== */
+    .team-section {
+      background: var(--navy);
+      padding: 6rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .team-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent 0%, rgba(53,192,237,0.05) 100%);
+    }
+    .team-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .team-section .section-label {
+      background: rgba(154,235,166,0.15);
+      color: var(--green);
+    }
+    .team-section .section-title { color: white; }
+    .team-section .section-subtitle { color: rgba(255,255,255,0.6); }
+
+    .team-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .team-feature {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.8rem;
+      transition: all 0.3s;
+    }
+    .team-feature:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(53,192,237,0.3);
+      transform: translateY(-2px);
+    }
+    .team-feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .team-feature h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--light-blue);
+      margin-bottom: 0.5rem;
+    }
+    .team-feature p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+    .team-image-banner {
+      margin-top: 3rem;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      max-height: 300px;
+    }
+    .team-image-banner img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+      opacity: 0.6;
+    }
+    .team-image-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--navy) 0%, transparent 40%, transparent 60%, var(--navy) 100%);
+    }
+    .team-bottom-note {
+      margin-top: 2.5rem;
+      padding: 1.5rem 2rem;
+      background: rgba(154,235,166,0.08);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ===== EINSATZGEBIET ===== */
+    .area-section {
+      background: var(--off-white);
+      padding: 6rem 2rem;
+    }
+    .area-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .area-map {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(8,55,107,0.06);
+      aspect-ratio: 4/3;
+    }
+    .area-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .area-details { display: flex; flex-direction: column; gap: 1.5rem; }
+    .area-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .area-item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(53,192,237,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .area-item h4 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+    .area-item p {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ===== KONTAKT ===== */
+    .contact-section {
+      background: white;
+      padding: 6rem 2rem;
+    }
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .contact-card {
+      background: var(--off-white);
+      border-radius: 12px;
+      padding: 0;
+      text-align: center;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    .contact-card a.card-link {
+      display: block;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 12px;
+    }
+    .contact-card:hover {
+      border-color: var(--light-blue);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(53,192,237,0.1);
+      cursor: pointer;
+    }
+    .contact-card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      margin: 0 auto 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .contact-card-icon.bg-blue { background: rgba(53,192,237,0.12); }
+    .contact-card-icon.bg-green { background: rgba(154,235,166,0.2); }
+    .contact-card-icon.bg-navy { background: rgba(8,55,107,0.08); }
+    .contact-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+    .contact-card p {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .contact-card a {
+      color: var(--dark-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-card a:hover { color: var(--light-blue); }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    }
+    .cta-banner h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: white;
+      margin-bottom: 0.8rem;
+      position: relative;
+    }
+    .cta-banner p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      position: relative;
+    }
+    .cta-banner .btn-primary {
+      background: white;
+      color: var(--navy);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .cta-banner .btn-primary:hover {
+      background: var(--navy);
+      color: white;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      padding: 3rem 2rem 1.5rem;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .footer-logo {
+      height: 32px;
+      opacity: 0.8;
+    }
+    .footer p { font-size: 0.8rem; }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--light-blue); }
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 1.5rem 0 1rem;
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    /* ===== SCROLL ANIMATION ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .about-inner, .area-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-stats { flex-direction: column; gap: 1.5rem; }
+      .nav-links { display: none; }
+      .team-features { grid-template-columns: 1fr 1fr; }
+      .hero-leaves { display: none; }
+    }
+    @media (max-width: 480px) {
+      .team-features { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="logo-img">
+    <ul class="nav-links">
+      <li><a href="#about">Wer wir sind</a></li>
+      <li><a href="#values">Unsere Werte</a></li>
+      <li><a href="#team">Unser Team</a></li>
+      <li><a href="#area">Einsatzgebiet</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+    <a href="tel:+494018035922" class="nav-cta">+49 40 18035922</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="deco-circle"></div>
+  <div class="hero-text">
+    <div class="hero-badge">Ambulanter Pflegedienst Hamburg</div>
+    <h1>Gemeinsam f&uuml;r Ihre <span>Lebensqualit&auml;t</span></h1>
+    <p class="hero-subtitle">
+      Beratend, pflegend und betreuend &mdash; unser Team aus erfahrenen Pflegefachkr&auml;ften versorgt Sie mit Leidenschaft in Ihrem vertrauten Zuhause.
+    </p>
+    <div class="hero-actions">
+      <a href="tel:+494018035922" class="btn btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Jetzt anrufen
+      </a>
+      <a href="#about" class="btn btn-outline">Mehr erfahren</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <h3>24h</h3>
+        <p>Bereitschaftsdienst</p>
+      </div>
+      <div class="stat-item">
+        <h3>Hamburg</h3>
+        <p>und Umgebung</p>
+      </div>
+      <div class="stat-item">
+        <h3>SGB V &amp; XI</h3>
+        <p>Alle Kassen</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="brand/bilder/pflegefachkraft-Seniorin-Weisse-Bluse.webp" alt="Pflegefachkraft betreut Seniorin liebevoll">
+  </div>
+</section>
+
+<!-- WER WIR SIND -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-image-wrapper">
+        <img src="brand/bilder/pflegefachkraft-Seniorin-Blaue-Pullover-nah.webp" alt="Pflegefachkraft im vertrauensvollen Gespr&auml;ch mit Seniorin">
+        <div class="about-image-quote">
+          <blockquote>&bdquo;Gemeinsam f&uuml;r mehr Zufriedenheit&ldquo;</blockquote>
+          <cite>&mdash; Pflegeleitbild der LuminaPlus eG</cite>
+        </div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <span class="section-label">Wer wir sind</span>
+      <h2 class="section-title">Pflege mit Herz und Kompetenz</h2>
+      <p>
+        LuminaPlus eG ist ein ambulanter Pflegedienst in Hamburg, gegr&uuml;ndet als Genossenschaft. Unser Team aus erfahrenen Pflegefachkr&auml;ften versorgt pflegebed&uuml;rftige Menschen und ihre Angeh&ouml;rigen mit Leidenschaft und Fachkompetenz &mdash; direkt in ihrem vertrauten h&auml;uslichen Umfeld.
+      </p>
+      <p>
+        Unser Ziel: Ihnen ein selbstst&auml;ndiges und selbstbestimmtes Leben in der eigenen Wohnung zu erm&ouml;glichen &mdash; auch bei wachsendem Pflegebedarf. Wir sind Vertragspartner aller gesetzlichen Krankenkassen und bieten Leistungen f&uuml;r die Pflegegrade 0&ndash;5.
+      </p>
+      <p>
+        Unser Leistungskatalog umfasst Beratung, Pflege und Betreuung in der h&auml;uslichen Krankenpflege, Verhinderungspflege zur Entlastung pflegender Angeh&ouml;riger sowie zus&auml;tzliche Service- und Betreuungsleistungen wie Spazierg&auml;nge, Eink&auml;ufe und Arztbegleitung.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- UNSERE WERTE -->
+<section class="section" id="values">
+  <div class="reveal">
+    <span class="section-label">Was uns antreibt</span>
+    <h2 class="section-title">Unsere Werte</h2>
+    <p class="section-subtitle">Das Wohl der Menschen ist unsere oberste Priorit&auml;t &mdash; bei der Einstellung unserer Mitarbeiter und bei der t&auml;glichen Arbeit.</p>
+  </div>
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <div class="value-icon green">&#x2764;</div>
+      <h3>Menschenw&uuml;rde</h3>
+      <p>Pflegebed&uuml;rftige sind keine Objekte, sondern individuelle Pers&ouml;nlichkeiten, die sich uns anvertrauen und unserer t&auml;glichen Aufmerksamkeit bed&uuml;rfen.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon blue">&#x1F91D;</div>
+      <h3>Selbstst&auml;ndigkeit f&ouml;rdern</h3>
+      <p>Hilfe zur Selbsthilfe und Reaktivierung vorhandener Ressourcen &mdash; f&uuml;r ein gr&ouml;&szlig;tm&ouml;gliches Ma&szlig; an Unabh&auml;ngigkeit.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon navy">&#x2B50;</div>
+      <h3>Qualit&auml;t</h3>
+      <p>Pflege nach dem Modell von Monika Krohwinkel, regelm&auml;&szlig;ige Fortbildungen und kontinuierliche Qualit&auml;tssicherung.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon green">&#x1F465;</div>
+      <h3>Bezugspflege</h3>
+      <p>Feste Bezugspersonen statt st&auml;ndig wechselnder Pflegekr&auml;fte &mdash; f&uuml;r Vertrauen und Kontinuit&auml;t in der Versorgung.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon blue">&#x1F4AC;</div>
+      <h3>Transparenz</h3>
+      <p>Kooperative F&uuml;hrung, offene Kommunikation mit Kunden, Angeh&ouml;rigen und Partnern &mdash; f&uuml;r ein vertrauensvolles Verh&auml;ltnis.</p>
+    </div>
+  </div>
+</section>
+
+<!-- UNSER TEAM -->
+<section class="team-section" id="team">
+  <div class="team-inner">
+    <div class="reveal">
+      <span class="section-label">Unser Team</span>
+      <h2 class="section-title">Vielfalt als St&auml;rke</h2>
+      <p class="section-subtitle">Unser multikulturelles Team vereint Pflegefachkr&auml;fte, Pflegehelferinnen und Hauswirtschaftskr&auml;fte aus verschiedenen Nationen.</p>
+    </div>
+    <div class="team-features">
+      <div class="team-feature reveal">
+        <div class="team-feature-icon">&#x1F30D;</div>
+        <h3>International</h3>
+        <p>Mehrsprachiges Team, das Pflege auch in der Muttersprache der Klienten erm&ouml;glicht.</p>
+      </div>
+      <div class="team-feature reveal">
+        <div class="team-feature-icon">&#x1F393;</div>
+        <h3>Qualifiziert</h3>
+        <p>Examinierte Fachkr&auml;fte mit regelm&auml;&szlig;iger Fort- und Weiterbildung.</p>
+      </div>
+      <div class="team-feature reveal">
+        <div class="team-feature-icon">&#x1F49B;</div>
+        <h3>Engagiert</h3>
+        <p>Jede Pflegekraft bringt Herzblut und pers&ouml;nliches Engagement in die t&auml;gliche Arbeit ein.</p>
+      </div>
+      <div class="team-feature reveal">
+        <div class="team-feature-icon">&#x1F517;</div>
+        <h3>Best&auml;ndig</h3>
+        <p>Feste Bezugspersonen statt st&auml;ndig wechselnder Pflegekr&auml;fte.</p>
+      </div>
+      <div class="team-feature reveal">
+        <div class="team-feature-icon">&#x1F4CB;</div>
+        <h3>Teamorientiert</h3>
+        <p>Kollegiale Zusammenarbeit mit regelm&auml;&szlig;igen Dienstbesprechungen.</p>
+      </div>
+    </div>
+    <div class="team-image-banner reveal">
+      <img src="brand/bilder/pflegefachkraft-Seniorin-Blaue-Pullover.webp" alt="Pflegefachkraft unterst&uuml;tzt Seniorin liebevoll im Alltag">
+    </div>
+    <div class="team-bottom-note reveal">
+      Neue Mitarbeiter werden systematisch nach unserem Einarbeitungskonzept durch erfahrene Mentoren eingearbeitet. Alle Pflegekr&auml;fte verpflichten sich zu st&auml;ndiger Fort- und Weiterbildung.
+    </div>
+  </div>
+</section>
+
+<!-- EINSATZGEBIET -->
+<section class="area-section" id="area">
+  <div class="area-inner">
+    <div class="reveal">
+      <span class="section-label">Einsatzgebiet</span>
+      <h2 class="section-title">Wir kommen zu Ihnen</h2>
+      <div class="area-details">
+        <div class="area-item">
+          <div class="area-item-icon">&#x1F4CD;</div>
+          <div>
+            <h4>Standort</h4>
+            <p>Angerstra&szlig;e 42, 22087 Hamburg</p>
+          </div>
+        </div>
+        <div class="area-item">
+          <div class="area-item-icon">&#x1F697;</div>
+          <div>
+            <h4>Einsatzradius</h4>
+            <p>Hamburg und Umgebung, ca. 30 km. Bevorzugt in den Stadtteilen rund um unseren Standort.</p>
+          </div>
+        </div>
+        <div class="area-item">
+          <div class="area-item-icon">&#x1F6B2;</div>
+          <div>
+            <h4>Mobilit&auml;t</h4>
+            <p>Unterwegs mit firmeneigenen Dienstfahrzeugen und E-Bikes &mdash; umweltbewusst und flexibel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="area-map reveal">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2369.5!2d10.0285!3d53.5630!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b18f3e56c6f8e3%3A0x0!2zQW5nZXJzdHJhw59lIDQyLCBIYW1idXJn!5e0!3m2!1sde!2sde!4v1" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="reveal" style="text-align:center;">
+      <span class="section-label">Kontakt</span>
+      <h2 class="section-title" style="margin-left:auto;margin-right:auto;">So erreichen Sie uns</h2>
+      <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">Wir sind f&uuml;r Sie da &mdash; pers&ouml;nlich, telefonisch und per E-Mail.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <a href="tel:+494018035922" class="card-link">
+          <div class="contact-card-icon bg-blue">&#x1F4DE;</div>
+          <h3>Telefon</h3>
+          <p>+49 40 18035922</p>
+        </a>
+      </div>
+      <div class="contact-card reveal">
+        <a href="mailto:info@luminaplus.de" class="card-link">
+          <div class="contact-card-icon bg-green">&#x2709;</div>
+          <h3>E-Mail</h3>
+          <p>info@luminaplus.de</p>
+        </a>
+      </div>
+      <div class="contact-card reveal">
+        <a href="https://maps.google.com/?q=Angerstra%C3%9Fe+42,+22087+Hamburg" target="_blank" rel="noopener" class="card-link">
+          <div class="contact-card-icon bg-navy">&#x1F4CD;</div>
+          <h3>Adresse</h3>
+          <p>Angerstra&szlig;e 42<br>22087 Hamburg</p>
+        </a>
+      </div>
+      <div class="contact-card reveal">
+        <a href="tel:+494018035922" class="card-link">
+          <div class="contact-card-icon bg-blue">&#x1F552;</div>
+          <h3>B&uuml;rozeiten</h3>
+          <p>Mo&ndash;Fr, 9:00&ndash;15:00 Uhr<br><strong>Notfall: 24h erreichbar</strong></p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Pflege, die zu Ihnen kommt</h2>
+  <p>Kontaktieren Sie uns f&uuml;r ein unverbindliches Beratungsgespr&auml;ch.</p>
+  <a href="tel:+494018035922" class="btn btn-primary">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Jetzt anrufen: +49 40 18035922
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="footer-logo" style="filter: brightness(0) invert(1); opacity: 0.8;">
+      <p>Gemeinsam f&uuml;r Ihre Lebensqualit&auml;t</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="impressum-luminaplus.html">Impressum</a></li>
+      <li><a href="datenschutz-luminaplus.html">Datenschutz</a></li>
+      <li><a href="karriere-luminaplus.html">Karriere</a></li>
+    </ul>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <p>&copy; 2024&ndash;2026 LuminaPlus eG. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

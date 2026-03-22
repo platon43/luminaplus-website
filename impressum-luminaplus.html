@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impressum | LuminaPlus eG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-body);
+      color: #333;
+      line-height: 1.8;
+      background: var(--white);
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 0.8rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-img { height: 40px; }
+    .back-link {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--navy); }
+
+    /* Header */
+    .page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, #0a4a8a 100%);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+
+    /* Content */
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+    .content h2 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-top: 2.5rem;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--green);
+      display: inline-block;
+    }
+    .content h2:first-of-type { margin-top: 0; }
+    .content p, .content li {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 0.6rem;
+    }
+    .content ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .content ul li::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--light-blue);
+      border-radius: 50%;
+      margin-right: 0.6rem;
+      vertical-align: middle;
+    }
+    .contact-block {
+      background: var(--off-white);
+      border-left: 3px solid var(--light-blue);
+      border-radius: 0 8px 8px 0;
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0;
+    }
+    .contact-block p {
+      margin-bottom: 0.3rem;
+    }
+    .contact-block a {
+      color: var(--dark-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-block a:hover { color: var(--light-blue); }
+
+    .legal-note {
+      background: rgba(154,235,166,0.08);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+    .footer a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      margin: 0 0.8rem;
+    }
+    .footer a:hover { color: var(--light-blue); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="logo-img">
+    <a href="ueber-uns-luminaplus.html" class="back-link">&larr; Zur&uuml;ck zur Startseite</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <h1>Impressum</h1>
+  <p>Angaben gem&auml;&szlig; &sect; 5 TMG</p>
+</header>
+
+<main class="content">
+
+  <h2>Angaben zum Unternehmen</h2>
+  <div class="contact-block">
+    <p><strong>LuminaPlus eG</strong></p>
+    <p>Angerstra&szlig;e 42</p>
+    <p>22087 Hamburg</p>
+    <p>Deutschland</p>
+  </div>
+
+  <h2>Vertreten durch</h2>
+  <p><strong>Vorstand:</strong> Samira Hannou</p>
+
+  <h2>Registereintrag</h2>
+  <p><strong>Registergericht:</strong> Amtsgericht Hamburg</p>
+  <p><strong>Registernummer:</strong> GnR 1170</p>
+
+  <h2>Kontakt</h2>
+  <div class="contact-block">
+    <p><strong>Telefon:</strong> <a href="tel:+494018035922">+49 40 18035922</a></p>
+    <p><strong>E-Mail:</strong> <a href="mailto:info@luminaplus.de">info@luminaplus.de</a></p>
+    <p><strong>Website:</strong> <a href="https://www.luminaplus.de">www.luminaplus.de</a></p>
+  </div>
+
+  <h2>Verantwortlich f&uuml;r den Inhalt gem&auml;&szlig; &sect; 18 Abs. 2 MStV</h2>
+  <p>Samira Hannou</p>
+  <p>Angerstra&szlig;e 42, 22087 Hamburg</p>
+
+  <h2>Aufsichtsbeh&ouml;rde</h2>
+  <p>Beh&ouml;rde f&uuml;r Arbeit, Gesundheit, Soziales, Familie und Integration (Sozialbeh&ouml;rde)</p>
+  <p>Freie und Hansestadt Hamburg</p>
+  <p>Hamburger Stra&szlig;e 47, 22083 Hamburg</p>
+
+  <h2>Berufsbezeichnung und berufsrechtliche Regelungen</h2>
+  <p><strong>Berufsbezeichnung:</strong> Ambulanter Pflegedienst</p>
+  <p><strong>Zulassung gem&auml;&szlig;:</strong> &sect; 72 SGB XI, &sect; 132a SGB V</p>
+  <p><strong>Zust&auml;ndige Aufsichtsbeh&ouml;rde:</strong> Wohn- und Betreuungsaufsicht Hamburg (WBA) gem&auml;&szlig; HmbWBG</p>
+
+  <h2>Haftung f&uuml;r Inhalte</h2>
+  <p>Als Diensteanbieter sind wir gem&auml;&szlig; &sect; 7 Abs. 1 TMG f&uuml;r eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach &sect;&sect; 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, &uuml;bermittelte oder gespeicherte fremde Informationen zu &uuml;berwachen oder nach Umst&auml;nden zu forschen, die auf eine rechtswidrige T&auml;tigkeit hinweisen.</p>
+  <p>Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unber&uuml;hrt. Eine diesbez&uuml;gliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung m&ouml;glich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
+
+  <h2>Haftung f&uuml;r Links</h2>
+  <p>Unser Angebot enth&auml;lt Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb k&ouml;nnen wir f&uuml;r diese fremden Inhalte auch keine Gew&auml;hr &uuml;bernehmen. F&uuml;r die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf m&ouml;gliche Rechtsverst&ouml;&szlig;e &uuml;berpr&uuml;ft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.</p>
+  <p>Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+
+  <h2>Urheberrecht</h2>
+  <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielf&auml;ltigung, Bearbeitung, Verbreitung und jede Art der Verwertung au&szlig;erhalb der Grenzen des Urheberrechtes bed&uuml;rfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur f&uuml;r den privaten, nicht kommerziellen Gebrauch gestattet.</p>
+
+  <div class="legal-note">
+    <strong>Streitschlichtung:</strong> Die Europ&auml;ische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" style="color:var(--dark-blue)">https://ec.europa.eu/consumers/odr/</a>. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; 2024&ndash;2026 LuminaPlus eG &middot; <a href="impressum-luminaplus.html">Impressum</a> &middot; <a href="datenschutz-luminaplus.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>

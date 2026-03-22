@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karriere | LuminaPlus eG &mdash; Wir suchen Verst&auml;rkung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: #333; line-height: 1.7; background: var(--white); }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 0.8rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-img { height: 40px; }
+    .back-link {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--navy); }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0a4a8a 60%, var(--dark-blue) 100%);
+      padding: 6rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -15%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(53,192,237,0.1) 0%, transparent 70%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(154,235,166,0.08) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(154,235,166,0.2);
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(154,235,166,0.3);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 span { color: var(--light-blue); }
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-scroll {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8rem;
+      text-decoration: none;
+      position: relative;
+      z-index: 2;
+      transition: color 0.3s;
+    }
+    .hero-scroll:hover { color: var(--light-blue); }
+    .hero-scroll .arrow {
+      display: inline-block;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    /* Why section */
+    .why-section {
+      padding: 5rem 2rem;
+      background: var(--off-white);
+    }
+    .why-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dark-blue);
+      background: rgba(47,144,176,0.08);
+      padding: 0.35rem 0.9rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--gray);
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .perks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .perk {
+      background: white;
+      border-radius: 12px;
+      padding: 1.8rem;
+      border: 1px solid var(--light-gray);
+      transition: all 0.3s;
+    }
+    .perk:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(8,55,107,0.06);
+      border-color: var(--light-blue);
+    }
+    .perk-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+    .perk h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+    .perk p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* Jobs section */
+    .jobs-section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .jobs-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .job-card {
+      background: white;
+      border: 1px solid var(--light-gray);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .job-card:hover {
+      box-shadow: 0 8px 35px rgba(8,55,107,0.08);
+      border-color: transparent;
+    }
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 2rem 2rem 0;
+      cursor: pointer;
+    }
+    .job-header-left { flex: 1; }
+    .job-type {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      border-radius: 4px;
+      margin-bottom: 0.6rem;
+    }
+    .job-type.urgent {
+      background: rgba(53,192,237,0.1);
+      color: var(--dark-blue);
+    }
+    .job-type.new {
+      background: rgba(154,235,166,0.15);
+      color: #3a8a4a;
+    }
+    .job-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .job-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    .job-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .job-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--off-white);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--dark-blue);
+      transition: all 0.3s;
+      flex-shrink: 0;
+      margin-top: 0.5rem;
+    }
+    .job-toggle:hover { background: rgba(53,192,237,0.1); }
+    .job-card.open .job-toggle { transform: rotate(180deg); }
+
+    .job-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out;
+    }
+    .job-card.open .job-details {
+      max-height: 800px;
+    }
+    .job-details-inner {
+      padding: 1.5rem 2rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .job-details h4 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+    }
+    .job-details ul {
+      list-style: none;
+      padding: 0;
+    }
+    .job-details li {
+      font-size: 0.85rem;
+      color: #555;
+      padding: 0.3rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .job-details li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--light-blue);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.45rem;
+    }
+    .job-apply {
+      grid-column: 1 / -1;
+      padding-top: 1rem;
+      border-top: 1px solid var(--light-gray);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: var(--light-blue);
+      color: white;
+      box-shadow: 0 4px 15px rgba(53,192,237,0.2);
+    }
+    .btn-primary:hover {
+      background: var(--dark-blue);
+      transform: translateY(-1px);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--dark-blue);
+      border: 2px solid var(--light-gray);
+    }
+    .btn-outline:hover {
+      border-color: var(--light-blue);
+      background: rgba(53,192,237,0.05);
+    }
+    .apply-hint {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* Image banner */
+    .image-banner {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+    }
+    .image-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+    .image-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(8,55,107,0.1) 0%, rgba(8,55,107,0.4) 100%);
+    }
+    .image-banner-text {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .image-banner-text h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: white;
+    }
+    .image-banner-text p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: var(--navy);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: white;
+      margin-bottom: 0.6rem;
+    }
+    .cta-section p {
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    .cta-section .btn-primary {
+      background: var(--light-blue);
+      font-size: 0.95rem;
+      padding: 0.9rem 2.5rem;
+    }
+    .cta-contacts {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .cta-contacts a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+    .cta-contacts a:hover { color: var(--light-blue); }
+
+    /* Footer */
+    .footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.5);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+    .footer a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      margin: 0 0.8rem;
+    }
+    .footer a:hover { color: var(--light-blue); }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .job-details-inner { grid-template-columns: 1fr; }
+      .job-meta { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html"><img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="logo-img"></a>
+    <a href="index.html" class="back-link">&larr; Zur&uuml;ck zur Startseite</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Karriere bei LuminaPlus</div>
+  <h1>Wir suchen <span>Verst&auml;rkung</span></h1>
+  <p>Werden Sie Teil unseres multikulturellen Teams und gestalten Sie mit uns die Zukunft der ambulanten Pflege in Hamburg.</p>
+  <a href="#jobs" class="hero-scroll">Offene Stellen ansehen <span class="arrow">&darr;</span></a>
+</section>
+
+<!-- IMAGE BANNER -->
+<div class="image-banner">
+  <img src="brand/bilder/Pflegefachkraft-blaue-Bluse.webp" alt="Pflegefachkraft bei LuminaPlus">
+  <div class="image-banner-text">
+    <h2>Pflege ist f&uuml;r uns mehr als ein Beruf</h2>
+    <p>Es ist unsere Berufung, Menschen ein w&uuml;rdevolles Leben im eigenen Zuhause zu erm&ouml;glichen.</p>
+  </div>
+</div>
+
+<!-- WARUM LUMINAPLUS -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="reveal">
+      <span class="section-label">Warum LuminaPlus</span>
+      <h2 class="section-title">Das bieten wir Ihnen</h2>
+      <p class="section-subtitle">Bei uns arbeiten Sie nicht nur &mdash; Sie machen einen Unterschied. Jeden Tag.</p>
+    </div>
+    <div class="perks-grid">
+      <div class="perk reveal">
+        <div class="perk-icon">&#x1F91D;</div>
+        <h3>Famili&auml;res Team</h3>
+        <p>Kollegiale Zusammenarbeit in einem wertsch&auml;tzenden, internationalen Team mit flachen Hierarchien.</p>
+      </div>
+      <div class="perk reveal">
+        <div class="perk-icon">&#x1F4DA;</div>
+        <h3>Fort- &amp; Weiterbildung</h3>
+        <p>Regelm&auml;&szlig;ige Fortbildungen und M&ouml;glichkeit zur Spezialisierung auf Kosten des Unternehmens.</p>
+      </div>
+      <div class="perk reveal">
+        <div class="perk-icon">&#x23F0;</div>
+        <h3>Flexible Arbeitszeiten</h3>
+        <p>Dienstplangestaltung mit R&uuml;cksicht auf Ihre pers&ouml;nlichen Bed&uuml;rfnisse und Work-Life-Balance.</p>
+      </div>
+      <div class="perk reveal">
+        <div class="perk-icon">&#x1F697;</div>
+        <h3>Firmenwagen &amp; E-Bikes</h3>
+        <p>Firmeneigene Dienstfahrzeuge und Elektrofahrr&auml;der f&uuml;r Ihre Eins&auml;tze.</p>
+      </div>
+      <div class="perk reveal">
+        <div class="perk-icon">&#x2615;</div>
+        <h3>Modernes B&uuml;ro</h3>
+        <p>Vollausgestattete K&uuml;chenzeile, Pausenraum, kostenfreie Getr&auml;nke und frisches Obst.</p>
+      </div>
+      <div class="perk reveal">
+        <div class="perk-icon">&#x1F331;</div>
+        <h3>Mentoring-Programm</h3>
+        <p>Strukturierte Einarbeitung durch erfahrene Mentoren nach unserem bew&auml;hrten Einarbeitungskonzept.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFENE STELLEN -->
+<section class="jobs-section" id="jobs">
+  <div class="reveal">
+    <span class="section-label">Offene Stellen</span>
+    <h2 class="section-title">Aktuelle Stellenangebote</h2>
+    <p class="section-subtitle">Finden Sie die passende Position und bewerben Sie sich direkt per E-Mail oder Telefon.</p>
+  </div>
+
+  <div class="jobs-grid">
+
+    <!-- PDL -->
+    <div class="job-card reveal">
+      <div class="job-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="job-header-left">
+          <span class="job-type urgent">Dringend gesucht</span>
+          <h3>Pflegedienstleitung (PDL) (m/w/d)</h3>
+          <div class="job-meta">
+            <span>&#x1F4CD; Hamburg</span>
+            <span>&#x23F0; Vollzeit / Teilzeit</span>
+            <span>&#x1F4B0; Nach Vereinbarung</span>
+          </div>
+        </div>
+        <button class="job-toggle">&#x25BC;</button>
+      </div>
+      <div class="job-details">
+        <div class="job-details-inner">
+          <div>
+            <h4>Ihre Aufgaben</h4>
+            <ul>
+              <li>Fachliche und organisatorische Leitung des Pflegedienstes</li>
+              <li>Personalplanung, Dienstplangestaltung und Mitarbeiterf&uuml;hrung</li>
+              <li>Sicherstellung der Pflegequalit&auml;t gem&auml;&szlig; SGB V und SGB XI</li>
+              <li>Aufnahme- und Beratungsgespr&auml;che mit Klienten und Angeh&ouml;rigen</li>
+              <li>Zusammenarbeit mit &Auml;rzten, Krankenkassen und Beh&ouml;rden</li>
+              <li>&Uuml;berwachung und Weiterentwicklung des Qualit&auml;tsmanagements</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ihr Profil</h4>
+            <ul>
+              <li>Abgeschlossene Ausbildung als Gesundheits- und Krankenpfleger/in oder Altenpfleger/in</li>
+              <li>Weiterbildung zur Pflegedienstleitung (mind. 460 Stunden)</li>
+              <li>Mehrj&auml;hrige Berufserfahrung in der ambulanten Pflege</li>
+              <li>F&uuml;hrungskompetenz und Organisationstalent</li>
+              <li>Kenntnisse der gesetzlichen Rahmenbedingungen (SGB V, XI, HmbWBG)</li>
+            </ul>
+          </div>
+          <div class="job-apply">
+            <a href="mailto:info@luminaplus.de?subject=Bewerbung%20PDL%20(m/w/d)" class="btn btn-primary">Jetzt bewerben</a>
+            <a href="tel:+494018035922" class="btn btn-outline">Anrufen</a>
+            <span class="apply-hint">Oder senden Sie Ihre Unterlagen an info@luminaplus.de</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Examinierte Pflegefachkraft -->
+    <div class="job-card reveal">
+      <div class="job-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="job-header-left">
+          <span class="job-type urgent">Dringend gesucht</span>
+          <h3>Examinierte Pflegefachkraft (m/w/d)</h3>
+          <div class="job-meta">
+            <span>&#x1F4CD; Hamburg</span>
+            <span>&#x23F0; Vollzeit / Teilzeit / Minijob</span>
+            <span>&#x1F4B0; Nach Vereinbarung</span>
+          </div>
+        </div>
+        <button class="job-toggle">&#x25BC;</button>
+      </div>
+      <div class="job-details">
+        <div class="job-details-inner">
+          <div>
+            <h4>Ihre Aufgaben</h4>
+            <ul>
+              <li>Durchf&uuml;hrung der Grund- und Behandlungspflege im h&auml;uslichen Umfeld</li>
+              <li>Erstellung und Umsetzung individueller Pflegeplanungen</li>
+              <li>Pflegedokumentation nach SIS</li>
+              <li>Medikamentenmanagement und Vitalzeichenkontrolle</li>
+              <li>Beratung von Klienten und Angeh&ouml;rigen</li>
+              <li>Zusammenarbeit mit &Auml;rzten und Therapeuten</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ihr Profil</h4>
+            <ul>
+              <li>Abgeschlossene 3-j&auml;hrige Ausbildung als Gesundheits- und Krankenpfleger/in, Altenpfleger/in oder Pflegefachfrau/-mann</li>
+              <li>Erfahrung in der ambulanten Pflege w&uuml;nschenswert</li>
+              <li>Empathie und Freude am Umgang mit Menschen</li>
+              <li>Zuverl&auml;ssigkeit und Teamf&auml;higkeit</li>
+              <li>F&uuml;hrerschein Klasse B von Vorteil</li>
+            </ul>
+          </div>
+          <div class="job-apply">
+            <a href="mailto:info@luminaplus.de?subject=Bewerbung%20Pflegefachkraft%20(m/w/d)" class="btn btn-primary">Jetzt bewerben</a>
+            <a href="tel:+494018035922" class="btn btn-outline">Anrufen</a>
+            <span class="apply-hint">Oder senden Sie Ihre Unterlagen an info@luminaplus.de</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GPA -->
+    <div class="job-card reveal">
+      <div class="job-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="job-header-left">
+          <span class="job-type new">Neu</span>
+          <h3>Gesundheits- und Pflegeassistent/in (GPA) (m/w/d)</h3>
+          <div class="job-meta">
+            <span>&#x1F4CD; Hamburg</span>
+            <span>&#x23F0; Teilzeit / Minijob</span>
+            <span>&#x1F4B0; Nach Vereinbarung</span>
+          </div>
+        </div>
+        <button class="job-toggle">&#x25BC;</button>
+      </div>
+      <div class="job-details">
+        <div class="job-details-inner">
+          <div>
+            <h4>Ihre Aufgaben</h4>
+            <ul>
+              <li>Unterst&uuml;tzung bei der Grundpflege (K&ouml;rperpflege, An-/Auskleiden, Mobilisation)</li>
+              <li>Hauswirtschaftliche Versorgung und Alltagsbegleitung</li>
+              <li>Hilfe bei Mahlzeiten und Eink&auml;ufen</li>
+              <li>Begleitung zu Arztbesuchen und Terminen</li>
+              <li>Dokumentation der erbrachten Leistungen</li>
+              <li>Enge Zusammenarbeit mit examinierten Pflegefachkr&auml;ften</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ihr Profil</h4>
+            <ul>
+              <li>Abgeschlossene Ausbildung als Gesundheits- und Pflegeassistent/in (GPA) oder vergleichbare Qualifikation</li>
+              <li>Freude am Umgang mit &auml;lteren und pflegebed&uuml;rftigen Menschen</li>
+              <li>Einf&uuml;hlungsverm&ouml;gen und Geduld</li>
+              <li>Zuverl&auml;ssigkeit und Verantwortungsbewusstsein</li>
+              <li>Gute Deutschkenntnisse</li>
+              <li>F&uuml;hrerschein Klasse B von Vorteil</li>
+            </ul>
+          </div>
+          <div class="job-apply">
+            <a href="mailto:info@luminaplus.de?subject=Bewerbung%20GPA%20(m/w/d)" class="btn btn-primary">Jetzt bewerben</a>
+            <a href="tel:+494018035922" class="btn btn-outline">Anrufen</a>
+            <span class="apply-hint">Oder senden Sie Ihre Unterlagen an info@luminaplus.de</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Keine passende Stelle dabei?</h2>
+  <p>Wir freuen uns auch &uuml;ber Initiativbewerbungen. Schreiben Sie uns!</p>
+  <a href="mailto:info@luminaplus.de?subject=Initiativbewerbung" class="btn btn-primary">Initiativbewerbung senden</a>
+  <div class="cta-contacts">
+    <a href="tel:+494018035922">&#x1F4DE; +49 40 18035922</a>
+    <a href="mailto:info@luminaplus.de">&#x2709; info@luminaplus.de</a>
+    <a href="https://maps.google.com/?q=Angerstra%C3%9Fe+42,+22087+Hamburg" target="_blank">&#x1F4CD; Angerstra&szlig;e 42, Hamburg</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>&copy; 2024&ndash;2026 LuminaPlus eG &middot; <a href="impressum-luminaplus.html">Impressum</a> &middot; <a href="datenschutz-luminaplus.html">Datenschutz</a> &middot; <a href="index.html">&Uuml;ber uns</a></p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

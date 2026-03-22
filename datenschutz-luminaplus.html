@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datenschutzerkl&auml;rung | LuminaPlus eG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-body);
+      color: #333;
+      line-height: 1.8;
+      background: var(--white);
+    }
+    .navbar {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 0.8rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-img { height: 40px; }
+    .back-link {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--navy); }
+    .page-header {
+      background: linear-gradient(135deg, var(--navy) 0%, #0a4a8a 100%);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+    .content h2 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-top: 2.5rem;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--green);
+      display: inline-block;
+    }
+    .content h2:first-of-type { margin-top: 0; }
+    .content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      color: var(--dark-blue);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .content p, .content li {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 0.6rem;
+    }
+    .content ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 1rem;
+    }
+    .content ul li::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--light-blue);
+      border-radius: 50%;
+      margin-right: 0.6rem;
+      vertical-align: middle;
+    }
+    .highlight-box {
+      background: var(--off-white);
+      border-left: 3px solid var(--light-blue);
+      border-radius: 0 8px 8px 0;
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0;
+    }
+    .highlight-box p { margin-bottom: 0.3rem; }
+    .highlight-box a {
+      color: var(--dark-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .legal-note {
+      background: rgba(154,235,166,0.08);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    .toc {
+      background: var(--off-white);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .toc h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.8rem;
+      margin-top: 0;
+    }
+    .toc ol {
+      padding-left: 1.2rem;
+      counter-reset: toc;
+    }
+    .toc ol li {
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+    }
+    .toc ol li::before {
+      content: none;
+    }
+    .toc a {
+      color: var(--dark-blue);
+      text-decoration: none;
+    }
+    .toc a:hover { color: var(--light-blue); }
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+    .footer a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      margin: 0 0.8rem;
+    }
+    .footer a:hover { color: var(--light-blue); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="logo-img">
+    <a href="ueber-uns-luminaplus.html" class="back-link">&larr; Zur&uuml;ck zur Startseite</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <h1>Datenschutzerkl&auml;rung</h1>
+  <p>Informationen gem&auml;&szlig; Art. 13 &amp; 14 DSGVO</p>
+</header>
+
+<main class="content">
+
+  <div class="toc">
+    <h3>Inhalts&uuml;bersicht</h3>
+    <ol>
+      <li><a href="#s1">Verantwortlicher</a></li>
+      <li><a href="#s2">Allgemeines zur Datenverarbeitung</a></li>
+      <li><a href="#s3">Hosting &amp; Technische Bereitstellung</a></li>
+      <li><a href="#s4">Kontaktaufnahme</a></li>
+      <li><a href="#s5">Patientendaten &amp; Pflegedokumentation</a></li>
+      <li><a href="#s6">Bewerberdaten</a></li>
+      <li><a href="#s7">Cookies &amp; Analyse</a></li>
+      <li><a href="#s8">Ihre Rechte</a></li>
+      <li><a href="#s9">Aktualit&auml;t</a></li>
+    </ol>
+  </div>
+
+  <h2 id="s1">1. Verantwortlicher</h2>
+  <div class="highlight-box">
+    <p><strong>LuminaPlus eG</strong></p>
+    <p>Angerstra&szlig;e 42, 22087 Hamburg</p>
+    <p>Vorstand: Samira Hannou</p>
+    <p>Telefon: <a href="tel:+494018035922">+49 40 18035922</a></p>
+    <p>E-Mail: <a href="mailto:info@luminaplus.de">info@luminaplus.de</a></p>
+  </div>
+
+  <h2 id="s2">2. Allgemeines zur Datenverarbeitung</h2>
+  <p>Wir verarbeiten personenbezogene Daten unserer Nutzer grunds&auml;tzlich nur, soweit dies zur Bereitstellung einer funktionsf&auml;higen Website sowie unserer Inhalte und Leistungen erforderlich ist. Die Verarbeitung personenbezogener Daten erfolgt regelm&auml;&szlig;ig nur nach Einwilligung des Nutzers oder wenn die Verarbeitung durch gesetzliche Vorschriften gestattet ist.</p>
+
+  <h3>Rechtsgrundlagen</h3>
+  <ul>
+    <li><strong>Art. 6 Abs. 1 lit. a DSGVO</strong> &mdash; Einwilligung der betroffenen Person</li>
+    <li><strong>Art. 6 Abs. 1 lit. b DSGVO</strong> &mdash; Vertragsanbahnung oder -erf&uuml;llung</li>
+    <li><strong>Art. 6 Abs. 1 lit. c DSGVO</strong> &mdash; Erf&uuml;llung rechtlicher Verpflichtungen</li>
+    <li><strong>Art. 6 Abs. 1 lit. f DSGVO</strong> &mdash; Berechtigtes Interesse</li>
+    <li><strong>Art. 9 Abs. 2 lit. h DSGVO</strong> &mdash; Verarbeitung von Gesundheitsdaten im Rahmen der Gesundheitsversorgung</li>
+  </ul>
+
+  <h3>Speicherdauer</h3>
+  <p>Personenbezogene Daten werden gel&ouml;scht, sobald der Zweck der Speicherung entf&auml;llt, es sei denn, gesetzliche Aufbewahrungsfristen stehen der L&ouml;schung entgegen. F&uuml;r Pflegedokumentation gelten Aufbewahrungsfristen von bis zu 30 Jahren gem&auml;&szlig; Berufsrecht.</p>
+
+  <h2 id="s3">3. Hosting &amp; Technische Bereitstellung</h2>
+  <p>Diese Website wird bei <strong>Wix.com Ltd.</strong> gehostet. Beim Besuch unserer Website werden automatisch folgende Daten in Server-Logfiles erhoben:</p>
+  <ul>
+    <li>IP-Adresse des anfragenden Rechners</li>
+    <li>Datum und Uhrzeit der Anfrage</li>
+    <li>Adresse der aufgerufenen Seite (URL)</li>
+    <li>Browsertyp und Betriebssystem</li>
+    <li>Referrer-URL (zuvor besuchte Seite)</li>
+  </ul>
+  <p>Die Rechtsgrundlage hierf&uuml;r ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der technischen Bereitstellung und Sicherheit der Website).</p>
+
+  <p><strong>Hosting-Anbieter:</strong> Wix.com Ltd. &mdash; <a href="https://de.wix.com/about/privacy" target="_blank" style="color:var(--dark-blue);font-weight:600;">Datenschutzerkl&auml;rung von Wix</a></p>
+
+  <h2 id="s4">4. Kontaktaufnahme</h2>
+  <p>Wenn Sie uns per Telefon, E-Mail oder &uuml;ber das Kontaktformular kontaktieren, werden die von Ihnen mitgeteilten Daten (Name, E-Mail-Adresse, Telefonnummer, Nachrichteninhalt) zum Zwecke der Bearbeitung Ihrer Anfrage verarbeitet und gespeichert.</p>
+  <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) bzw. Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen).</p>
+  <p><strong>Speicherdauer:</strong> Ihre Daten werden nach abschlie&szlig;ender Bearbeitung Ihrer Anfrage gel&ouml;scht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+
+  <h2 id="s5">5. Patientendaten &amp; Pflegedokumentation</h2>
+  <p>Im Rahmen unserer pflegerischen T&auml;tigkeit verarbeiten wir besondere Kategorien personenbezogener Daten (Gesundheitsdaten) unserer Klienten. Diese Verarbeitung erfolgt auf Grundlage von:</p>
+  <ul>
+    <li><strong>Art. 9 Abs. 2 lit. h DSGVO</strong> i.V.m. &sect; 22 Abs. 1 Nr. 1 lit. b BDSG &mdash; Gesundheitsversorgung</li>
+    <li><strong>Vertragliche Grundlage</strong> &mdash; Pflege- und Versorgungsvertrag</li>
+    <li><strong>Gesetzliche Pflichten</strong> &mdash; SGB V, SGB XI, HmbWBG</li>
+  </ul>
+  <p>Die Pflegedokumentation wird gem&auml;&szlig; der strukturierten Informationssammlung (SIS) gef&uuml;hrt und digital gespeichert. Alle Mitarbeiter sind auf die Einhaltung der Datenschutzbestimmungen (DSGVO, BDSG) gesondert verpflichtet und unterliegen der beruflichen Schweigepflicht.</p>
+  <p><strong>Speicherdauer:</strong> Pflegedokumentationen werden gem&auml;&szlig; den gesetzlichen Aufbewahrungsfristen f&uuml;r mindestens 10 Jahre nach Beendigung der Pflege aufbewahrt.</p>
+
+  <h2 id="s6">6. Bewerberdaten</h2>
+  <p>Wenn Sie sich bei uns bewerben, verarbeiten wir die von Ihnen &uuml;bermittelten Daten (Lebenslauf, Zeugnisse, Kontaktdaten) zum Zwecke der Durchf&uuml;hrung des Bewerbungsverfahrens.</p>
+  <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO i.V.m. &sect; 26 BDSG.</p>
+  <p><strong>Speicherdauer:</strong> Im Falle einer Ablehnung werden Ihre Bewerbungsunterlagen sp&auml;testens 6 Monate nach Abschluss des Verfahrens gel&ouml;scht, sofern Sie nicht einer l&auml;ngeren Speicherung zustimmen.</p>
+
+  <h2 id="s7">7. Cookies &amp; Analyse</h2>
+  <p>Diese Website verwendet Cookies, die von Wix.com f&uuml;r die technische Funktionalit&auml;t der Website ben&ouml;tigt werden (sog. &bdquo;notwendige Cookies&ldquo;). Diese Cookies erm&ouml;glichen grundlegende Funktionen wie Seitennavigation und Sicherheit.</p>
+  <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der technischen Funktionalit&auml;t).</p>
+  <p>Analyse- oder Tracking-Tools von Drittanbietern werden auf dieser Website derzeit nicht eingesetzt. Sollten zuk&uuml;nftig solche Tools eingebunden werden, holen wir vorab Ihre Einwilligung ein.</p>
+
+  <h2 id="s8">8. Ihre Rechte</h2>
+  <p>Sie haben gegen&uuml;ber uns folgende Rechte bez&uuml;glich Ihrer personenbezogenen Daten:</p>
+  <ul>
+    <li><strong>Auskunftsrecht</strong> (Art. 15 DSGVO)</li>
+    <li><strong>Recht auf Berichtigung</strong> (Art. 16 DSGVO)</li>
+    <li><strong>Recht auf L&ouml;schung</strong> (Art. 17 DSGVO)</li>
+    <li><strong>Recht auf Einschr&auml;nkung der Verarbeitung</strong> (Art. 18 DSGVO)</li>
+    <li><strong>Recht auf Daten&uuml;bertragbarkeit</strong> (Art. 20 DSGVO)</li>
+    <li><strong>Widerspruchsrecht</strong> (Art. 21 DSGVO)</li>
+    <li><strong>Recht auf Widerruf</strong> erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO)</li>
+  </ul>
+  <p>Zur Aus&uuml;bung Ihrer Rechte wenden Sie sich bitte an: <a href="mailto:info@luminaplus.de" style="color:var(--dark-blue);font-weight:600;">info@luminaplus.de</a></p>
+
+  <h3>Beschwerderecht</h3>
+  <p>Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbeh&ouml;rde zu beschweren:</p>
+  <div class="highlight-box">
+    <p><strong>Der Hamburgische Beauftragte f&uuml;r Datenschutz und Informationsfreiheit</strong></p>
+    <p>Ludwig-Erhard-Str. 22, 7. OG</p>
+    <p>20459 Hamburg</p>
+    <p>Telefon: +49 40 42854-4040</p>
+    <p><a href="mailto:mailbox@datenschutz.hamburg.de">mailbox@datenschutz.hamburg.de</a></p>
+  </div>
+
+  <h2 id="s9">9. Aktualit&auml;t und &Auml;nderung dieser Datenschutzerkl&auml;rung</h2>
+  <p>Diese Datenschutzerkl&auml;rung ist aktuell g&uuml;ltig und hat den Stand M&auml;rz 2026.</p>
+  <p>Durch die Weiterentwicklung unserer Website und Angebote oder aufgrund ge&auml;nderter gesetzlicher bzw. beh&ouml;rdlicher Vorgaben kann es notwendig werden, diese Datenschutzerkl&auml;rung zu &auml;ndern. Die jeweils aktuelle Datenschutzerkl&auml;rung kann jederzeit auf dieser Seite abgerufen werden.</p>
+
+  <div class="legal-note">
+    <strong>Hinweis:</strong> Diese Datenschutzerkl&auml;rung wurde nach bestem Wissen erstellt. F&uuml;r eine rechtssichere Pr&uuml;fung empfehlen wir die Konsultation eines spezialisierten Rechtsanwalts f&uuml;r Datenschutzrecht.
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; 2024&ndash;2026 LuminaPlus eG &middot; <a href="impressum-luminaplus.html">Impressum</a> &middot; <a href="datenschutz-luminaplus.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>
