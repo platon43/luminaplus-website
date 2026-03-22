@@ -488,6 +488,97 @@
       line-height: 1.7;
     }
 
+    /* ===== LEISTUNGEN ===== */
+    .services-section {
+      background: var(--off-white);
+      padding: 6rem 2rem;
+    }
+    .services-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .service-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid var(--light-gray);
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(8,55,107,0.08);
+      border-color: transparent;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--dark-blue));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+      background: rgba(47,144,176,0.08);
+    }
+    .service-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .service-card p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    .service-card .badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-top: 0.8rem;
+    }
+    .badge-sgb5 { background: rgba(53,192,237,0.1); color: var(--dark-blue); }
+    .badge-sgb11 { background: rgba(154,235,166,0.15); color: #3a8a4a; }
+    .badge-privat { background: rgba(8,55,107,0.06); color: var(--navy); }
+    .services-note {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    .services-note strong { color: var(--navy); }
+    @media (max-width: 768px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
     /* ===== TEAM ===== */
     .team-section {
       background: var(--navy);
@@ -871,6 +962,7 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">Wer wir sind</a></li>
       <li><a href="#values">Unsere Werte</a></li>
+      <li><a href="#services">Leistungen</a></li>
       <li><a href="#team">Unser Team</a></li>
       <li><a href="#area">Einsatzgebiet</a></li>
       <li><a href="#contact">Kontakt</a></li>
@@ -982,6 +1074,56 @@
       <h3>Transparenz</h3>
       <p>Kooperative F&uuml;hrung, offene Kommunikation mit Kunden, Angeh&ouml;rigen und Partnern &mdash; f&uuml;r ein vertrauensvolles Verh&auml;ltnis.</p>
     </div>
+  </div>
+</section>
+
+<!-- UNSERE LEISTUNGEN -->
+<section class="services-section" id="services">
+  <div class="services-inner">
+    <div class="reveal">
+      <span class="section-label">Unsere Leistungen</span>
+      <h2 class="section-title">Umfassende Pflege aus einer Hand</h2>
+      <p class="section-subtitle">Wir sind Vertragspartner aller gesetzlichen Krankenkassen und bieten Leistungen f&uuml;r die Pflegegrade 0&ndash;5.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#x1FA7A;</div>
+        <h3>Behandlungspflege</h3>
+        <p>Medizinische Versorgung nach &auml;rztlicher Verordnung: Medikamentengabe, Wundversorgung, Injektionen, Vitalzeichenkontrolle.</p>
+        <span class="badge badge-sgb5">SGB V</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">&#x1F6C1;</div>
+        <h3>Grundpflege</h3>
+        <p>Unterst&uuml;tzung bei K&ouml;rperpflege, An- und Auskleiden, Ern&auml;hrung und Mobilisation &mdash; individuell auf Ihre Bed&uuml;rfnisse abgestimmt.</p>
+        <span class="badge badge-sgb11">SGB XI</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">&#x1F3E0;</div>
+        <h3>Hauswirtschaftliche Versorgung</h3>
+        <p>Einkaufen, Kochen, Reinigung der Wohnung und W&auml;schepflege &mdash; f&uuml;r ein angenehmes Wohnumfeld.</p>
+        <span class="badge badge-sgb11">SGB XI</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">&#x1F4CB;</div>
+        <h3>Beratung &amp; Betreuung</h3>
+        <p>Pers&ouml;nliche Aufnahme- und Beratungsgespr&auml;che, Pflegeplanung und Beratungsbesuche nach &sect; 37.3 SGB XI.</p>
+        <span class="badge badge-sgb11">SGB XI</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">&#x1F91D;</div>
+        <h3>Verhinderungspflege</h3>
+        <p>Vertretung bei Urlaub oder Krankheit der pflegenden Angeh&ouml;rigen &mdash; damit Sie sich erholen k&ouml;nnen.</p>
+        <span class="badge badge-sgb11">SGB XI</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">&#x1F6B6;</div>
+        <h3>Alltagsbegleitung</h3>
+        <p>Spazierg&auml;nge, Arztbegleitung, Eink&auml;ufe und Gesellschaft &mdash; zus&auml;tzliche Betreuung &uuml;ber die Pflege hinaus.</p>
+        <span class="badge badge-privat">Privat / Entlastung</span>
+      </div>
+    </div>
+    <p class="services-note reveal"><strong>Kostenfreie Erstberatung:</strong> Wir beraten Sie gerne unverbindlich zu Ihrem individuellen Pflegebedarf und den M&ouml;glichkeiten der Kostenerstattung.</p>
   </div>
 </section>
 
