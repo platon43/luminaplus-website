@@ -288,12 +288,16 @@
     .job-card.open .job-toggle { transform: rotate(180deg); }
 
     .job-details {
-      max-height: 0;
+      display: grid;
+      grid-template-rows: 0fr;
       overflow: hidden;
-      transition: max-height 0.4s ease-out;
+      transition: grid-template-rows 0.4s ease-out;
     }
     .job-card.open .job-details {
-      max-height: 800px;
+      grid-template-rows: 1fr;
+    }
+    .job-details > div {
+      overflow: hidden;
     }
     .job-details-inner {
       padding: 1.5rem 2rem 2rem;

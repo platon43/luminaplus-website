@@ -85,6 +85,8 @@
     }
     .mobile-overlay.active { display: block; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .mobile-only { display: none; }
+    @media (max-width: 768px) { .mobile-only { display: block; } }
     .nav-links a {
       text-decoration: none;
       font-family: var(--font-body);
@@ -807,6 +809,8 @@
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
       .hamburger { display: block; }
+      .nav-cta { display: none; }
+      .logo-img { height: 36px; }
       .nav-links {
         display: none;
         position: fixed;
@@ -829,14 +833,21 @@
         font-size: 1rem;
       }
       .nav-links a::after { display: none; }
-      .nav-cta {
-        margin-top: 1rem;
-        text-align: center;
+      /* Mobile CTA inside menu */
+      .nav-links .mobile-cta {
         display: block;
+        margin-top: 1rem;
+        background: var(--light-blue);
+        color: white;
+        text-align: center;
+        padding: 0.8rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
       }
       .hero { grid-template-columns: 1fr; }
-      .hero-img { height: 300px; }
-      .hero-text { padding: 6rem 1.5rem 2rem; }
+      .hero-img { height: 280px; order: -1; }
+      .hero-text { padding: 2rem 1.5rem 2rem; }
       .about-inner, .area-inner { grid-template-columns: 1fr; gap: 2rem; }
       .hero-stats { flex-direction: row; flex-wrap: wrap; gap: 1.5rem; }
       .team-features { grid-template-columns: 1fr 1fr; }
@@ -864,6 +875,7 @@
       <li><a href="#area">Einsatzgebiet</a></li>
       <li><a href="#contact">Kontakt</a></li>
       <li><a href="./karriere-luminaplus">Karriere</a></li>
+      <li class="mobile-only"><a href="tel:+494018035922" class="mobile-cta">Jetzt anrufen</a></li>
     </ul>
     <a href="tel:+494018035922" class="nav-cta">+49 40 18035922</a>
     <button class="hamburger" id="hamburger" aria-label="Men&uuml; &ouml;ffnen">
