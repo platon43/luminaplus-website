@@ -54,11 +54,51 @@
 
     /* Hero */
     .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, #0a4a8a 60%, var(--dark-blue) 100%);
-      padding: 6rem 2rem 5rem;
-      text-align: center;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 75vh;
       position: relative;
       overflow: hidden;
+    }
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 6rem 3rem 4rem 5%;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .hero-img::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 25%;
+      height: 100%;
+      background: linear-gradient(to right, var(--navy), transparent);
+      z-index: 2;
+    }
+    .hero-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(to top, var(--navy), transparent);
+      z-index: 2;
     }
     .hero::before {
       content: '';
@@ -378,41 +418,14 @@
       color: var(--gray);
     }
 
-    /* Image banner */
-    .image-banner {
-      position: relative;
-      height: 300px;
-      overflow: hidden;
-    }
-    .image-banner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
-    }
-    .image-banner::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(8,55,107,0.1) 0%, rgba(8,55,107,0.4) 100%);
-    }
-    .image-banner-text {
-      position: absolute;
-      bottom: 2rem;
-      left: 2rem;
-      right: 2rem;
-      z-index: 2;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .image-banner-text h2 {
-      font-family: var(--font-heading);
-      font-size: 1.5rem;
-      color: white;
-    }
-    .image-banner-text p {
-      color: rgba(255,255,255,0.8);
-      font-size: 0.9rem;
+    /* Hero subtitle */
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-style: italic;
     }
 
     /* CTA */
@@ -505,6 +518,10 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-img { height: 280px; order: -1; }
+      .hero-text { padding: 2rem 1.5rem 3rem; align-items: center; text-align: center; }
+      .hero-text p { max-width: 100%; }
       .job-details-inner { grid-template-columns: 1fr; }
       .job-meta { flex-direction: column; gap: 0.5rem; }
     }
@@ -521,20 +538,17 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">Karriere bei LuminaPlus</div>
-  <h1>Wir suchen <span>Verst&auml;rkung</span></h1>
-  <p>Werden Sie Teil unseres multikulturellen Teams und gestalten Sie mit uns die Zukunft der ambulanten Pflege in Hamburg.</p>
-  <a href="#jobs" class="hero-scroll">Offene Stellen ansehen <span class="arrow">&darr;</span></a>
-</section>
-
-<!-- IMAGE BANNER -->
-<div class="image-banner">
-  <img src="brand/bilder/Pflegefachkraft-blaue-Bluse.webp" alt="Pflegefachkraft bei LuminaPlus">
-  <div class="image-banner-text">
-    <h2>Pflege ist f&uuml;r uns mehr als ein Beruf</h2>
-    <p>Es ist unsere Berufung, Menschen ein w&uuml;rdevolles Leben im eigenen Zuhause zu erm&ouml;glichen.</p>
+  <div class="hero-text">
+    <div class="hero-badge">Karriere bei LuminaPlus</div>
+    <h1>Wir suchen <span>Verst&auml;rkung</span></h1>
+    <p>Werden Sie Teil unseres multikulturellen Teams und gestalten Sie mit uns die Zukunft der ambulanten Pflege in Hamburg.</p>
+    <a href="#jobs" class="hero-scroll">Offene Stellen ansehen <span class="arrow">&darr;</span></a>
+    <p class="hero-sub">Pflege ist f&uuml;r uns mehr als ein Beruf &mdash; es ist unsere Berufung, Menschen ein w&uuml;rdevolles Leben im eigenen Zuhause zu erm&ouml;glichen.</p>
   </div>
-</div>
+  <div class="hero-img">
+    <img src="brand/bilder/Pflegefachkraft-blaue-Bluse.webp" alt="Pflegefachkraft bei LuminaPlus">
+  </div>
+</section>
 
 <!-- WARUM LUMINAPLUS -->
 <section class="why-section">
