@@ -143,14 +143,42 @@
     .footer {
       background: var(--navy);
       color: rgba(255,255,255,0.5);
-      padding: 2rem;
-      text-align: center;
+      padding: 3rem 2rem 1.5rem;
+    }
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 0.8rem; }
+    .footer p { font-size: 0.8rem; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
       font-size: 0.8rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--light-blue); }
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 1.5rem 0 1rem;
+    }
+    .footer-bottom {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.75rem;
     }
     .footer a {
       color: rgba(255,255,255,0.5);
       text-decoration: none;
-      margin: 0 0.8rem;
     }
     .footer a:hover { color: var(--light-blue); }
   </style>
@@ -225,7 +253,22 @@
 </main>
 
 <footer class="footer">
-  <p>&copy; 2024&ndash;2026 LuminaPlus eG &middot; <a href="impressum-luminaplus.html">Impressum</a> &middot; <a href="./datenschutz-luminaplus">Datenschutz</a></p>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" style="height:32px;filter:brightness(0) invert(1);opacity:0.8;">
+      <p>Gemeinsam f&uuml;r Ihre Lebensqualit&auml;t</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="./">Startseite</a></li>
+      <li><a href="./impressum-luminaplus">Impressum</a></li>
+      <li><a href="./datenschutz-luminaplus">Datenschutz</a></li>
+      <li><a href="./karriere-luminaplus">Karriere</a></li>
+    </ul>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <p>&copy; 2024&ndash;2026 LuminaPlus eG. Alle Rechte vorbehalten.</p>
+  </div>
 </footer>
 
 </body>
