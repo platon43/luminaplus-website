@@ -371,6 +371,7 @@
               <th>Art</th>
               <th>Code</th>
               <th>Eingereicht</th>
+              <th>Drive</th>
               <th>Aktionen</th>
             </tr>
           </thead>
@@ -449,6 +450,7 @@
     <div class="detail-grid" id="modalContent"></div>
     <div class="modal-actions">
       <button class="btn-sm btn-pdf" onclick="generatePDF()">PDF herunterladen</button>
+      <button class="btn-sm btn-primary-sm" id="driveBtn" onclick="processDrive()" style="display:none;">Drive verarbeiten</button>
       <button class="btn-sm btn-delete" onclick="deleteSubmission()">L&ouml;schen</button>
     </div>
   </div>
@@ -541,12 +543,13 @@
         <td><span class="badge-type ${d.employment_type === 'angestellter' ? 'badge-angestellt' : 'badge-minijob'}">${formatType(d.employment_type)}</span></td>
         <td>${d.invitation_code || '-'}</td>
         <td>${formatDate(d.submitted_at)}</td>
+        <td>${d.drive_folder_url ? '<a href="' + d.drive_folder_url + '" target="_blank" class="btn-sm btn-primary-sm" style="text-decoration:none;font-size:0.7rem;">Drive</a>' : '<span style="color:var(--gray);font-size:0.7rem;">-</span>'}</td>
         <td>
           <button class="btn-sm btn-view" onclick='viewDetail(${JSON.stringify(d).replace(/'/g, "&#39;")})'>Ansehen</button>
           <button class="btn-sm btn-pdf" onclick='viewDetail(${JSON.stringify(d).replace(/'/g, "&#39;")}); setTimeout(generatePDF, 100)'>PDF</button>
         </td>
       </tr>
-    `).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:2rem;">Keine Einreichungen vorhanden</td></tr>';
+    `).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:2rem;">Keine Einreichungen vorhanden</td></tr>';
   }
 
   // LOAD CODES
@@ -644,12 +647,66 @@
       { label: 'Art / Verdienst', value: (d.weitere_beschaeftigung_2_art || '') + ' / ' + (d.weitere_beschaeftigung_2_verdienst || '-') + ' \u20ac' },
     ];
 
+    // Add Drive section if available
+    if (d.drive_folder_url || (d.drive_files && d.drive_files.length > 0)) {
+      fields.push({ section: 'Google Drive Dokumente' });
+      if (d.drive_folder_url) {
+        fields.push({ label: 'Drive-Ordner', value: `<a href="${d.drive_folder_url}" target="_blank" style="color:var(--light-blue);text-decoration:none;font-weight:600;">Ordner \u00f6ffnen \u2197</a>` });
+      }
+      if (d.drive_files && d.drive_files.length > 0) {
+        d.drive_files.forEach(f => {
+          fields.push({ label: f.name, value: f.webViewLink ? `<a href="${f.webViewLink}" target="_blank" style="color:var(--dark-blue);text-decoration:none;">\u{1F4C4} Anzeigen</a>` : 'Hochgeladen' });
+        });
+      }
+      if (d.processed_at) {
+        fields.push({ label: 'Verarbeitet am', value: formatDate(d.processed_at) });
+      }
+    } else if (d.processed_at === null || d.processed_at === undefined) {
+      fields.push({ section: 'Google Drive' });
+      fields.push({ label: 'Status', value: '<span style="color:var(--gray);">Noch nicht verarbeitet</span>' });
+    }
+
     document.getElementById('modalContent').innerHTML = fields.map(f => {
       if (f.section) return `<div class="detail-section">${f.section}</div>`;
       return `<div class="detail-item"><label>${f.label}</label><p>${f.value || '-'}</p></div>`;
     }).join('');
 
+    // Show/hide Drive processing button
+    const driveBtn = document.getElementById('driveBtn');
+    if (!d.drive_folder_url) {
+      driveBtn.style.display = 'inline-block';
+    } else {
+      driveBtn.style.display = 'none';
+    }
+
     document.getElementById('detailModal').classList.add('visible');
+  }
+
+  // Process Drive manually
+  async function processDrive() {
+    if (!currentSubmission) return;
+    const btn = document.getElementById('driveBtn');
+    btn.disabled = true;
+    btn.textContent = 'Wird verarbeitet...';
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/process-submission`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ submission_id: currentSubmission.id })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('Drive-Ordner erstellt: ' + (data.files_uploaded || 0) + ' Datei(en) hochgeladen.');
+        closeModal();
+        loadSubmissions();
+      } else {
+        alert('Fehler: ' + (data.error || 'Unbekannter Fehler'));
+      }
+    } catch (e) {
+      alert('Fehler: ' + e.message);
+    }
+    btn.disabled = false;
+    btn.textContent = 'Drive verarbeiten';
   }
 
   function closeModal() {
