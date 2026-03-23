@@ -819,6 +819,17 @@
 
   let currentCode = null;
 
+  // ===== EMAIL NOTIFICATION =====
+  async function sendNotification(subject, body) {
+    try {
+      await fetch(`${SUPABASE_URL}/functions/v1/send-notification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subject, body })
+      });
+    } catch (e) { console.log('Notification error:', e); }
+  }
+
   // ===== MOBILE MENU =====
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
@@ -967,13 +978,28 @@
         body: { used: true, used_at: new Date().toISOString() }
       });
 
+      // Send success notification
+      sendNotification(
+        'Neuer Personalfragebogen: ' + data.vorname + ' ' + data.nachname,
+        'Ein neuer Personalfragebogen wurde eingereicht.\n\n' +
+        'Name: ' + data.vorname + ' ' + data.nachname + '\n' +
+        'Code: ' + currentCode + '\n' +
+        'Beschäftigungsart: ' + (data.employment_type || '-') + '\n' +
+        'E-Mail: ' + (data.email || '-') + '\n' +
+        'Telefon: ' + (data.telefon || '-') + '\n\n' +
+        'Die vollständigen Daten finden Sie im Supabase Dashboard:\nhttps://supabase.com/dashboard/project/auaueqkhhygykbjehjpq/editor'
+      );
+
       // Show success
       document.getElementById('formContainer').style.display = 'none';
       document.getElementById('successMessage').classList.add('visible');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (err) {
-      alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns unter info@luminaplus.de');
+      const errorMsg = err.message || err.toString();
+      alert('Es ist ein Fehler aufgetreten:\n\n' + errorMsg + '\n\nBitte kontaktieren Sie uns unter info@luminaplus.de');
+      // Send error notification
+      sendNotification('FEHLER: Personalfragebogen', 'Code: ' + currentCode + '\nFehler: ' + errorMsg + '\nDaten: ' + JSON.stringify(submission, null, 2));
       btn.disabled = false;
       btn.textContent = 'Personalfragebogen absenden';
     }
