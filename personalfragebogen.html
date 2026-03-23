@@ -782,13 +782,42 @@
 </footer>
 
 <script>
-  // ===== CONFIGURATION =====
-  // TODO: Replace with actual Supabase credentials once project is created
-  const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-  const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+  // ===== SUPABASE CLIENT =====
+  const SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
+
+  // Simple Supabase REST client (no SDK needed)
+  async function supabaseQuery(table, method, params = {}) {
+    let url = `${SUPABASE_URL}/rest/v1/${table}`;
+    const headers = {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': method === 'POST' ? 'return=minimal' : ''
+    };
+
+    if (method === 'GET' && params.query) {
+      url += `?${params.query}`;
+    }
+
+    const options = { method, headers };
+    if (method === 'POST' || method === 'PATCH') {
+      options.body = JSON.stringify(params.body);
+    }
+    if (method === 'PATCH' && params.query) {
+      url += `?${params.query}`;
+    }
+
+    const res = await fetch(url, options);
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(err);
+    }
+    if (method === 'GET') return res.json();
+    return true;
+  }
 
   let currentCode = null;
-  let codeRecord = null;
 
   // ===== MOBILE MENU =====
   const hamburger = document.getElementById('hamburger');
@@ -819,18 +848,17 @@
     // For now: simple code verification (will connect to Supabase)
     // TODO: Replace with Supabase query
     try {
-      // Simulated verification - replace with:
-      // const { data, error } = await supabase.from('invitation_codes').select('*')
-      //   .eq('code', code).eq('used', false).gt('expires_at', new Date().toISOString()).single();
+      const data = await supabaseQuery('invitation_codes', 'GET', {
+        query: `code=eq.${encodeURIComponent(code)}&used=eq.false&expires_at=gt.${new Date().toISOString()}&select=id,code,employee_name`
+      });
 
-      // Temporary: accept any code starting with "LP-"
-      if (code.startsWith('LP-')) {
+      if (data && data.length > 0) {
         currentCode = code;
         document.getElementById('codeSection').style.display = 'none';
         document.getElementById('formContainer').classList.add('visible');
         errorEl.classList.remove('visible');
       } else {
-        errorEl.textContent = 'Ungültiger oder abgelaufener Code. Bitte prüfen Sie Ihre Eingabe.';
+        errorEl.textContent = 'Ung\u00fcltiger oder abgelaufener Code. Bitte pr\u00fcfen Sie Ihre Eingabe.';
         errorEl.classList.add('visible');
       }
     } catch (err) {
@@ -884,15 +912,56 @@
     data.invitation_code = currentCode;
 
     try {
-      // TODO: Replace with Supabase insert
-      // const { error } = await supabase.from('employee_submissions').insert([data]);
-      // if (error) throw error;
+      // Prepare submission data
+      const submission = {
+        invitation_code: currentCode,
+        employment_type: data.employment_type,
+        anrede: data.anrede,
+        vorname: data.vorname,
+        nachname: data.nachname,
+        geburtsdatum: data.geburtsdatum || null,
+        staatsangehoerigkeit: data.staatsangehoerigkeit,
+        strasse: data.strasse,
+        plz: data.plz,
+        ort: data.ort,
+        email: data.email || null,
+        telefon: data.telefon || null,
+        kontoinhaber: data.kontoinhaber,
+        iban_encrypted: data.iban,
+        kreditinstitut: data.kreditinstitut || null,
+        steuer_id_encrypted: data.steuer_id,
+        steuerklasse: data.steuerklasse || null,
+        kinderfreibetrag: data.kinderfreibetrag || null,
+        freibetraege: data.freibetraege || null,
+        konfession: data.konfession || null,
+        konfession_ehepartner: data.konfession_ehepartner || null,
+        versicherungsart: data.versicherungsart,
+        krankenkasse: data.krankenkasse,
+        sv_nummer_encrypted: data.sv_nummer || null,
+        geburtsname: data.geburtsname || null,
+        geburtsort: data.geburtsort,
+        geburtsland: data.geburtsland,
+        hat_kinder: data.hat_kinder === 'ja',
+        anzahl_kinder_unter_25: data.hat_kinder === 'ja' ? parseInt(data.anzahl_kinder_unter_25 || '0') : 0,
+        weitere_beschaeftigung_1_name: data.weitere_beschaeftigung_1_name || null,
+        weitere_beschaeftigung_1_beginn: data.weitere_beschaeftigung_1_beginn || null,
+        weitere_beschaeftigung_1_art: data.weitere_beschaeftigung_1_art || null,
+        weitere_beschaeftigung_1_verdienst: data.weitere_beschaeftigung_1_verdienst || null,
+        weitere_beschaeftigung_2_name: data.weitere_beschaeftigung_2_name || null,
+        weitere_beschaeftigung_2_beginn: data.weitere_beschaeftigung_2_beginn || null,
+        weitere_beschaeftigung_2_art: data.weitere_beschaeftigung_2_art || null,
+        weitere_beschaeftigung_2_verdienst: data.weitere_beschaeftigung_2_verdienst || null,
+        bestaetigung: true
+      };
 
-      // TODO: Mark invitation code as used
-      // await supabase.from('invitation_codes').update({ used: true, used_at: new Date().toISOString() })
-      //   .eq('code', currentCode);
+      // Insert submission
+      await supabaseQuery('employee_submissions', 'POST', { body: submission });
 
-      console.log('Form data:', data);
+      // Mark code as used
+      await supabaseQuery('invitation_codes', 'PATCH', {
+        query: `code=eq.${encodeURIComponent(currentCode)}`,
+        body: { used: true, used_at: new Date().toISOString() }
+      });
 
       // Show success
       document.getElementById('formContainer').style.display = 'none';
