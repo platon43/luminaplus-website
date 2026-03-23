@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | LuminaPlus Personal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --red: #e74c3c;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-body); color: #333; background: var(--off-white); min-height: 100vh; }
+
+    /* Login */
+    .login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, #0a4a8a 100%);
+    }
+    .login-box {
+      background: white;
+      border-radius: 16px;
+      padding: 3rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .login-box img { height: 44px; margin-bottom: 1.5rem; }
+    .login-box h1 { font-family: var(--font-heading); font-size: 1.4rem; color: var(--navy); margin-bottom: 0.5rem; }
+    .login-box p { font-size: 0.85rem; color: var(--gray); margin-bottom: 1.5rem; }
+    .login-box input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid var(--light-gray);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+    }
+    .login-box input:focus { outline: none; border-color: var(--light-blue); }
+    .login-box button {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--light-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .login-box button:hover { background: var(--dark-blue); }
+    .login-error { color: var(--red); font-size: 0.8rem; margin-top: 0.5rem; display: none; }
+
+    /* Admin Dashboard */
+    .admin-container { display: none; }
+    .admin-container.visible { display: block; }
+
+    .admin-header {
+      background: var(--navy);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-header img { height: 36px; filter: brightness(0) invert(1); opacity: 0.8; }
+    .admin-header-right { display: flex; align-items: center; gap: 1rem; }
+    .admin-header span { color: rgba(255,255,255,0.6); font-size: 0.8rem; }
+    .admin-header .logout-btn {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .admin-header .logout-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0;
+      background: white;
+      border-bottom: 2px solid var(--light-gray);
+      padding: 0 2rem;
+    }
+    .tab {
+      padding: 1rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.3s;
+    }
+    .tab:hover { color: var(--navy); }
+    .tab.active { color: var(--navy); border-bottom-color: var(--light-blue); }
+    .tab .badge {
+      display: inline-block;
+      background: var(--light-blue);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.1rem 0.5rem;
+      border-radius: 10px;
+      margin-left: 0.4rem;
+    }
+
+    /* Content */
+    .admin-content { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Cards */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .stat-card h3 { font-family: var(--font-heading); font-size: 2rem; color: var(--navy); }
+    .stat-card p { font-size: 0.8rem; color: var(--gray); }
+
+    /* Table */
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .table-header {
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .table-header h2 { font-family: var(--font-heading); font-size: 1.1rem; color: var(--navy); }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      padding: 0.8rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--off-white);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    td {
+      padding: 0.8rem 1rem;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--light-gray);
+      color: #444;
+    }
+    tr:hover td { background: rgba(53,192,237,0.03); }
+    .badge-type {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .badge-minijob { background: rgba(53,192,237,0.1); color: var(--dark-blue); }
+    .badge-angestellt { background: rgba(154,235,166,0.15); color: #3a8a4a; }
+
+    /* Buttons */
+    .btn-sm {
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+    }
+    .btn-view { background: rgba(53,192,237,0.1); color: var(--dark-blue); }
+    .btn-view:hover { background: rgba(53,192,237,0.2); }
+    .btn-pdf { background: rgba(8,55,107,0.08); color: var(--navy); }
+    .btn-pdf:hover { background: rgba(8,55,107,0.15); }
+    .btn-delete { background: rgba(231,76,60,0.08); color: var(--red); }
+    .btn-delete:hover { background: rgba(231,76,60,0.15); }
+    .btn-primary-sm { background: var(--light-blue); color: white; }
+    .btn-primary-sm:hover { background: var(--dark-blue); }
+
+    /* Detail modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8,55,107,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 16px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray);
+    }
+    .modal h2 { font-family: var(--font-heading); font-size: 1.3rem; color: var(--navy); margin-bottom: 1.5rem; }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+    .detail-item label { font-size: 0.7rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.05em; }
+    .detail-item p { font-size: 0.9rem; color: #333; margin-top: 0.1rem; }
+    .detail-section {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--dark-blue);
+      margin-top: 1.5rem;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid var(--green);
+      grid-column: 1 / -1;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--light-gray);
+    }
+
+    /* Code creation */
+    .create-code-form {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      max-width: 500px;
+    }
+    .create-code-form h2 { font-family: var(--font-heading); font-size: 1.1rem; color: var(--navy); margin-bottom: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--navy); margin-bottom: 0.3rem; }
+    .form-group input {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid var(--light-gray);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+    }
+    .form-group input:focus { outline: none; border-color: var(--light-blue); }
+    .code-result {
+      display: none;
+      background: rgba(154,235,166,0.1);
+      border: 1px solid var(--green);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .code-result.visible { display: block; }
+    .code-result code {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.1em;
+    }
+    .code-result .copy-btn {
+      margin-left: 0.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .admin-content { padding: 1rem; }
+      table { font-size: 0.8rem; }
+      th, td { padding: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-container" id="loginContainer">
+  <div class="login-box">
+    <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus">
+    <h1>Admin-Bereich</h1>
+    <p>Bitte geben Sie das Admin-Passwort ein</p>
+    <input type="password" id="adminPassword" placeholder="Passwort" onkeypress="if(event.key==='Enter')adminLogin()">
+    <button onclick="adminLogin()">Anmelden</button>
+    <p class="login-error" id="loginError">Falsches Passwort</p>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="admin-container" id="adminContainer">
+  <div class="admin-header">
+    <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus">
+    <div class="admin-header-right">
+      <span>Admin-Bereich</span>
+      <button class="logout-btn" onclick="logout()">Abmelden</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('submissions')">Einreichungen <span class="badge" id="submissionCount">0</span></div>
+    <div class="tab" onclick="switchTab('codes')">Einladungscodes</div>
+    <div class="tab" onclick="switchTab('notifications')">Benachrichtigungen</div>
+  </div>
+
+  <div class="admin-content">
+
+    <!-- SUBMISSIONS TAB -->
+    <div class="tab-content active" id="tab-submissions">
+      <div class="stats-row" id="statsRow"></div>
+      <div class="table-container">
+        <div class="table-header">
+          <h2>Personalfrageb&ouml;gen</h2>
+          <button class="btn-sm btn-primary-sm" onclick="loadSubmissions()">Aktualisieren</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Art</th>
+              <th>Code</th>
+              <th>Eingereicht</th>
+              <th>Aktionen</th>
+            </tr>
+          </thead>
+          <tbody id="submissionsTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CODES TAB -->
+    <div class="tab-content" id="tab-codes">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+        <div class="create-code-form">
+          <h2>Neuen Code erstellen</h2>
+          <div class="form-group">
+            <label>Name des Mitarbeiters</label>
+            <input type="text" id="newCodeName" placeholder="z.B. Max M&uuml;ller">
+          </div>
+          <div class="form-group">
+            <label>G&uuml;ltigkeit (Tage)</label>
+            <input type="number" id="newCodeDays" value="30" min="1" max="365">
+          </div>
+          <button class="btn-sm btn-primary-sm" style="padding:0.6rem 1.5rem;font-size:0.85rem;" onclick="createCode()">Code erstellen</button>
+          <div class="code-result" id="codeResult">
+            <p style="font-size:0.8rem;color:var(--gray);margin-bottom:0.3rem;">Einladungscode:</p>
+            <code id="generatedCode"></code>
+            <button class="copy-btn" onclick="copyCode()">&#x1F4CB;</button>
+            <p style="font-size:0.75rem;color:var(--gray);margin-top:0.5rem;">Diesen Code an den Mitarbeiter senden zusammen mit dem Link:<br><strong>www.luminaplus.de/personalfragebogen</strong></p>
+          </div>
+        </div>
+        <div class="table-container">
+          <div class="table-header">
+            <h2>Bestehende Codes</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Mitarbeiter</th>
+                <th>Status</th>
+                <th>G&uuml;ltig bis</th>
+              </tr>
+            </thead>
+            <tbody id="codesTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS TAB -->
+    <div class="tab-content" id="tab-notifications">
+      <div class="table-container">
+        <div class="table-header">
+          <h2>Benachrichtigungen</h2>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Betreff</th>
+              <th>Details</th>
+              <th>Zeitpunkt</th>
+            </tr>
+          </thead>
+          <tbody id="notificationsTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h2 id="modalTitle">Personalfragebogen</h2>
+    <div class="detail-grid" id="modalContent"></div>
+    <div class="modal-actions">
+      <button class="btn-sm btn-pdf" onclick="generatePDF()">PDF herunterladen</button>
+      <button class="btn-sm btn-delete" onclick="deleteSubmission()">L&ouml;schen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
+  // Admin password hash (SHA-256 of password)
+  const ADMIN_HASH = '6c7579fdd27803f5a309ef76497f94b8275397d0f3a1d1eb89717ec455766643';
+
+  let currentSubmission = null;
+
+  // Simple SHA-256
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // Supabase query helper
+  async function query(table, method, params = {}) {
+    let url = `${SUPABASE_URL}/rest/v1/${table}`;
+    const headers = {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+    };
+    if (method === 'POST') headers['Prefer'] = 'return=representation';
+    if (method === 'DELETE') headers['Prefer'] = 'return=minimal';
+    if (params.query) url += `?${params.query}`;
+    const options = { method, headers };
+    if (params.body) options.body = JSON.stringify(params.body);
+    const res = await fetch(url, options);
+    if (method === 'DELETE') return true;
+    return res.json();
+  }
+
+  // LOGIN
+  async function adminLogin() {
+    const pw = document.getElementById('adminPassword').value;
+    const hash = await sha256(pw);
+    if (hash === ADMIN_HASH) {
+      sessionStorage.setItem('admin', '1');
+      showDashboard();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  }
+  function logout() {
+    sessionStorage.removeItem('admin');
+    location.reload();
+  }
+  function showDashboard() {
+    document.getElementById('loginContainer').style.display = 'none';
+    document.getElementById('adminContainer').classList.add('visible');
+    loadSubmissions();
+    loadCodes();
+    loadNotifications();
+  }
+  if (sessionStorage.getItem('admin') === '1') showDashboard();
+
+  // TABS
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+    if (name === 'codes') loadCodes();
+    if (name === 'notifications') loadNotifications();
+  }
+
+  // LOAD SUBMISSIONS
+  async function loadSubmissions() {
+    const data = await query('employee_submissions', 'GET', { query: 'select=*&order=submitted_at.desc' });
+    document.getElementById('submissionCount').textContent = data.length;
+
+    const types = { minijob_standard: 0, minijob_rvfrei: 0, angestellter: 0 };
+    data.forEach(d => { if (types[d.employment_type] !== undefined) types[d.employment_type]++; });
+
+    document.getElementById('statsRow').innerHTML = `
+      <div class="stat-card"><h3>${data.length}</h3><p>Gesamt</p></div>
+      <div class="stat-card"><h3>${types.minijob_standard}</h3><p>Minijob Standard</p></div>
+      <div class="stat-card"><h3>${types.minijob_rvfrei}</h3><p>Minijob RV-frei</p></div>
+      <div class="stat-card"><h3>${types.angestellter}</h3><p>Angestellte</p></div>
+    `;
+
+    document.getElementById('submissionsTable').innerHTML = data.map(d => `
+      <tr>
+        <td><strong>${d.vorname || ''} ${d.nachname || ''}</strong></td>
+        <td><span class="badge-type ${d.employment_type === 'angestellter' ? 'badge-angestellt' : 'badge-minijob'}">${formatType(d.employment_type)}</span></td>
+        <td>${d.invitation_code || '-'}</td>
+        <td>${formatDate(d.submitted_at)}</td>
+        <td>
+          <button class="btn-sm btn-view" onclick='viewDetail(${JSON.stringify(d).replace(/'/g, "&#39;")})'>Ansehen</button>
+          <button class="btn-sm btn-pdf" onclick='viewDetail(${JSON.stringify(d).replace(/'/g, "&#39;")}); setTimeout(generatePDF, 100)'>PDF</button>
+        </td>
+      </tr>
+    `).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--gray);padding:2rem;">Keine Einreichungen vorhanden</td></tr>';
+  }
+
+  // LOAD CODES
+  async function loadCodes() {
+    const data = await query('invitation_codes', 'GET', { query: 'select=*&order=created_at.desc' });
+    document.getElementById('codesTable').innerHTML = data.map(d => `
+      <tr>
+        <td><strong>${d.code}</strong></td>
+        <td>${d.employee_name || '-'}</td>
+        <td>${d.used ? '<span style="color:var(--gray)">Verwendet</span>' : '<span style="color:#3a8a4a">Aktiv</span>'}</td>
+        <td>${formatDate(d.expires_at)}</td>
+      </tr>
+    `).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--gray);padding:2rem;">Keine Codes vorhanden</td></tr>';
+  }
+
+  // LOAD NOTIFICATIONS
+  async function loadNotifications() {
+    const data = await query('notifications', 'GET', { query: 'select=*&order=created_at.desc&limit=50' });
+    document.getElementById('notificationsTable').innerHTML = data.map(d => `
+      <tr>
+        <td><strong>${d.subject}</strong></td>
+        <td style="white-space:pre-line;font-size:0.8rem;">${d.body || ''}</td>
+        <td>${formatDate(d.created_at)}</td>
+      </tr>
+    `).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--gray);padding:2rem;">Keine Benachrichtigungen</td></tr>';
+  }
+
+  // CREATE CODE
+  async function createCode() {
+    const name = document.getElementById('newCodeName').value.trim();
+    const days = parseInt(document.getElementById('newCodeDays').value) || 30;
+    if (!name) { alert('Bitte Namen eingeben'); return; }
+
+    const code = 'LP-' + new Date().getFullYear() + '-' + name.split(' ').pop().toUpperCase().replace(/[^A-Z]/g, '').substring(0, 8);
+    const expires = new Date(Date.now() + days * 86400000).toISOString();
+
+    await query('invitation_codes', 'POST', {
+      body: { code, employee_name: name, created_by: 'Admin', expires_at: expires }
+    });
+
+    document.getElementById('generatedCode').textContent = code;
+    document.getElementById('codeResult').classList.add('visible');
+    loadCodes();
+  }
+
+  function copyCode() {
+    const code = document.getElementById('generatedCode').textContent;
+    navigator.clipboard.writeText(code);
+    alert('Code kopiert: ' + code);
+  }
+
+  // VIEW DETAIL
+  function viewDetail(d) {
+    currentSubmission = d;
+    document.getElementById('modalTitle').textContent = `${d.vorname || ''} ${d.nachname || ''} - Personalfragebogen`;
+
+    const fields = [
+      { section: 'Angaben zur Person' },
+      { label: 'Anrede', value: d.anrede },
+      { label: 'Vorname', value: d.vorname },
+      { label: 'Nachname', value: d.nachname },
+      { label: 'Geburtsdatum', value: d.geburtsdatum },
+      { label: 'Staatsangeh\u00f6rigkeit', value: d.staatsangehoerigkeit },
+      { label: 'Stra\u00dfe', value: d.strasse },
+      { label: 'PLZ / Ort', value: (d.plz || '') + ' ' + (d.ort || '') },
+      { label: 'E-Mail', value: d.email },
+      { label: 'Telefon', value: d.telefon },
+      { section: 'Besch\u00e4ftigung' },
+      { label: 'Art', value: formatType(d.employment_type) },
+      { section: 'Bankverbindung' },
+      { label: 'Kontoinhaber', value: d.kontoinhaber },
+      { label: 'IBAN', value: d.iban_encrypted },
+      { label: 'Kreditinstitut', value: d.kreditinstitut },
+      { section: 'Lohnsteuer' },
+      { label: 'Steuer-ID', value: d.steuer_id_encrypted },
+      { label: 'Steuerklasse', value: d.steuerklasse },
+      { label: 'Kinderfreibetrag', value: d.kinderfreibetrag },
+      { label: 'Freibetr\u00e4ge', value: d.freibetraege },
+      { label: 'Konfession', value: d.konfession },
+      { label: 'Konfession Ehepartner', value: d.konfession_ehepartner },
+      { section: 'Sozialversicherung' },
+      { label: 'Versicherungsart', value: d.versicherungsart },
+      { label: 'Krankenkasse', value: d.krankenkasse },
+      { label: 'SV-Nummer', value: d.sv_nummer_encrypted },
+      { label: 'Geburtsname', value: d.geburtsname },
+      { label: 'Geburtsort', value: d.geburtsort },
+      { label: 'Geburtsland', value: d.geburtsland },
+      { section: 'Kinder' },
+      { label: 'Hat Kinder', value: d.hat_kinder ? 'Ja' : 'Nein' },
+      { label: 'Kinder unter 25', value: d.anzahl_kinder_unter_25 },
+      { section: 'Weitere Besch\u00e4ftigungen' },
+      { label: 'Arbeitgeber 1', value: d.weitere_beschaeftigung_1_name },
+      { label: 'Art / Verdienst', value: (d.weitere_beschaeftigung_1_art || '') + ' / ' + (d.weitere_beschaeftigung_1_verdienst || '-') + ' \u20ac' },
+      { label: 'Arbeitgeber 2', value: d.weitere_beschaeftigung_2_name },
+      { label: 'Art / Verdienst', value: (d.weitere_beschaeftigung_2_art || '') + ' / ' + (d.weitere_beschaeftigung_2_verdienst || '-') + ' \u20ac' },
+    ];
+
+    document.getElementById('modalContent').innerHTML = fields.map(f => {
+      if (f.section) return `<div class="detail-section">${f.section}</div>`;
+      return `<div class="detail-item"><label>${f.label}</label><p>${f.value || '-'}</p></div>`;
+    }).join('');
+
+    document.getElementById('detailModal').classList.add('visible');
+  }
+
+  function closeModal() {
+    document.getElementById('detailModal').classList.remove('visible');
+    currentSubmission = null;
+  }
+
+  // DELETE
+  async function deleteSubmission() {
+    if (!currentSubmission) return;
+    if (!confirm('Datensatz wirklich l\u00f6schen? Diese Aktion kann nicht r\u00fcckg\u00e4ngig gemacht werden.')) return;
+    await query('employee_submissions', 'DELETE', { query: `id=eq.${currentSubmission.id}` });
+    closeModal();
+    loadSubmissions();
+  }
+
+  // GENERATE PDF
+  function generatePDF() {
+    if (!currentSubmission) return;
+    const d = currentSubmission;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.setTextColor(8, 55, 107);
+    doc.text('PERSONALFRAGEBOGEN', 105, 20, { align: 'center' });
+
+    doc.setFontSize(9);
+    doc.setTextColor(107, 125, 138);
+    doc.text('LuminaPlus eG | Angerstra\u00dfe 42, 22087 Hamburg', 105, 27, { align: 'center' });
+
+    let y = 40;
+    const sections = [
+      { title: 'Angaben zur Person', fields: [
+        ['Anrede', d.anrede], ['Vorname', d.vorname], ['Nachname', d.nachname],
+        ['Geburtsdatum', d.geburtsdatum], ['Staatsangeh\u00f6rigkeit', d.staatsangehoerigkeit],
+        ['Stra\u00dfe', d.strasse], ['PLZ', d.plz], ['Ort', d.ort],
+        ['E-Mail', d.email], ['Telefon', d.telefon],
+      ]},
+      { title: 'Besch\u00e4ftigung', fields: [['Art', formatType(d.employment_type)]] },
+      { title: 'Bankverbindung', fields: [
+        ['Kontoinhaber', d.kontoinhaber], ['IBAN', d.iban_encrypted], ['Kreditinstitut', d.kreditinstitut],
+      ]},
+      { title: 'Lohnsteuer', fields: [
+        ['Steuer-ID', d.steuer_id_encrypted], ['Steuerklasse', d.steuerklasse],
+        ['Kinderfreibetrag', d.kinderfreibetrag], ['Konfession', d.konfession],
+      ]},
+      { title: 'Sozialversicherung', fields: [
+        ['Versicherungsart', d.versicherungsart], ['Krankenkasse', d.krankenkasse],
+        ['SV-Nummer', d.sv_nummer_encrypted], ['Geburtsname', d.geburtsname],
+        ['Geburtsort', d.geburtsort], ['Geburtsland', d.geburtsland],
+      ]},
+      { title: 'Kinder', fields: [
+        ['Hat Kinder', d.hat_kinder ? 'Ja' : 'Nein'],
+        ['Kinder unter 25', d.anzahl_kinder_unter_25?.toString()],
+      ]},
+    ];
+
+    sections.forEach(sec => {
+      if (y > 260) { doc.addPage(); y = 20; }
+      doc.setFontSize(11);
+      doc.setTextColor(8, 55, 107);
+      doc.text(sec.title, 15, y);
+      doc.setDrawColor(154, 235, 166);
+      doc.line(15, y + 1, 195, y + 1);
+      y += 7;
+
+      doc.setFontSize(9);
+      sec.fields.forEach(([label, value]) => {
+        if (y > 275) { doc.addPage(); y = 20; }
+        doc.setTextColor(107, 125, 138);
+        doc.text(label + ':', 15, y);
+        doc.setTextColor(51, 51, 51);
+        doc.text(String(value || '-'), 70, y);
+        y += 5;
+      });
+      y += 5;
+    });
+
+    doc.save(`Personalfragebogen_${d.nachname}_${d.vorname}.pdf`);
+  }
+
+  // HELPERS
+  function formatType(t) {
+    const map = { minijob_standard: 'Minijob (Standard)', minijob_rvfrei: 'Minijob (RV-frei)', angestellter: 'Angestellte/r' };
+    return map[t] || t || '-';
+  }
+  function formatDate(d) {
+    if (!d) return '-';
+    return new Date(d).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+</script>
+</body>
+</html>
