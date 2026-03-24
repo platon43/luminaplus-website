@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
       --navy: #08376B;
@@ -1027,6 +1028,111 @@
     return results;
   }
 
+  // Generate PDF of form data and upload to Storage
+  function generateFormPDF(data) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Header
+    doc.setFontSize(18);
+    doc.setTextColor(8, 55, 107);
+    doc.text('PERSONALFRAGEBOGEN', 105, 20, { align: 'center' });
+    doc.setFontSize(9);
+    doc.setTextColor(107, 125, 138);
+    doc.text('LuminaPlus eG | Angerstrasse 42, 22087 Hamburg', 105, 27, { align: 'center' });
+    doc.setFontSize(7);
+    doc.text('Erstellt am: ' + new Date().toLocaleDateString('de-DE') + ' | Code: ' + (data.invitation_code || '-'), 105, 32, { align: 'center' });
+
+    let y = 42;
+    const typeLabels = { minijob_standard: 'Minijob (Standard)', minijob_rvfrei: 'Minijob (RV-frei)', angestellter: 'Angestellte/r' };
+
+    const sections = [
+      { title: 'Angaben zur Person', fields: [
+        ['Anrede', data.anrede], ['Vorname', data.vorname], ['Nachname', data.nachname],
+        ['Geburtsdatum', data.geburtsdatum], ['Staatsangehoerigkeit', data.staatsangehoerigkeit],
+        ['Strasse', data.strasse], ['PLZ', data.plz], ['Ort', data.ort],
+        ['E-Mail', data.email], ['Telefon', data.telefon],
+      ]},
+      { title: 'Beschaeftigung', fields: [['Art', typeLabels[data.employment_type] || data.employment_type || '-']] },
+      { title: 'Bankverbindung', fields: [
+        ['Kontoinhaber', data.kontoinhaber], ['IBAN', data.iban], ['Kreditinstitut', data.kreditinstitut],
+      ]},
+      { title: 'Lohnsteuer', fields: [
+        ['Steuer-ID', data.steuer_id], ['Steuerklasse', data.steuerklasse],
+        ['Kinderfreibetrag', data.kinderfreibetrag], ['Freibetraege', data.freibetraege],
+        ['Konfession', data.konfession], ['Konfession Ehepartner', data.konfession_ehepartner],
+      ]},
+      { title: 'Sozialversicherung', fields: [
+        ['Versicherungsart', data.versicherungsart], ['Krankenkasse', data.krankenkasse],
+        ['SV-Nummer', data.sv_nummer], ['Geburtsname', data.geburtsname],
+        ['Geburtsort', data.geburtsort], ['Geburtsland', data.geburtsland],
+      ]},
+      { title: 'Kinder', fields: [
+        ['Hat Kinder', data.hat_kinder === 'ja' ? 'Ja' : 'Nein'],
+        ['Kinder unter 25', data.hat_kinder === 'ja' ? (data.anzahl_kinder_unter_25 || '0') : '-'],
+      ]},
+      { title: 'Weitere Beschaeftigungen', fields: [
+        ['Arbeitgeber 1', data.weitere_beschaeftigung_1_name],
+        ['Art / Verdienst 1', (data.weitere_beschaeftigung_1_art || '-') + ' / ' + (data.weitere_beschaeftigung_1_verdienst || '-') + ' EUR'],
+        ['Arbeitgeber 2', data.weitere_beschaeftigung_2_name],
+        ['Art / Verdienst 2', (data.weitere_beschaeftigung_2_art || '-') + ' / ' + (data.weitere_beschaeftigung_2_verdienst || '-') + ' EUR'],
+      ]},
+    ];
+
+    sections.forEach(sec => {
+      if (y > 260) { doc.addPage(); y = 20; }
+      doc.setFontSize(11);
+      doc.setTextColor(8, 55, 107);
+      doc.text(sec.title, 15, y);
+      doc.setDrawColor(154, 235, 166);
+      doc.line(15, y + 1, 195, y + 1);
+      y += 7;
+      doc.setFontSize(9);
+      sec.fields.forEach(([label, value]) => {
+        if (y > 275) { doc.addPage(); y = 20; }
+        doc.setTextColor(107, 125, 138);
+        doc.text(label + ':', 15, y);
+        doc.setTextColor(51, 51, 51);
+        doc.text(String(value || '-'), 70, y);
+        y += 5;
+      });
+      y += 5;
+    });
+
+    // Footer
+    doc.setFontSize(7);
+    doc.setTextColor(180, 180, 180);
+    doc.text('Dieses Dokument wurde automatisch erstellt. Aenderungen vorbehalten.', 105, 290, { align: 'center' });
+
+    // Return as Blob
+    return doc.output('blob');
+  }
+
+  async function uploadFormPDF(submissionId, formData) {
+    try {
+      const pdfBlob = generateFormPDF(formData);
+      const nachname = (formData.nachname || 'Unbekannt').replace(/[^a-zA-ZäöüÄÖÜß\-]/g, '');
+      const vorname = (formData.vorname || '').replace(/[^a-zA-ZäöüÄÖÜß\-]/g, '');
+      const fileName = `Personalfragebogen_${nachname}_${vorname}.pdf`;
+      const path = `submissions/${submissionId}/${fileName}`;
+
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/documents/${path}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/pdf',
+          'x-upsert': 'true'
+        },
+        body: pdfBlob
+      });
+      if (!res.ok) console.error('PDF upload failed:', await res.text());
+      else console.log('Form PDF uploaded:', fileName);
+    } catch (e) {
+      console.error('PDF generation error:', e);
+    }
+  }
+
   // Call process-submission Edge Function
   async function triggerDriveProcessing(submissionId) {
     try {
@@ -1210,6 +1316,10 @@
       btn.textContent = 'Dokumente werden hochgeladen...';
       const fileResults = await uploadFilesToStorage(submissionId);
       console.log('Files uploaded:', fileResults);
+
+      // Generate and upload form data PDF
+      btn.textContent = 'PDF wird erstellt...';
+      await uploadFormPDF(submissionId, data);
 
       // Trigger Drive processing (async, don't block)
       btn.textContent = 'Wird verarbeitet...';
