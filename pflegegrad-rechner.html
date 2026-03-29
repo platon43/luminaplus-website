@@ -924,99 +924,148 @@
       </div>
     </div>
 
-    <!-- STEP 4: Selbstversorgung - alle 13 offiziellen NBA-Kriterien -->
+    <!-- STEP 4: Selbstversorgung - Kategorien + Detailfragen -->
     <div class="step" data-step="4">
       <div class="step-icon blue">&#128703;</div>
       <h2>Modul 4: Selbstversorgung</h2>
-      <p class="step-desc">Wie selbstst&auml;ndig kann die Person f&uuml;r sich selbst sorgen? (Gewichtung: 40&nbsp;% &mdash; wichtigstes Modul)</p>
+      <p class="step-desc">In welchen Bereichen ben&ouml;tigt die Person Hilfe? (Gewichtung: 40&nbsp;% &mdash; wichtigstes Modul)</p>
 
-      <table class="freq-table"><thead><tr><th></th><th>Selbst&shy;st&auml;ndig</th><th>&Uuml;berw. selbst.</th><th>&Uuml;berw. unselbst.</th><th>Unselbst&shy;st&auml;ndig</th></tr></thead><tbody>
-        <tr><td>Waschen des vorderen Oberk&ouml;rpers</td>
-          <td><input type="radio" name="m4q1" value="0"></td><td><input type="radio" name="m4q1" value="1"></td><td><input type="radio" name="m4q1" value="2"></td><td><input type="radio" name="m4q1" value="3"></td></tr>
-        <tr><td>K&ouml;rperpflege im Bereich des Kopfes</td>
-          <td><input type="radio" name="m4q2" value="0"></td><td><input type="radio" name="m4q2" value="1"></td><td><input type="radio" name="m4q2" value="2"></td><td><input type="radio" name="m4q2" value="3"></td></tr>
-        <tr><td>Waschen des Intimbereichs</td>
-          <td><input type="radio" name="m4q3" value="0"></td><td><input type="radio" name="m4q3" value="1"></td><td><input type="radio" name="m4q3" value="2"></td><td><input type="radio" name="m4q3" value="3"></td></tr>
-        <tr><td>Duschen und Baden einschl. Haare</td>
-          <td><input type="radio" name="m4q4" value="0"></td><td><input type="radio" name="m4q4" value="1"></td><td><input type="radio" name="m4q4" value="2"></td><td><input type="radio" name="m4q4" value="3"></td></tr>
-        <tr><td>An-/Auskleiden Oberk&ouml;rper</td>
-          <td><input type="radio" name="m4q5" value="0"></td><td><input type="radio" name="m4q5" value="1"></td><td><input type="radio" name="m4q5" value="2"></td><td><input type="radio" name="m4q5" value="3"></td></tr>
-        <tr><td>An-/Auskleiden Unterk&ouml;rper</td>
-          <td><input type="radio" name="m4q6" value="0"></td><td><input type="radio" name="m4q6" value="1"></td><td><input type="radio" name="m4q6" value="2"></td><td><input type="radio" name="m4q6" value="3"></td></tr>
-        <tr><td>Mundgerechtes Zubereiten der Nahrung</td>
-          <td><input type="radio" name="m4q7" value="0"></td><td><input type="radio" name="m4q7" value="1"></td><td><input type="radio" name="m4q7" value="2"></td><td><input type="radio" name="m4q7" value="3"></td></tr>
-        <tr><td>Essen</td>
-          <td><input type="radio" name="m4q8" value="0"></td><td><input type="radio" name="m4q8" value="1"></td><td><input type="radio" name="m4q8" value="2"></td><td><input type="radio" name="m4q8" value="3"></td></tr>
-        <tr><td>Trinken</td>
-          <td><input type="radio" name="m4q9" value="0"></td><td><input type="radio" name="m4q9" value="1"></td><td><input type="radio" name="m4q9" value="2"></td><td><input type="radio" name="m4q9" value="3"></td></tr>
-        <tr><td>Benutzen einer Toilette oder eines Toilettenstuhls</td>
-          <td><input type="radio" name="m4q10" value="0"></td><td><input type="radio" name="m4q10" value="1"></td><td><input type="radio" name="m4q10" value="2"></td><td><input type="radio" name="m4q10" value="3"></td></tr>
-        <tr><td>Bew&auml;ltigen der Folgen einer Harninkontinenz</td>
-          <td><input type="radio" name="m4q11" value="0"></td><td><input type="radio" name="m4q11" value="1"></td><td><input type="radio" name="m4q11" value="2"></td><td><input type="radio" name="m4q11" value="3"></td></tr>
-        <tr><td>Bew&auml;ltigen der Folgen einer Stuhlinkontinenz</td>
-          <td><input type="radio" name="m4q12" value="0"></td><td><input type="radio" name="m4q12" value="1"></td><td><input type="radio" name="m4q12" value="2"></td><td><input type="radio" name="m4q12" value="3"></td></tr>
-      </tbody></table>
-
-      <div class="question" style="margin-top: 1.5rem;">
-        <label>Ern&auml;hrung parenteral oder &uuml;ber Sonde</label>
-        <div class="options">
-          <div class="option"><input type="radio" name="m4q13" value="0" id="m4q13a" checked><label class="option-label" for="m4q13a"><span class="option-dot"></span>Entf&auml;llt / orale Ern&auml;hrung</label></div>
-          <div class="option"><input type="radio" name="m4q13" value="3" id="m4q13b"><label class="option-label" for="m4q13b"><span class="option-dot"></span>Teilweise Sonde/parenteral</label></div>
-          <div class="option"><input type="radio" name="m4q13" value="6" id="m4q13c"><label class="option-label" for="m4q13c"><span class="option-dot"></span>Vollst&auml;ndig Sonde/parenteral</label></div>
+      <div class="question">
+        <label>W&auml;hlen Sie alle zutreffenden Bereiche aus:</label>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m4_cat_pflege" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--navy);">K&ouml;rperpflege</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m4_cat_kleidung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--navy);">An- und Auskleiden</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m4_cat_ernaehrung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--navy);">Ern&auml;hrung</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m4_cat_ausscheidung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--navy);">Ausscheidung</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
+            <input type="checkbox" id="m4_cat_keine" onchange="toggleM4Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--gray);">Komplett selbstst&auml;ndig in allen Bereichen</span></label>
         </div>
+      </div>
+
+      <div id="m4_pflege" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">K&ouml;rperpflege</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>Waschen des vorderen Oberk&ouml;rpers</td><td><input type="radio" name="m4q1" value="0" checked></td><td><input type="radio" name="m4q1" value="1"></td><td><input type="radio" name="m4q1" value="2"></td><td><input type="radio" name="m4q1" value="3"></td></tr>
+          <tr><td>K&ouml;rperpflege im Bereich des Kopfes</td><td><input type="radio" name="m4q2" value="0" checked></td><td><input type="radio" name="m4q2" value="1"></td><td><input type="radio" name="m4q2" value="2"></td><td><input type="radio" name="m4q2" value="3"></td></tr>
+          <tr><td>Waschen des Intimbereichs</td><td><input type="radio" name="m4q3" value="0" checked></td><td><input type="radio" name="m4q3" value="1"></td><td><input type="radio" name="m4q3" value="2"></td><td><input type="radio" name="m4q3" value="3"></td></tr>
+          <tr><td>Duschen und Baden einschl. Haare</td><td><input type="radio" name="m4q4" value="0" checked></td><td><input type="radio" name="m4q4" value="1"></td><td><input type="radio" name="m4q4" value="2"></td><td><input type="radio" name="m4q4" value="3"></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="m4_kleidung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">An- und Auskleiden</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>An-/Auskleiden Oberk&ouml;rper</td><td><input type="radio" name="m4q5" value="0" checked></td><td><input type="radio" name="m4q5" value="1"></td><td><input type="radio" name="m4q5" value="2"></td><td><input type="radio" name="m4q5" value="3"></td></tr>
+          <tr><td>An-/Auskleiden Unterk&ouml;rper</td><td><input type="radio" name="m4q6" value="0" checked></td><td><input type="radio" name="m4q6" value="1"></td><td><input type="radio" name="m4q6" value="2"></td><td><input type="radio" name="m4q6" value="3"></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="m4_ernaehrung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Ern&auml;hrung</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>Mundgerechtes Zubereiten der Nahrung</td><td><input type="radio" name="m4q7" value="0" checked></td><td><input type="radio" name="m4q7" value="1"></td><td><input type="radio" name="m4q7" value="2"></td><td><input type="radio" name="m4q7" value="3"></td></tr>
+          <tr><td>Essen</td><td><input type="radio" name="m4q8" value="0" checked></td><td><input type="radio" name="m4q8" value="1"></td><td><input type="radio" name="m4q8" value="2"></td><td><input type="radio" name="m4q8" value="3"></td></tr>
+          <tr><td>Trinken</td><td><input type="radio" name="m4q9" value="0" checked></td><td><input type="radio" name="m4q9" value="1"></td><td><input type="radio" name="m4q9" value="2"></td><td><input type="radio" name="m4q9" value="3"></td></tr>
+        </tbody></table>
+        <div style="margin-top:1rem;">
+          <p style="font-size:0.85rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Ern&auml;hrung &uuml;ber Sonde / parenteral?</p>
+          <div class="options" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;">
+            <div class="option"><input type="radio" name="m4q13" value="0" id="m4q13a" checked><label class="option-label" for="m4q13a"><span class="option-dot"></span>Nein / oral</label></div>
+            <div class="option"><input type="radio" name="m4q13" value="3" id="m4q13b"><label class="option-label" for="m4q13b"><span class="option-dot"></span>Teilweise</label></div>
+            <div class="option"><input type="radio" name="m4q13" value="6" id="m4q13c"><label class="option-label" for="m4q13c"><span class="option-dot"></span>Vollst&auml;ndig</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="m4_ausscheidung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Ausscheidung</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>Benutzen einer Toilette / Toilettenstuhl</td><td><input type="radio" name="m4q10" value="0" checked></td><td><input type="radio" name="m4q10" value="1"></td><td><input type="radio" name="m4q10" value="2"></td><td><input type="radio" name="m4q10" value="3"></td></tr>
+          <tr><td>Bew&auml;ltigen der Folgen einer Harninkontinenz</td><td><input type="radio" name="m4q11" value="0" checked></td><td><input type="radio" name="m4q11" value="1"></td><td><input type="radio" name="m4q11" value="2"></td><td><input type="radio" name="m4q11" value="3"></td></tr>
+          <tr><td>Bew&auml;ltigen der Folgen einer Stuhlinkontinenz</td><td><input type="radio" name="m4q12" value="0" checked></td><td><input type="radio" name="m4q12" value="1"></td><td><input type="radio" name="m4q12" value="2"></td><td><input type="radio" name="m4q12" value="3"></td></tr>
+        </tbody></table>
       </div>
     </div>
 
-    <!-- STEP 5: Krankheitsbewältigung - alle 16 offiziellen NBA-Kriterien -->
+    <!-- STEP 5: Krankheitsbewältigung - Kategorien + Detailfragen -->
     <div class="step" data-step="5">
       <div class="step-icon green">&#128138;</div>
       <h2>Modul 5: Krankheits- &amp; therapiebedingte Anforderungen</h2>
-      <p class="step-desc">Wie h&auml;ufig ben&ouml;tigt die Person Hilfe bei medizinischen Ma&szlig;nahmen? (Gewichtung: 20&nbsp;%)</p>
+      <p class="step-desc">Welche medizinischen Ma&szlig;nahmen sind erforderlich? (Gewichtung: 20&nbsp;%)</p>
 
-      <p style="font-size: 0.8rem; color: var(--gray); margin-bottom: 1rem; padding: 0.8rem; background: var(--off-white); border-radius: 8px;">W&auml;hlen Sie &bdquo;Entf&auml;llt&ldquo; wenn die Ma&szlig;nahme nicht zutrifft.</p>
+      <div class="question">
+        <label>W&auml;hlen Sie alle zutreffenden Bereiche aus:</label>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m5_cat_medikamente" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--navy);">Medikamente, Injektionen &amp; Hilfsmittel</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m5_cat_wundversorgung" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--navy);">Wundversorgung &amp; Spezialversorgung</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m5_cat_therapie" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--navy);">Therapie &amp; Intensivma&szlig;nahmen</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m5_cat_arzt" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--navy);">Arztbesuche &amp; Di&auml;t</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
+            <input type="checkbox" id="m5_cat_keine" onchange="toggleM5Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <span style="font-size:0.9rem;color:var(--gray);">Keine medizinischen Ma&szlig;nahmen erforderlich</span></label>
+        </div>
+      </div>
 
-      <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentl.</th><th>T&auml;glich</th><th>Mehrfach tgl.</th></tr></thead><tbody>
-        <tr><td>Medikation</td>
-          <td><input type="radio" name="m5q1" value="0" checked></td><td><input type="radio" name="m5q1" value="1"></td><td><input type="radio" name="m5q1" value="2"></td><td><input type="radio" name="m5q1" value="3"></td></tr>
-        <tr><td>Injektionen (z.&thinsp;B. Insulin)</td>
-          <td><input type="radio" name="m5q2" value="0" checked></td><td><input type="radio" name="m5q2" value="1"></td><td><input type="radio" name="m5q2" value="2"></td><td><input type="radio" name="m5q2" value="3"></td></tr>
-        <tr><td>Versorgung intraven&ouml;ser Zug&auml;nge (Port)</td>
-          <td><input type="radio" name="m5q3" value="0" checked></td><td><input type="radio" name="m5q3" value="1"></td><td><input type="radio" name="m5q3" value="2"></td><td><input type="radio" name="m5q3" value="3"></td></tr>
-        <tr><td>Absaugen und Sauerstoffgabe</td>
-          <td><input type="radio" name="m5q4" value="0" checked></td><td><input type="radio" name="m5q4" value="1"></td><td><input type="radio" name="m5q4" value="2"></td><td><input type="radio" name="m5q4" value="3"></td></tr>
-        <tr><td>Einreibungen, K&auml;lte-/W&auml;rmeanwendungen</td>
-          <td><input type="radio" name="m5q5" value="0" checked></td><td><input type="radio" name="m5q5" value="1"></td><td><input type="radio" name="m5q5" value="2"></td><td><input type="radio" name="m5q5" value="3"></td></tr>
-        <tr><td>Messung von K&ouml;rperzust&auml;nden (Blutdruck, Zucker&hellip;)</td>
-          <td><input type="radio" name="m5q6" value="0" checked></td><td><input type="radio" name="m5q6" value="1"></td><td><input type="radio" name="m5q6" value="2"></td><td><input type="radio" name="m5q6" value="3"></td></tr>
-        <tr><td>K&ouml;rpernahe Hilfsmittel (Prothesen, Kompressionsstr&uuml;mpfe&hellip;)</td>
-          <td><input type="radio" name="m5q7" value="0" checked></td><td><input type="radio" name="m5q7" value="1"></td><td><input type="radio" name="m5q7" value="2"></td><td><input type="radio" name="m5q7" value="3"></td></tr>
-        <tr><td>Verbandswechsel und Wundversorgung</td>
-          <td><input type="radio" name="m5q8" value="0" checked></td><td><input type="radio" name="m5q8" value="1"></td><td><input type="radio" name="m5q8" value="2"></td><td><input type="radio" name="m5q8" value="3"></td></tr>
-        <tr><td>Versorgung mit Stoma</td>
-          <td><input type="radio" name="m5q9" value="0" checked></td><td><input type="radio" name="m5q9" value="1"></td><td><input type="radio" name="m5q9" value="2"></td><td><input type="radio" name="m5q9" value="3"></td></tr>
-        <tr><td>Einmalkatheterisierung / Abf&uuml;hrmethoden</td>
-          <td><input type="radio" name="m5q10" value="0" checked></td><td><input type="radio" name="m5q10" value="1"></td><td><input type="radio" name="m5q10" value="2"></td><td><input type="radio" name="m5q10" value="3"></td></tr>
-        <tr><td>Therapiema&szlig;nahmen zu Hause (Bewegungs&uuml;bungen&hellip;)</td>
-          <td><input type="radio" name="m5q11" value="0" checked></td><td><input type="radio" name="m5q11" value="1"></td><td><input type="radio" name="m5q11" value="2"></td><td><input type="radio" name="m5q11" value="3"></td></tr>
-        <tr><td>Zeit-/technikintensive Ma&szlig;nahmen (Beatmung, Dialyse&hellip;)</td>
-          <td><input type="radio" name="m5q12" value="0" checked></td><td><input type="radio" name="m5q12" value="1"></td><td><input type="radio" name="m5q12" value="2"></td><td><input type="radio" name="m5q12" value="3"></td></tr>
-      </tbody></table>
+      <div id="m5_medikamente" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Medikamente, Injektionen &amp; Hilfsmittel</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentl.</th><th>T&auml;glich</th><th>Mehrfach tgl.</th></tr></thead><tbody>
+          <tr><td>Medikation</td><td><input type="radio" name="m5q1" value="0" checked></td><td><input type="radio" name="m5q1" value="1"></td><td><input type="radio" name="m5q1" value="2"></td><td><input type="radio" name="m5q1" value="3"></td></tr>
+          <tr><td>Injektionen (z.&thinsp;B. Insulin)</td><td><input type="radio" name="m5q2" value="0" checked></td><td><input type="radio" name="m5q2" value="1"></td><td><input type="radio" name="m5q2" value="2"></td><td><input type="radio" name="m5q2" value="3"></td></tr>
+          <tr><td>Versorgung intraven&ouml;ser Zug&auml;nge (Port)</td><td><input type="radio" name="m5q3" value="0" checked></td><td><input type="radio" name="m5q3" value="1"></td><td><input type="radio" name="m5q3" value="2"></td><td><input type="radio" name="m5q3" value="3"></td></tr>
+          <tr><td>Absaugen und Sauerstoffgabe</td><td><input type="radio" name="m5q4" value="0" checked></td><td><input type="radio" name="m5q4" value="1"></td><td><input type="radio" name="m5q4" value="2"></td><td><input type="radio" name="m5q4" value="3"></td></tr>
+          <tr><td>Einreibungen, K&auml;lte-/W&auml;rmeanwendungen</td><td><input type="radio" name="m5q5" value="0" checked></td><td><input type="radio" name="m5q5" value="1"></td><td><input type="radio" name="m5q5" value="2"></td><td><input type="radio" name="m5q5" value="3"></td></tr>
+          <tr><td>Messung von K&ouml;rperzust&auml;nden</td><td><input type="radio" name="m5q6" value="0" checked></td><td><input type="radio" name="m5q6" value="1"></td><td><input type="radio" name="m5q6" value="2"></td><td><input type="radio" name="m5q6" value="3"></td></tr>
+          <tr><td>K&ouml;rpernahe Hilfsmittel</td><td><input type="radio" name="m5q7" value="0" checked></td><td><input type="radio" name="m5q7" value="1"></td><td><input type="radio" name="m5q7" value="2"></td><td><input type="radio" name="m5q7" value="3"></td></tr>
+        </tbody></table>
+      </div>
 
-      <p style="font-size: 0.82rem; font-weight: 600; color: var(--navy); margin: 1.5rem 0 0.8rem;">Arztbesuche und Einrichtungen</p>
-      <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>1&ndash;3x/Mo.</th><th>4&ndash;8x/Mo.</th><th>&gt;8x/Mo.</th></tr></thead><tbody>
-        <tr><td>Arztbesuche</td>
-          <td><input type="radio" name="m5q13" value="0" checked></td><td><input type="radio" name="m5q13" value="1"></td><td><input type="radio" name="m5q13" value="2"></td><td><input type="radio" name="m5q13" value="3"></td></tr>
-        <tr><td>Besuche anderer Einrichtungen (bis 3&nbsp;Std.)</td>
-          <td><input type="radio" name="m5q14" value="0" checked></td><td><input type="radio" name="m5q14" value="1"></td><td><input type="radio" name="m5q14" value="2"></td><td><input type="radio" name="m5q14" value="3"></td></tr>
-        <tr><td>Zeitlich ausgedehnte Besuche (&uuml;ber 3&nbsp;Std.)</td>
-          <td><input type="radio" name="m5q15" value="0" checked></td><td><input type="radio" name="m5q15" value="1"></td><td><input type="radio" name="m5q15" value="2"></td><td><input type="radio" name="m5q15" value="3"></td></tr>
-      </tbody></table>
+      <div id="m5_wundversorgung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Wundversorgung &amp; Spezialversorgung</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentl.</th><th>T&auml;glich</th><th>Mehrfach tgl.</th></tr></thead><tbody>
+          <tr><td>Verbandswechsel und Wundversorgung</td><td><input type="radio" name="m5q8" value="0" checked></td><td><input type="radio" name="m5q8" value="1"></td><td><input type="radio" name="m5q8" value="2"></td><td><input type="radio" name="m5q8" value="3"></td></tr>
+          <tr><td>Versorgung mit Stoma</td><td><input type="radio" name="m5q9" value="0" checked></td><td><input type="radio" name="m5q9" value="1"></td><td><input type="radio" name="m5q9" value="2"></td><td><input type="radio" name="m5q9" value="3"></td></tr>
+          <tr><td>Einmalkatheterisierung / Abf&uuml;hrmethoden</td><td><input type="radio" name="m5q10" value="0" checked></td><td><input type="radio" name="m5q10" value="1"></td><td><input type="radio" name="m5q10" value="2"></td><td><input type="radio" name="m5q10" value="3"></td></tr>
+        </tbody></table>
+      </div>
 
-      <div class="question" style="margin-top: 1.5rem;">
-        <label>Einhaltung einer Di&auml;t oder anderer therapiebedingter Verhaltensvorschriften</label>
-        <div class="options" style="grid-template-columns: 1fr 1fr;">
-          <div class="option"><input type="radio" name="m5q16" value="0" id="m5q16a" checked><label class="option-label" for="m5q16a"><span class="option-dot"></span>Entf&auml;llt</label></div>
-          <div class="option"><input type="radio" name="m5q16" value="1" id="m5q16b"><label class="option-label" for="m5q16b"><span class="option-dot"></span>Ja, erforderlich</label></div>
+      <div id="m5_therapie" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Therapie &amp; Intensivma&szlig;nahmen</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentl.</th><th>T&auml;glich</th><th>Mehrfach tgl.</th></tr></thead><tbody>
+          <tr><td>Therapiema&szlig;nahmen zu Hause</td><td><input type="radio" name="m5q11" value="0" checked></td><td><input type="radio" name="m5q11" value="1"></td><td><input type="radio" name="m5q11" value="2"></td><td><input type="radio" name="m5q11" value="3"></td></tr>
+          <tr><td>Zeit-/technikintensive Ma&szlig;nahmen</td><td><input type="radio" name="m5q12" value="0" checked></td><td><input type="radio" name="m5q12" value="1"></td><td><input type="radio" name="m5q12" value="2"></td><td><input type="radio" name="m5q12" value="3"></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="m5_arzt" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Arztbesuche &amp; Di&auml;t</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>1&ndash;3x/Mo.</th><th>4&ndash;8x/Mo.</th><th>&gt;8x/Mo.</th></tr></thead><tbody>
+          <tr><td>Arztbesuche</td><td><input type="radio" name="m5q13" value="0" checked></td><td><input type="radio" name="m5q13" value="1"></td><td><input type="radio" name="m5q13" value="2"></td><td><input type="radio" name="m5q13" value="3"></td></tr>
+          <tr><td>Besuche anderer Einrichtungen (bis 3&nbsp;Std.)</td><td><input type="radio" name="m5q14" value="0" checked></td><td><input type="radio" name="m5q14" value="1"></td><td><input type="radio" name="m5q14" value="2"></td><td><input type="radio" name="m5q14" value="3"></td></tr>
+          <tr><td>Zeitlich ausgedehnte Besuche (&uuml;ber 3&nbsp;Std.)</td><td><input type="radio" name="m5q15" value="0" checked></td><td><input type="radio" name="m5q15" value="1"></td><td><input type="radio" name="m5q15" value="2"></td><td><input type="radio" name="m5q15" value="3"></td></tr>
+        </tbody></table>
+        <div style="margin-top:1rem;">
+          <p style="font-size:0.85rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Einhaltung einer Di&auml;t oder therapiebedingter Verhaltensvorschriften?</p>
+          <div class="options" style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+            <div class="option"><input type="radio" name="m5q16" value="0" id="m5q16a" checked><label class="option-label" for="m5q16a"><span class="option-dot"></span>Nein / entf&auml;llt</label></div>
+            <div class="option"><input type="radio" name="m5q16" value="1" id="m5q16b"><label class="option-label" for="m5q16b"><span class="option-dot"></span>Ja, erforderlich</label></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1145,8 +1194,8 @@ const moduleQuestions = {
   1: ['m1q1','m1q2','m1q3','m1q4','m1q5'],
   2: ['m2q1','m2q2','m2q3','m2q4','m2q5','m2q6','m2q7','m2q8','m2q9','m2q10','m2q11'],
   3: [], // Module 3 uses category-based questions, handled separately
-  4: ['m4q1','m4q2','m4q3','m4q4','m4q5','m4q6','m4q7','m4q8','m4q9','m4q10','m4q11','m4q12'],
-  5: [], // Module 5 uses pre-checked defaults (entfällt), always completable
+  4: [], // Module 4 uses category checkboxes
+  5: [], // Module 5 uses category checkboxes
   6: ['m6q1','m6q2','m6q3','m6q4','m6q5','m6q6']
 };
 
@@ -1179,6 +1228,86 @@ function toggleM3Cat() {
   // Uncheck "Keine" if any category is checked
   if (anyChecked) document.getElementById('cat_keine').checked = false;
   checkStepComplete(3);
+}
+
+// Module 4 category toggles
+const m4CatMap = {
+  'm4_cat_pflege': { div: 'm4_pflege', qs: ['m4q1','m4q2','m4q3','m4q4'] },
+  'm4_cat_kleidung': { div: 'm4_kleidung', qs: ['m4q5','m4q6'] },
+  'm4_cat_ernaehrung': { div: 'm4_ernaehrung', qs: ['m4q7','m4q8','m4q9'] },
+  'm4_cat_ausscheidung': { div: 'm4_ausscheidung', qs: ['m4q10','m4q11','m4q12'] }
+};
+function toggleM4Cat() {
+  let anyChecked = false;
+  Object.entries(m4CatMap).forEach(([cbId, {div, qs}]) => {
+    const checked = document.getElementById(cbId).checked;
+    document.getElementById(div).style.display = checked ? 'block' : 'none';
+    if (checked) anyChecked = true;
+    if (!checked) qs.forEach(q => {
+      const r = document.querySelector(`input[name="${q}"][value="0"]`);
+      if (r) r.checked = true;
+    });
+  });
+  if (anyChecked) document.getElementById('m4_cat_keine').checked = false;
+  checkStepComplete(4);
+}
+function toggleM4Keine() {
+  if (document.getElementById('m4_cat_keine').checked) {
+    Object.entries(m4CatMap).forEach(([cbId, {div, qs}]) => {
+      document.getElementById(cbId).checked = false;
+      document.getElementById(div).style.display = 'none';
+      qs.forEach(q => {
+        const r = document.querySelector(`input[name="${q}"][value="0"]`);
+        if (r) r.checked = true;
+      });
+    });
+    // Reset m4q13 to 0
+    const s = document.querySelector('input[name="m4q13"][value="0"]');
+    if (s) s.checked = true;
+  }
+  checkStepComplete(4);
+}
+
+// Module 5 category toggles
+const m5CatMap = {
+  'm5_cat_medikamente': { div: 'm5_medikamente', qs: ['m5q1','m5q2','m5q3','m5q4','m5q5','m5q6','m5q7'] },
+  'm5_cat_wundversorgung': { div: 'm5_wundversorgung', qs: ['m5q8','m5q9','m5q10'] },
+  'm5_cat_therapie': { div: 'm5_therapie', qs: ['m5q11','m5q12'] },
+  'm5_cat_arzt': { div: 'm5_arzt', qs: ['m5q13','m5q14','m5q15'] }
+};
+function toggleM5Cat() {
+  let anyChecked = false;
+  Object.entries(m5CatMap).forEach(([cbId, {div, qs}]) => {
+    const checked = document.getElementById(cbId).checked;
+    document.getElementById(div).style.display = checked ? 'block' : 'none';
+    if (checked) anyChecked = true;
+    if (!checked) qs.forEach(q => {
+      const r = document.querySelector(`input[name="${q}"][value="0"]`);
+      if (r) r.checked = true;
+    });
+  });
+  if (anyChecked) document.getElementById('m5_cat_keine').checked = false;
+  // Reset m5q16 when arzt category unchecked
+  if (!document.getElementById('m5_cat_arzt').checked) {
+    const r = document.querySelector('input[name="m5q16"][value="0"]');
+    if (r) r.checked = true;
+  }
+  checkStepComplete(5);
+}
+function toggleM5Keine() {
+  if (document.getElementById('m5_cat_keine').checked) {
+    Object.entries(m5CatMap).forEach(([cbId, {div, qs}]) => {
+      document.getElementById(cbId).checked = false;
+      document.getElementById(div).style.display = 'none';
+      qs.forEach(q => {
+        const r = document.querySelector(`input[name="${q}"][value="0"]`);
+        if (r) r.checked = true;
+      });
+    });
+    const r = document.querySelector('input[name="m5q16"][value="0"]');
+    if (r) r.checked = true;
+  }
+  checkStepComplete(5);
 }
 
 function toggleM3Keine() {
@@ -1231,9 +1360,16 @@ function checkStepComplete(step) {
     document.getElementById('btnNext').disabled = !(anyCategory || keine);
     return;
   }
+  if (step === 4) {
+    const anyCat = Object.keys(m4CatMap).some(id => document.getElementById(id).checked);
+    const keine = document.getElementById('m4_cat_keine').checked;
+    document.getElementById('btnNext').disabled = !(anyCat || keine);
+    return;
+  }
   if (step === 5) {
-    // Module 5: all radios have defaults (checked="checked"), always completable
-    document.getElementById('btnNext').disabled = false;
+    const anyCat = Object.keys(m5CatMap).some(id => document.getElementById(id).checked);
+    const keine = document.getElementById('m5_cat_keine').checked;
+    document.getElementById('btnNext').disabled = !(anyCat || keine);
     return;
   }
   const questions = moduleQuestions[step];
@@ -1320,7 +1456,11 @@ function calculateResult() {
 
   // Module 4: Selbstversorgung (40%) - 12 standard criteria (0-3) + 1 special (0/3/6)
   // Official NBA thresholds (max 42 with Sonderpunkt 4.13)
-  const m4raw = getModuleRaw(4) + (function() {
+  const m4Questions = ['m4q1','m4q2','m4q3','m4q4','m4q5','m4q6','m4q7','m4q8','m4q9','m4q10','m4q11','m4q12'];
+  const m4raw = m4Questions.reduce((sum, q) => {
+    const el = document.querySelector(`input[name="${q}"]:checked`);
+    return sum + (el ? parseInt(el.value) : 0);
+  }, 0) + (function() {
     const el = document.querySelector('input[name="m4q13"]:checked');
     return el ? parseInt(el.value) : 0;
   })();
