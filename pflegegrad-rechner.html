@@ -549,6 +549,45 @@
       .result-cta-buttons { flex-direction: column; align-items: center; }
       .hero { padding: 7rem 1.5rem 3rem; }
       .calc-container { padding: 0 1rem; }
+      .freq-table { font-size: 0.78rem; }
+      .freq-table th { font-size: 0.7rem; padding: 0.4rem 0.3rem; }
+      .freq-table td:first-child { min-width: 120px; }
+    }
+
+    /* Frequency table for Module 3 */
+    .freq-table { width: 100%; border-collapse: collapse; }
+    .freq-table th {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gray);
+      text-align: center;
+      padding: 0.5rem 0.5rem;
+      border-bottom: 2px solid var(--light-gray);
+    }
+    .freq-table th:first-child { text-align: left; }
+    .freq-table td {
+      padding: 0.6rem 0.5rem;
+      border-bottom: 1px solid var(--light-gray);
+      text-align: center;
+      font-size: 0.85rem;
+      color: #555;
+    }
+    .freq-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+      color: var(--navy);
+      min-width: 180px;
+    }
+    .freq-table input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--light-blue);
+      cursor: pointer;
+    }
+    .freq-table tr:hover { background: rgba(53,192,237,0.03); }
+    .cat-check:has(input:checked) {
+      border-color: var(--light-blue);
+      background: rgba(53,192,237,0.05);
     }
   </style>
 </head>
@@ -820,40 +859,81 @@
       </div>
     </div>
 
-    <!-- STEP 3: Verhaltensweisen -->
+    <!-- STEP 3: Verhaltensweisen - Kategorieauswahl -->
     <div class="step" data-step="3">
       <div class="step-icon navy">&#128150;</div>
       <h2>Modul 3: Verhalten &amp; psychische Problemlagen</h2>
-      <p class="step-desc">Gibt es Verhaltensauff&auml;lligkeiten oder psychische Belastungen? (H&ouml;herer Wert aus Modul 2 oder 3 z&auml;hlt)</p>
+      <p class="step-desc">Welche Verhaltensauff&auml;lligkeiten treten bei der pflegebed&uuml;rftigen Person auf? (H&ouml;herer Wert aus Modul 2 oder 3 z&auml;hlt)</p>
 
       <div class="question">
-        <label>Zeigt die Person n&auml;chtliche Unruhe, zielloses Umherwandern oder motorische Auff&auml;lligkeiten?</label>
-        <div class="options">
-          <div class="option"><input type="radio" name="m3q1" value="0" id="m3q1a"><label class="option-label" for="m3q1a"><span class="option-dot"></span>Nie</label></div>
-          <div class="option"><input type="radio" name="m3q1" value="1" id="m3q1b"><label class="option-label" for="m3q1b"><span class="option-dot"></span>Selten (1&ndash;3x/Monat)</label></div>
-          <div class="option"><input type="radio" name="m3q1" value="3" id="m3q1c"><label class="option-label" for="m3q1c"><span class="option-dot"></span>H&auml;ufig (1&ndash;3x/Woche)</label></div>
-          <div class="option"><input type="radio" name="m3q1" value="5" id="m3q1d"><label class="option-label" for="m3q1d"><span class="option-dot"></span>T&auml;glich</label></div>
+        <label>W&auml;hlen Sie alle zutreffenden Kategorien aus:</label>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
+            <input type="checkbox" id="cat_aggression" onchange="toggleM3Cat()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
+            <span style="font-size: 0.9rem; color: var(--navy);">Aggressionen</span>
+          </label>
+          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
+            <input type="checkbox" id="cat_angst" onchange="toggleM3Cat()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
+            <span style="font-size: 0.9rem; color: var(--navy);">&Auml;ngste und Wahnvorstellungen</span>
+          </label>
+          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
+            <input type="checkbox" id="cat_pflege" onchange="toggleM3Cat()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
+            <span style="font-size: 0.9rem; color: var(--navy);">Handlungen, die die Pflege erschweren</span>
+          </label>
+          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
+            <input type="checkbox" id="cat_motorik" onchange="toggleM3Cat()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
+            <span style="font-size: 0.9rem; color: var(--navy);">Motorische oder soziale Verhaltensauff&auml;lligkeiten</span>
+          </label>
+          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s; background: var(--off-white);">
+            <input type="checkbox" id="cat_keine" onchange="toggleM3Keine()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
+            <span style="font-size: 0.9rem; color: var(--gray);">Keine Verhaltensauff&auml;lligkeiten</span>
+          </label>
         </div>
       </div>
 
-      <div class="question">
-        <label>Zeigt die Person aggressives oder selbstsch&auml;digendes Verhalten?</label>
-        <div class="options">
-          <div class="option"><input type="radio" name="m3q2" value="0" id="m3q2a"><label class="option-label" for="m3q2a"><span class="option-dot"></span>Nie</label></div>
-          <div class="option"><input type="radio" name="m3q2" value="1" id="m3q2b"><label class="option-label" for="m3q2b"><span class="option-dot"></span>Selten (1&ndash;3x/Monat)</label></div>
-          <div class="option"><input type="radio" name="m3q2" value="3" id="m3q2c"><label class="option-label" for="m3q2c"><span class="option-dot"></span>H&auml;ufig (1&ndash;3x/Woche)</label></div>
-          <div class="option"><input type="radio" name="m3q2" value="5" id="m3q2d"><label class="option-label" for="m3q2d"><span class="option-dot"></span>T&auml;glich</label></div>
-        </div>
+      <!-- Detailfragen: Aggressionen -->
+      <div id="m3_aggression" class="m3-detail" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
+        <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem;">Aggressionen</h3>
+        <p style="font-size: 0.82rem; color: var(--gray); margin-bottom: 1rem;">Wie h&auml;ufig treten die folgenden Verhaltensweisen auf?</p>
+        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;gl.</th></tr></thead><tbody>
+          <tr><td>Verbale Aggression</td><td><input type="radio" name="m3_a1" value="0" checked></td><td><input type="radio" name="m3_a1" value="1"></td><td><input type="radio" name="m3_a1" value="3"></td><td><input type="radio" name="m3_a1" value="5"></td></tr>
+          <tr><td>Selbstsch&auml;digendes Verhalten</td><td><input type="radio" name="m3_a2" value="0" checked></td><td><input type="radio" name="m3_a2" value="1"></td><td><input type="radio" name="m3_a2" value="3"></td><td><input type="radio" name="m3_a2" value="5"></td></tr>
+          <tr><td>Physische Aggression gegen andere</td><td><input type="radio" name="m3_a3" value="0" checked></td><td><input type="radio" name="m3_a3" value="1"></td><td><input type="radio" name="m3_a3" value="3"></td><td><input type="radio" name="m3_a3" value="5"></td></tr>
+          <tr><td>Besch&auml;digen von Gegenst&auml;nden</td><td><input type="radio" name="m3_a4" value="0" checked></td><td><input type="radio" name="m3_a4" value="1"></td><td><input type="radio" name="m3_a4" value="3"></td><td><input type="radio" name="m3_a4" value="5"></td></tr>
+        </tbody></table>
       </div>
 
-      <div class="question">
-        <label>Leidet die Person unter &Auml;ngsten, Wahnvorstellungen, Antriebslosigkeit oder depressiven Verstimmungen?</label>
-        <div class="options">
-          <div class="option"><input type="radio" name="m3q3" value="0" id="m3q3a"><label class="option-label" for="m3q3a"><span class="option-dot"></span>Nie</label></div>
-          <div class="option"><input type="radio" name="m3q3" value="1" id="m3q3b"><label class="option-label" for="m3q3b"><span class="option-dot"></span>Selten (1&ndash;3x/Monat)</label></div>
-          <div class="option"><input type="radio" name="m3q3" value="3" id="m3q3c"><label class="option-label" for="m3q3c"><span class="option-dot"></span>H&auml;ufig (1&ndash;3x/Woche)</label></div>
-          <div class="option"><input type="radio" name="m3q3" value="5" id="m3q3d"><label class="option-label" for="m3q3d"><span class="option-dot"></span>T&auml;glich</label></div>
-        </div>
+      <!-- Detailfragen: Ängste -->
+      <div id="m3_angst" class="m3-detail" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
+        <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem;">&Auml;ngste und Wahnvorstellungen</h3>
+        <p style="font-size: 0.82rem; color: var(--gray); margin-bottom: 1rem;">Wie h&auml;ufig treten die folgenden Verhaltensweisen auf?</p>
+        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;gl.</th></tr></thead><tbody>
+          <tr><td>Wahnvorstellungen</td><td><input type="radio" name="m3_b1" value="0" checked></td><td><input type="radio" name="m3_b1" value="1"></td><td><input type="radio" name="m3_b1" value="3"></td><td><input type="radio" name="m3_b1" value="5"></td></tr>
+          <tr><td>&Auml;ngste</td><td><input type="radio" name="m3_b2" value="0" checked></td><td><input type="radio" name="m3_b2" value="1"></td><td><input type="radio" name="m3_b2" value="3"></td><td><input type="radio" name="m3_b2" value="5"></td></tr>
+          <tr><td>N&auml;chtliche Unruhe</td><td><input type="radio" name="m3_b3" value="0" checked></td><td><input type="radio" name="m3_b3" value="1"></td><td><input type="radio" name="m3_b3" value="3"></td><td><input type="radio" name="m3_b3" value="5"></td></tr>
+        </tbody></table>
+      </div>
+
+      <!-- Detailfragen: Pflege erschweren -->
+      <div id="m3_pflege" class="m3-detail" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
+        <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem;">Handlungen, die die Pflege erschweren</h3>
+        <p style="font-size: 0.82rem; color: var(--gray); margin-bottom: 1rem;">Wie h&auml;ufig treten die folgenden Verhaltensweisen auf?</p>
+        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;gl.</th></tr></thead><tbody>
+          <tr><td>Abwehr pflegerischer Ma&szlig;nahmen</td><td><input type="radio" name="m3_c1" value="0" checked></td><td><input type="radio" name="m3_c1" value="1"></td><td><input type="radio" name="m3_c1" value="3"></td><td><input type="radio" name="m3_c1" value="5"></td></tr>
+          <tr><td>Pflegerelevante vokale Auff&auml;lligkeiten</td><td><input type="radio" name="m3_c2" value="0" checked></td><td><input type="radio" name="m3_c2" value="1"></td><td><input type="radio" name="m3_c2" value="3"></td><td><input type="radio" name="m3_c2" value="5"></td></tr>
+          <tr><td>Sonstige inad&auml;quate Handlungen</td><td><input type="radio" name="m3_c3" value="0" checked></td><td><input type="radio" name="m3_c3" value="1"></td><td><input type="radio" name="m3_c3" value="3"></td><td><input type="radio" name="m3_c3" value="5"></td></tr>
+        </tbody></table>
+      </div>
+
+      <!-- Detailfragen: Motorik/Soziales -->
+      <div id="m3_motorik" class="m3-detail" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
+        <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem;">Motorische oder soziale Auff&auml;lligkeiten</h3>
+        <p style="font-size: 0.82rem; color: var(--gray); margin-bottom: 1rem;">Wie h&auml;ufig treten die folgenden Verhaltensweisen auf?</p>
+        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;gl.</th></tr></thead><tbody>
+          <tr><td>Antriebslosigkeit / depressive Stimmung</td><td><input type="radio" name="m3_d1" value="0" checked></td><td><input type="radio" name="m3_d1" value="1"></td><td><input type="radio" name="m3_d1" value="3"></td><td><input type="radio" name="m3_d1" value="5"></td></tr>
+          <tr><td>Motorisch gepr&auml;gte Verhaltensauff&auml;lligkeiten</td><td><input type="radio" name="m3_d2" value="0" checked></td><td><input type="radio" name="m3_d2" value="1"></td><td><input type="radio" name="m3_d2" value="3"></td><td><input type="radio" name="m3_d2" value="5"></td></tr>
+          <tr><td>Sozial inad&auml;quate Verhaltensweisen</td><td><input type="radio" name="m3_d3" value="0" checked></td><td><input type="radio" name="m3_d3" value="1"></td><td><input type="radio" name="m3_d3" value="3"></td><td><input type="radio" name="m3_d3" value="5"></td></tr>
+        </tbody></table>
       </div>
     </div>
 
@@ -1089,11 +1169,60 @@ const stepNames = [
 const moduleQuestions = {
   1: ['m1q1','m1q2','m1q3','m1q4','m1q5'],
   2: ['m2q1','m2q2','m2q3','m2q4'],
-  3: ['m3q1','m3q2','m3q3'],
+  3: [], // Module 3 uses category-based questions, handled separately
   4: ['m4q1','m4q2','m4q3','m4q4','m4q5'],
   5: ['m5q1','m5q2','m5q3'],
   6: ['m6q1','m6q2','m6q3']
 };
+
+// All 13 official NBA Module 3 criteria
+const m3AllQuestions = [
+  'm3_a1','m3_a2','m3_a3','m3_a4',  // Aggressionen
+  'm3_b1','m3_b2','m3_b3',          // Ängste
+  'm3_c1','m3_c2','m3_c3',          // Pflege erschweren
+  'm3_d1','m3_d2','m3_d3'           // Motorik/Soziales
+];
+
+// Module 3 category toggles
+function toggleM3Cat() {
+  const cats = [
+    { cb: 'cat_aggression', div: 'm3_aggression' },
+    { cb: 'cat_angst', div: 'm3_angst' },
+    { cb: 'cat_pflege', div: 'm3_pflege' },
+    { cb: 'cat_motorik', div: 'm3_motorik' }
+  ];
+  let anyChecked = false;
+  cats.forEach(c => {
+    const checked = document.getElementById(c.cb).checked;
+    document.getElementById(c.div).style.display = checked ? 'block' : 'none';
+    if (checked) anyChecked = true;
+    // Reset unchecked category radios to "Nie" (0)
+    if (!checked) {
+      document.querySelectorAll(`#${c.div} input[type="radio"][value="0"]`).forEach(r => r.checked = true);
+    }
+  });
+  // Uncheck "Keine" if any category is checked
+  if (anyChecked) document.getElementById('cat_keine').checked = false;
+  checkStepComplete(3);
+}
+
+function toggleM3Keine() {
+  const keine = document.getElementById('cat_keine').checked;
+  if (keine) {
+    ['cat_aggression','cat_angst','cat_pflege','cat_motorik'].forEach(id => {
+      document.getElementById(id).checked = false;
+    });
+    ['m3_aggression','m3_angst','m3_pflege','m3_motorik'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    // Reset all M3 radios to "Nie"
+    m3AllQuestions.forEach(q => {
+      const r = document.querySelector(`input[name="${q}"][value="0"]`);
+      if (r) r.checked = true;
+    });
+  }
+  checkStepComplete(3);
+}
 
 function showStep(step) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
@@ -1120,6 +1249,13 @@ function showStep(step) {
 
 function checkStepComplete(step) {
   if (step === 0 || step >= 7) return;
+  if (step === 3) {
+    // Module 3: at least one category or "Keine" must be checked
+    const anyCategory = ['cat_aggression','cat_angst','cat_pflege','cat_motorik'].some(id => document.getElementById(id).checked);
+    const keine = document.getElementById('cat_keine').checked;
+    document.getElementById('btnNext').disabled = !(anyCategory || keine);
+    return;
+  }
   const questions = moduleQuestions[step];
   const allAnswered = questions.every(q => document.querySelector(`input[name="${q}"]:checked`));
   document.getElementById('btnNext').disabled = !allAnswered;
@@ -1186,14 +1322,17 @@ function calculateResult() {
   else if (m2raw <= 8) m2weighted = 11.25;
   else m2weighted = 15;
 
-  // Module 3: Verhaltensweisen - 3 questions (of 13 official), values 0/1/3/5, max 15
-  // Direct thresholds for frequency-based scoring
-  const m3raw = getModuleRaw(3);
+  // Module 3: Verhaltensweisen - all 13 official NBA criteria, values 0/1/3/5, max 65
+  // Official NBA thresholds apply directly
+  const m3raw = m3AllQuestions.reduce((sum, q) => {
+    const el = document.querySelector(`input[name="${q}"]:checked`);
+    return sum + (el ? parseInt(el.value) : 0);
+  }, 0);
   let m3weighted;
   if (m3raw <= 0) m3weighted = 0;
   else if (m3raw <= 2) m3weighted = 3.75;
-  else if (m3raw <= 5) m3weighted = 7.5;
-  else if (m3raw <= 9) m3weighted = 11.25;
+  else if (m3raw <= 4) m3weighted = 7.5;
+  else if (m3raw <= 6) m3weighted = 11.25;
   else m3weighted = 15;
 
   // Higher of Module 2 or 3 counts (official NBA rule)
