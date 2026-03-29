@@ -812,51 +812,38 @@
       </div>
     </div>
 
-    <!-- STEP 2: Kognitive Fähigkeiten -->
+    <!-- STEP 2: Kognitive Fähigkeiten - alle 11 offiziellen NBA-Kriterien -->
     <div class="step" data-step="2">
       <div class="step-icon green">&#129504;</div>
-      <h2>Modul 2: Geistige F&auml;higkeiten</h2>
-      <p class="step-desc">Wie gut kann sich die Person orientieren und verst&auml;ndigen? (Gewichtung: 15 %, h&ouml;herer Wert aus Modul 2 oder 3)</p>
+      <h2>Modul 2: Kognitive &amp; kommunikative F&auml;higkeiten</h2>
+      <p class="step-desc">Wie gut kann sich die Person orientieren, verstehen und verst&auml;ndigen? (Gewichtung: 15&nbsp;%, h&ouml;herer Wert aus Modul 2 oder 3)</p>
 
-      <div class="question">
-        <label>Erkennt die Person vertraute Personen (Familie, Nachbarn, Pflegekr&auml;fte)?</label>
-        <div class="options">
-          <div class="option"><input type="radio" name="m2q1" value="0" id="m2q1a"><label class="option-label" for="m2q1a"><span class="option-dot"></span>Ja, immer</label></div>
-          <div class="option"><input type="radio" name="m2q1" value="1" id="m2q1b"><label class="option-label" for="m2q1b"><span class="option-dot"></span>Meistens</label></div>
-          <div class="option"><input type="radio" name="m2q1" value="2" id="m2q1c"><label class="option-label" for="m2q1c"><span class="option-dot"></span>Selten</label></div>
-          <div class="option"><input type="radio" name="m2q1" value="3" id="m2q1d"><label class="option-label" for="m2q1d"><span class="option-dot"></span>Nie / nicht mehr</label></div>
-        </div>
-      </div>
+      <p style="font-size: 0.8rem; color: var(--gray); margin-bottom: 1.5rem; padding: 0.8rem; background: var(--off-white); border-radius: 8px;">F&uuml;r jede F&auml;higkeit: Wie selbstst&auml;ndig ist die Person?</p>
 
-      <div class="question">
-        <label>Findet sich die Person &ouml;rtlich zurecht (wei&szlig; wo sie ist, findet R&auml;ume)?</label>
-        <div class="options">
-          <div class="option"><input type="radio" name="m2q2" value="0" id="m2q2a"><label class="option-label" for="m2q2a"><span class="option-dot"></span>Ja, immer</label></div>
-          <div class="option"><input type="radio" name="m2q2" value="1" id="m2q2b"><label class="option-label" for="m2q2b"><span class="option-dot"></span>Meistens</label></div>
-          <div class="option"><input type="radio" name="m2q2" value="2" id="m2q2c"><label class="option-label" for="m2q2c"><span class="option-dot"></span>Selten</label></div>
-          <div class="option"><input type="radio" name="m2q2" value="3" id="m2q2d"><label class="option-label" for="m2q2d"><span class="option-dot"></span>Nie / nicht mehr</label></div>
-        </div>
-      </div>
-
-      <div class="question">
-        <label>Kann die Person Gefahren erkennen und einsch&auml;tzen (z.&thinsp;B. hei&szlig;e Herdplatte, Sturzrisiken)?</label>
-        <div class="options">
-          <div class="option"><input type="radio" name="m2q3" value="0" id="m2q3a"><label class="option-label" for="m2q3a"><span class="option-dot"></span>Ja, immer</label></div>
-          <div class="option"><input type="radio" name="m2q3" value="1" id="m2q3b"><label class="option-label" for="m2q3b"><span class="option-dot"></span>Meistens</label></div>
-          <div class="option"><input type="radio" name="m2q3" value="2" id="m2q3c"><label class="option-label" for="m2q3c"><span class="option-dot"></span>Selten</label></div>
-          <div class="option"><input type="radio" name="m2q3" value="3" id="m2q3d"><label class="option-label" for="m2q3d"><span class="option-dot"></span>Nie / nicht mehr</label></div>
-        </div>
-      </div>
-
-      <div class="question">
-        <label>Kann die Person Bed&uuml;rfnisse mitteilen und einem Gespr&auml;ch folgen?</label>
-        <div class="options">
-          <div class="option"><input type="radio" name="m2q4" value="0" id="m2q4a"><label class="option-label" for="m2q4a"><span class="option-dot"></span>Ja, problemlos</label></div>
-          <div class="option"><input type="radio" name="m2q4" value="1" id="m2q4b"><label class="option-label" for="m2q4b"><span class="option-dot"></span>&Uuml;berwiegend ja</label></div>
-          <div class="option"><input type="radio" name="m2q4" value="2" id="m2q4c"><label class="option-label" for="m2q4c"><span class="option-dot"></span>Nur eingeschr&auml;nkt</label></div>
-          <div class="option"><input type="radio" name="m2q4" value="3" id="m2q4d"><label class="option-label" for="m2q4d"><span class="option-dot"></span>Nein, nicht m&ouml;glich</label></div>
-        </div>
-      </div>
+      <table class="freq-table" id="m2Table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>In geringem Ma&szlig;e</th><th>Nicht vorhanden</th></tr></thead><tbody>
+        <tr><td>Erkennen von Personen aus dem n&auml;heren Umfeld</td>
+          <td><input type="radio" name="m2q1" value="0"></td><td><input type="radio" name="m2q1" value="1"></td><td><input type="radio" name="m2q1" value="2"></td><td><input type="radio" name="m2q1" value="3"></td></tr>
+        <tr><td>&Ouml;rtliche Orientierung</td>
+          <td><input type="radio" name="m2q2" value="0"></td><td><input type="radio" name="m2q2" value="1"></td><td><input type="radio" name="m2q2" value="2"></td><td><input type="radio" name="m2q2" value="3"></td></tr>
+        <tr><td>Zeitliche Orientierung</td>
+          <td><input type="radio" name="m2q3" value="0"></td><td><input type="radio" name="m2q3" value="1"></td><td><input type="radio" name="m2q3" value="2"></td><td><input type="radio" name="m2q3" value="3"></td></tr>
+        <tr><td>Erinnern an wesentliche Ereignisse</td>
+          <td><input type="radio" name="m2q4" value="0"></td><td><input type="radio" name="m2q4" value="1"></td><td><input type="radio" name="m2q4" value="2"></td><td><input type="radio" name="m2q4" value="3"></td></tr>
+        <tr><td>Steuern von mehrschrittigen Alltagshandlungen</td>
+          <td><input type="radio" name="m2q5" value="0"></td><td><input type="radio" name="m2q5" value="1"></td><td><input type="radio" name="m2q5" value="2"></td><td><input type="radio" name="m2q5" value="3"></td></tr>
+        <tr><td>Treffen von Entscheidungen im Alltag</td>
+          <td><input type="radio" name="m2q6" value="0"></td><td><input type="radio" name="m2q6" value="1"></td><td><input type="radio" name="m2q6" value="2"></td><td><input type="radio" name="m2q6" value="3"></td></tr>
+        <tr><td>Verstehen von Sachverhalten und Informationen</td>
+          <td><input type="radio" name="m2q7" value="0"></td><td><input type="radio" name="m2q7" value="1"></td><td><input type="radio" name="m2q7" value="2"></td><td><input type="radio" name="m2q7" value="3"></td></tr>
+        <tr><td>Erkennen von Risiken und Gefahren</td>
+          <td><input type="radio" name="m2q8" value="0"></td><td><input type="radio" name="m2q8" value="1"></td><td><input type="radio" name="m2q8" value="2"></td><td><input type="radio" name="m2q8" value="3"></td></tr>
+        <tr><td>Mitteilen von elementaren Bed&uuml;rfnissen</td>
+          <td><input type="radio" name="m2q9" value="0"></td><td><input type="radio" name="m2q9" value="1"></td><td><input type="radio" name="m2q9" value="2"></td><td><input type="radio" name="m2q9" value="3"></td></tr>
+        <tr><td>Verstehen von Aufforderungen</td>
+          <td><input type="radio" name="m2q10" value="0"></td><td><input type="radio" name="m2q10" value="1"></td><td><input type="radio" name="m2q10" value="2"></td><td><input type="radio" name="m2q10" value="3"></td></tr>
+        <tr><td>Beteiligen an einem Gespr&auml;ch</td>
+          <td><input type="radio" name="m2q11" value="0"></td><td><input type="radio" name="m2q11" value="1"></td><td><input type="radio" name="m2q11" value="2"></td><td><input type="radio" name="m2q11" value="3"></td></tr>
+      </tbody></table>
     </div>
 
     <!-- STEP 3: Verhaltensweisen - Kategorieauswahl -->
@@ -1168,7 +1155,7 @@ const stepNames = [
 
 const moduleQuestions = {
   1: ['m1q1','m1q2','m1q3','m1q4','m1q5'],
-  2: ['m2q1','m2q2','m2q3','m2q4'],
+  2: ['m2q1','m2q2','m2q3','m2q4','m2q5','m2q6','m2q7','m2q8','m2q9','m2q10','m2q11'],
   3: [], // Module 3 uses category-based questions, handled separately
   4: ['m4q1','m4q2','m4q3','m4q4','m4q5'],
   5: ['m5q1','m5q2','m5q3'],
@@ -1312,14 +1299,14 @@ function calculateResult() {
   else if (m1raw <= 9) m1weighted = 7.5;
   else m1weighted = 10;
 
-  // Module 2: Kognitive Fähigkeiten - 4 questions (of 11 official), max 12
-  // Direct thresholds proportional to 4 questions
+  // Module 2: Kognitive Fähigkeiten - all 11 official NBA criteria, max 33
+  // Official NBA thresholds apply directly
   const m2raw = getModuleRaw(2);
   let m2weighted;
-  if (m2raw <= 0) m2weighted = 0;
-  else if (m2raw <= 2) m2weighted = 3.75;
-  else if (m2raw <= 5) m2weighted = 7.5;
-  else if (m2raw <= 8) m2weighted = 11.25;
+  if (m2raw <= 1) m2weighted = 0;
+  else if (m2raw <= 5) m2weighted = 3.75;
+  else if (m2raw <= 10) m2weighted = 7.5;
+  else if (m2raw <= 16) m2weighted = 11.25;
   else m2weighted = 15;
 
   // Module 3: Verhaltensweisen - all 13 official NBA criteria, values 0/1/3/5, max 65
