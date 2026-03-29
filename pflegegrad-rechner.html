@@ -589,6 +589,27 @@
       border-color: var(--light-blue);
       background: rgba(53,192,237,0.05);
     }
+    .cat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(53,192,237,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .cat-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--dark-blue);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .cat-keine .cat-icon { background: rgba(107,125,138,0.08); }
+    .cat-keine .cat-icon svg { stroke: var(--gray); }
   </style>
 </head>
 <body>
@@ -695,155 +716,114 @@
       </div>
     </div>
 
-    <!-- STEP 1: Mobilität -->
+    <!-- STEP 1: Mobilität - Kategorien -->
     <div class="step" data-step="1">
       <div class="step-icon blue">&#128694;</div>
       <h2>Modul 1: Mobilit&auml;t</h2>
-      <p class="step-desc">Wie selbstst&auml;ndig kann sich die Person bewegen? (Gewichtung: 10 %)</p>
+      <p class="step-desc">In welchen Bereichen ben&ouml;tigt die Person Unterst&uuml;tzung? (Gewichtung: 10&nbsp;%)</p>
 
       <div class="question">
-        <label>Kann die Person ihre Liegeposition im Bett selbstst&auml;ndig ver&auml;ndern?</label>
-        <div class="options">
-          <div class="option">
-            <input type="radio" name="m1q1" value="0" id="m1q1a">
-            <label class="option-label" for="m1q1a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q1" value="1" id="m1q1b">
-            <label class="option-label" for="m1q1b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q1" value="2" id="m1q1c">
-            <label class="option-label" for="m1q1c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q1" value="3" id="m1q1d">
-            <label class="option-label" for="m1q1d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
-          </div>
+        <label>W&auml;hlen Sie alle zutreffenden Bereiche aus:</label>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m1_cat_fortbewegen" onchange="toggleM1Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M13 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="currentColor" stroke="none"/><path d="M4 17l3-3 2 2 4-4 3 3"/><path d="M19 21l-4-4-2 2-4-4-3 3"/><circle cx="7" cy="21" r="2"/><circle cx="17" cy="21" r="2"/><path d="M7 19h10"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Fortbewegen</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m1_cat_sitzen" onchange="toggleM1Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 11V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5"/><path d="M4 15h16"/><path d="M6 15v4"/><path d="M18 15v4"/><path d="M12 7v4"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Sitzen und Aufstehen</span></label>
+          <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
+            <input type="checkbox" id="m1_cat_keine" onchange="toggleM1Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--gray);">Keiner der genannten Bereiche</span></label>
         </div>
       </div>
 
-      <div class="question">
-        <label>Kann die Person stabil und sicher sitzen (z.&thinsp;B. auf einem Stuhl)?</label>
-        <div class="options">
-          <div class="option">
-            <input type="radio" name="m1q2" value="0" id="m1q2a">
-            <label class="option-label" for="m1q2a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q2" value="1" id="m1q2b">
-            <label class="option-label" for="m1q2b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q2" value="2" id="m1q2c">
-            <label class="option-label" for="m1q2c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q2" value="3" id="m1q2d">
-            <label class="option-label" for="m1q2d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
-          </div>
-        </div>
+      <div id="m1_fortbewegen" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Fortbewegen</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>Fortbewegen innerhalb der Wohnung</td><td><input type="radio" name="m1q4" value="0" checked></td><td><input type="radio" name="m1q4" value="1"></td><td><input type="radio" name="m1q4" value="2"></td><td><input type="radio" name="m1q4" value="3"></td></tr>
+          <tr><td>Treppensteigen</td><td><input type="radio" name="m1q5" value="0" checked></td><td><input type="radio" name="m1q5" value="1"></td><td><input type="radio" name="m1q5" value="2"></td><td><input type="radio" name="m1q5" value="3"></td></tr>
+        </tbody></table>
       </div>
 
-      <div class="question">
-        <label>Kann die Person selbstst&auml;ndig aufstehen und sich umsetzen (z.&thinsp;B. vom Bett in den Rollstuhl)?</label>
-        <div class="options">
-          <div class="option">
-            <input type="radio" name="m1q3" value="0" id="m1q3a">
-            <label class="option-label" for="m1q3a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q3" value="1" id="m1q3b">
-            <label class="option-label" for="m1q3b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q3" value="2" id="m1q3c">
-            <label class="option-label" for="m1q3c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q3" value="3" id="m1q3d">
-            <label class="option-label" for="m1q3d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="question">
-        <label>Kann die Person sich innerhalb der Wohnung fortbewegen (auch mit Hilfsmittel)?</label>
-        <div class="options">
-          <div class="option">
-            <input type="radio" name="m1q4" value="0" id="m1q4a">
-            <label class="option-label" for="m1q4a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q4" value="1" id="m1q4b">
-            <label class="option-label" for="m1q4b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q4" value="2" id="m1q4c">
-            <label class="option-label" for="m1q4c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q4" value="3" id="m1q4d">
-            <label class="option-label" for="m1q4d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="question">
-        <label>Kann die Person Treppen steigen?</label>
-        <div class="options">
-          <div class="option">
-            <input type="radio" name="m1q5" value="0" id="m1q5a">
-            <label class="option-label" for="m1q5a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q5" value="1" id="m1q5b">
-            <label class="option-label" for="m1q5b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q5" value="2" id="m1q5c">
-            <label class="option-label" for="m1q5c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="m1q5" value="3" id="m1q5d">
-            <label class="option-label" for="m1q5d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
-          </div>
-        </div>
+      <div id="m1_sitzen" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Sitzen und Aufstehen</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>Positionswechsel im Bett</td><td><input type="radio" name="m1q1" value="0" checked></td><td><input type="radio" name="m1q1" value="1"></td><td><input type="radio" name="m1q1" value="2"></td><td><input type="radio" name="m1q1" value="3"></td></tr>
+          <tr><td>Halten einer stabilen Sitzposition</td><td><input type="radio" name="m1q2" value="0" checked></td><td><input type="radio" name="m1q2" value="1"></td><td><input type="radio" name="m1q2" value="2"></td><td><input type="radio" name="m1q2" value="3"></td></tr>
+          <tr><td>Aufstehen und Umsetzen</td><td><input type="radio" name="m1q3" value="0" checked></td><td><input type="radio" name="m1q3" value="1"></td><td><input type="radio" name="m1q3" value="2"></td><td><input type="radio" name="m1q3" value="3"></td></tr>
+        </tbody></table>
       </div>
     </div>
 
-    <!-- STEP 2: Kognitive Fähigkeiten - alle 11 offiziellen NBA-Kriterien -->
+    <!-- STEP 2: Kognitive Fähigkeiten - 4 Kategorien -->
     <div class="step" data-step="2">
       <div class="step-icon green">&#129504;</div>
       <h2>Modul 2: Kognitive &amp; kommunikative F&auml;higkeiten</h2>
-      <p class="step-desc">Wie gut kann sich die Person orientieren, verstehen und verst&auml;ndigen? (Gewichtung: 15&nbsp;%, h&ouml;herer Wert aus Modul 2 oder 3)</p>
+      <p class="step-desc">Welche F&auml;higkeiten bereiten der Person Schwierigkeiten? (Gewichtung: 15&nbsp;%, h&ouml;herer Wert aus Modul 2 oder 3)</p>
 
-      <p style="font-size: 0.8rem; color: var(--gray); margin-bottom: 1.5rem; padding: 0.8rem; background: var(--off-white); border-radius: 8px;">F&uuml;r jede F&auml;higkeit: Wie selbstst&auml;ndig ist die Person?</p>
+      <div class="question">
+        <label>W&auml;hlen Sie alle zutreffenden Bereiche aus:</label>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m2_cat_orientierung" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 12h2m14 0h2M12 3v2m0 14v2"/><circle cx="12" cy="12" r="7"/><path d="M12 9v3l2 2"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">R&auml;umliche und zeitliche Orientierung</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m2_cat_entscheidungen" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M9 18l3-3-3-3"/><path d="M5 6h14"/><path d="M5 12h8"/><path d="M5 18h4"/><circle cx="18" cy="14" r="4"/><path d="M18 12v4"/><path d="M16 14h4"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Allt&auml;gliche Entscheidungen treffen und umsetzen</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m2_cat_austausch" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Austausch mit Umfeld</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m2_cat_erkennen" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Erkennen und Erinnern</span></label>
+          <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
+            <input type="checkbox" id="m2_cat_keine" onchange="toggleM2Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--gray);">Keine Einschr&auml;nkungen</span></label>
+        </div>
+      </div>
 
-      <table class="freq-table" id="m2Table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>In geringem Ma&szlig;e</th><th>Nicht vorhanden</th></tr></thead><tbody>
-        <tr><td>Erkennen von Personen aus dem n&auml;heren Umfeld</td>
-          <td><input type="radio" name="m2q1" value="0"></td><td><input type="radio" name="m2q1" value="1"></td><td><input type="radio" name="m2q1" value="2"></td><td><input type="radio" name="m2q1" value="3"></td></tr>
-        <tr><td>&Ouml;rtliche Orientierung</td>
-          <td><input type="radio" name="m2q2" value="0"></td><td><input type="radio" name="m2q2" value="1"></td><td><input type="radio" name="m2q2" value="2"></td><td><input type="radio" name="m2q2" value="3"></td></tr>
-        <tr><td>Zeitliche Orientierung</td>
-          <td><input type="radio" name="m2q3" value="0"></td><td><input type="radio" name="m2q3" value="1"></td><td><input type="radio" name="m2q3" value="2"></td><td><input type="radio" name="m2q3" value="3"></td></tr>
-        <tr><td>Erinnern an wesentliche Ereignisse</td>
-          <td><input type="radio" name="m2q4" value="0"></td><td><input type="radio" name="m2q4" value="1"></td><td><input type="radio" name="m2q4" value="2"></td><td><input type="radio" name="m2q4" value="3"></td></tr>
-        <tr><td>Steuern von mehrschrittigen Alltagshandlungen</td>
-          <td><input type="radio" name="m2q5" value="0"></td><td><input type="radio" name="m2q5" value="1"></td><td><input type="radio" name="m2q5" value="2"></td><td><input type="radio" name="m2q5" value="3"></td></tr>
-        <tr><td>Treffen von Entscheidungen im Alltag</td>
-          <td><input type="radio" name="m2q6" value="0"></td><td><input type="radio" name="m2q6" value="1"></td><td><input type="radio" name="m2q6" value="2"></td><td><input type="radio" name="m2q6" value="3"></td></tr>
-        <tr><td>Verstehen von Sachverhalten und Informationen</td>
-          <td><input type="radio" name="m2q7" value="0"></td><td><input type="radio" name="m2q7" value="1"></td><td><input type="radio" name="m2q7" value="2"></td><td><input type="radio" name="m2q7" value="3"></td></tr>
-        <tr><td>Erkennen von Risiken und Gefahren</td>
-          <td><input type="radio" name="m2q8" value="0"></td><td><input type="radio" name="m2q8" value="1"></td><td><input type="radio" name="m2q8" value="2"></td><td><input type="radio" name="m2q8" value="3"></td></tr>
-        <tr><td>Mitteilen von elementaren Bed&uuml;rfnissen</td>
-          <td><input type="radio" name="m2q9" value="0"></td><td><input type="radio" name="m2q9" value="1"></td><td><input type="radio" name="m2q9" value="2"></td><td><input type="radio" name="m2q9" value="3"></td></tr>
-        <tr><td>Verstehen von Aufforderungen</td>
-          <td><input type="radio" name="m2q10" value="0"></td><td><input type="radio" name="m2q10" value="1"></td><td><input type="radio" name="m2q10" value="2"></td><td><input type="radio" name="m2q10" value="3"></td></tr>
-        <tr><td>Beteiligen an einem Gespr&auml;ch</td>
-          <td><input type="radio" name="m2q11" value="0"></td><td><input type="radio" name="m2q11" value="1"></td><td><input type="radio" name="m2q11" value="2"></td><td><input type="radio" name="m2q11" value="3"></td></tr>
-      </tbody></table>
+      <div id="m2_orientierung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">R&auml;umliche und zeitliche Orientierung</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorh.</th></tr></thead><tbody>
+          <tr><td>&Ouml;rtliche Orientierung</td><td><input type="radio" name="m2q2" value="0" checked></td><td><input type="radio" name="m2q2" value="1"></td><td><input type="radio" name="m2q2" value="2"></td><td><input type="radio" name="m2q2" value="3"></td></tr>
+          <tr><td>Zeitliche Orientierung</td><td><input type="radio" name="m2q3" value="0" checked></td><td><input type="radio" name="m2q3" value="1"></td><td><input type="radio" name="m2q3" value="2"></td><td><input type="radio" name="m2q3" value="3"></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="m2_entscheidungen" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Allt&auml;gliche Entscheidungen treffen und umsetzen</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorh.</th></tr></thead><tbody>
+          <tr><td>Steuern von mehrschrittigen Alltagshandlungen</td><td><input type="radio" name="m2q5" value="0" checked></td><td><input type="radio" name="m2q5" value="1"></td><td><input type="radio" name="m2q5" value="2"></td><td><input type="radio" name="m2q5" value="3"></td></tr>
+          <tr><td>Treffen von Entscheidungen im Alltag</td><td><input type="radio" name="m2q6" value="0" checked></td><td><input type="radio" name="m2q6" value="1"></td><td><input type="radio" name="m2q6" value="2"></td><td><input type="radio" name="m2q6" value="3"></td></tr>
+          <tr><td>Verstehen von Sachverhalten und Informationen</td><td><input type="radio" name="m2q7" value="0" checked></td><td><input type="radio" name="m2q7" value="1"></td><td><input type="radio" name="m2q7" value="2"></td><td><input type="radio" name="m2q7" value="3"></td></tr>
+          <tr><td>Erkennen von Risiken und Gefahren</td><td><input type="radio" name="m2q8" value="0" checked></td><td><input type="radio" name="m2q8" value="1"></td><td><input type="radio" name="m2q8" value="2"></td><td><input type="radio" name="m2q8" value="3"></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="m2_austausch" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Austausch mit Umfeld</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorh.</th></tr></thead><tbody>
+          <tr><td>Mitteilen von elementaren Bed&uuml;rfnissen</td><td><input type="radio" name="m2q9" value="0" checked></td><td><input type="radio" name="m2q9" value="1"></td><td><input type="radio" name="m2q9" value="2"></td><td><input type="radio" name="m2q9" value="3"></td></tr>
+          <tr><td>Verstehen von Aufforderungen</td><td><input type="radio" name="m2q10" value="0" checked></td><td><input type="radio" name="m2q10" value="1"></td><td><input type="radio" name="m2q10" value="2"></td><td><input type="radio" name="m2q10" value="3"></td></tr>
+          <tr><td>Beteiligen an einem Gespr&auml;ch</td><td><input type="radio" name="m2q11" value="0" checked></td><td><input type="radio" name="m2q11" value="1"></td><td><input type="radio" name="m2q11" value="2"></td><td><input type="radio" name="m2q11" value="3"></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="m2_erkennen" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Erkennen und Erinnern</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorh.</th></tr></thead><tbody>
+          <tr><td>Erkennen von Personen aus dem n&auml;heren Umfeld</td><td><input type="radio" name="m2q1" value="0" checked></td><td><input type="radio" name="m2q1" value="1"></td><td><input type="radio" name="m2q1" value="2"></td><td><input type="radio" name="m2q1" value="3"></td></tr>
+          <tr><td>Erinnern an wesentliche Ereignisse</td><td><input type="radio" name="m2q4" value="0" checked></td><td><input type="radio" name="m2q4" value="1"></td><td><input type="radio" name="m2q4" value="2"></td><td><input type="radio" name="m2q4" value="3"></td></tr>
+        </tbody></table>
+      </div>
     </div>
 
     <!-- STEP 3: Verhaltensweisen - Kategorieauswahl -->
@@ -856,24 +836,29 @@
         <label>W&auml;hlen Sie alle zutreffenden Kategorien aus:</label>
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
-            <input type="checkbox" id="cat_aggression" onchange="toggleM3Cat()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
-            <span style="font-size: 0.9rem; color: var(--navy);">Aggressionen</span>
+            <input type="checkbox" id="cat_aggression" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Aggressionen</span>
           </label>
-          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
-            <input type="checkbox" id="cat_angst" onchange="toggleM3Cat()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
-            <span style="font-size: 0.9rem; color: var(--navy);">&Auml;ngste und Wahnvorstellungen</span>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="cat_angst" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5-2 4-2 4 2 4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">&Auml;ngste und Wahnvorstellungen</span>
           </label>
-          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
-            <input type="checkbox" id="cat_pflege" onchange="toggleM3Cat()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
-            <span style="font-size: 0.9rem; color: var(--navy);">Handlungen, die die Pflege erschweren</span>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="cat_pflege" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Handlungen, die die Pflege erschweren</span>
           </label>
-          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
-            <input type="checkbox" id="cat_motorik" onchange="toggleM3Cat()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
-            <span style="font-size: 0.9rem; color: var(--navy);">Motorische oder soziale Verhaltensauff&auml;lligkeiten</span>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="cat_motorik" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Motorische oder soziale Verhaltensauff&auml;lligkeiten</span>
           </label>
-          <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s; background: var(--off-white);">
-            <input type="checkbox" id="cat_keine" onchange="toggleM3Keine()" style="width: 20px; height: 20px; accent-color: var(--light-blue); flex-shrink: 0;">
-            <span style="font-size: 0.9rem; color: var(--gray);">Keine Verhaltensauff&auml;lligkeiten</span>
+          <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
+            <input type="checkbox" id="cat_keine" onchange="toggleM3Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--gray);">Keine Verhaltensauff&auml;lligkeiten</span>
           </label>
         </div>
       </div>
@@ -935,18 +920,23 @@
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_pflege" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="none"/><path d="M8 12l2 2 4-4"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">K&ouml;rperpflege</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_kleidung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2 12 5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10h12V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">An- und Auskleiden</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_ernaehrung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Ern&auml;hrung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_ausscheidung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2z"/><path d="M9 7h6"/><path d="M12 7v5"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Ausscheidung</span></label>
-          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
+          <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m4_cat_keine" onchange="toggleM4Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span style="font-size:0.9rem;color:var(--gray);">Komplett selbstst&auml;ndig in allen Bereichen</span></label>
         </div>
       </div>
@@ -1007,18 +997,23 @@
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_medikamente" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75A2.25 2.25 0 0 0 15.75 1.5H13.5m-3 0V3h3V1.5m-3 0h3m-6 18h9"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Medikamente, Injektionen &amp; Hilfsmittel</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_wundversorgung" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M6 8H5a4 4 0 0 0 0 8h1"/><line x1="6" y1="12" x2="18" y2="12"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Wundversorgung &amp; Spezialversorgung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_therapie" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Therapie &amp; Intensivma&szlig;nahmen</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_arzt" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Arztbesuche &amp; Di&auml;t</span></label>
-          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
+          <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m5_cat_keine" onchange="toggleM5Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span style="font-size:0.9rem;color:var(--gray);">Keine medizinischen Ma&szlig;nahmen erforderlich</span></label>
         </div>
       </div>
@@ -1070,26 +1065,57 @@
       </div>
     </div>
 
-    <!-- STEP 6: Alltagsleben - alle 6 offiziellen NBA-Kriterien -->
+    <!-- STEP 6: Alltagsleben - 3 Kategorien -->
     <div class="step" data-step="6">
       <div class="step-icon navy">&#127968;</div>
-      <h2>Modul 6: Gestaltung des Alltagslebens und sozialer Kontakte</h2>
-      <p class="step-desc">Wie selbstst&auml;ndig gestaltet die Person ihren Alltag? (Gewichtung: 15&nbsp;%)</p>
+      <h2>Modul 6: Alltagsleben &amp; soziale Kontakte</h2>
+      <p class="step-desc">In welchen Bereichen ben&ouml;tigt die Person Unterst&uuml;tzung? (Gewichtung: 15&nbsp;%)</p>
 
-      <table class="freq-table"><thead><tr><th></th><th>Selbst&shy;st&auml;ndig</th><th>&Uuml;berw. selbst.</th><th>&Uuml;berw. unselbst.</th><th>Unselbst&shy;st&auml;ndig</th></tr></thead><tbody>
-        <tr><td>Gestaltung des Tagesablaufs und Anpassung an Ver&auml;nderungen</td>
-          <td><input type="radio" name="m6q1" value="0"></td><td><input type="radio" name="m6q1" value="1"></td><td><input type="radio" name="m6q1" value="2"></td><td><input type="radio" name="m6q1" value="3"></td></tr>
-        <tr><td>Ruhen und Schlafen</td>
-          <td><input type="radio" name="m6q2" value="0"></td><td><input type="radio" name="m6q2" value="1"></td><td><input type="radio" name="m6q2" value="2"></td><td><input type="radio" name="m6q2" value="3"></td></tr>
-        <tr><td>Sich besch&auml;ftigen</td>
-          <td><input type="radio" name="m6q3" value="0"></td><td><input type="radio" name="m6q3" value="1"></td><td><input type="radio" name="m6q3" value="2"></td><td><input type="radio" name="m6q3" value="3"></td></tr>
-        <tr><td>Vornehmen von in die Zukunft gerichteten Planungen</td>
-          <td><input type="radio" name="m6q4" value="0"></td><td><input type="radio" name="m6q4" value="1"></td><td><input type="radio" name="m6q4" value="2"></td><td><input type="radio" name="m6q4" value="3"></td></tr>
-        <tr><td>Interaktion mit Personen im direkten Kontakt</td>
-          <td><input type="radio" name="m6q5" value="0"></td><td><input type="radio" name="m6q5" value="1"></td><td><input type="radio" name="m6q5" value="2"></td><td><input type="radio" name="m6q5" value="3"></td></tr>
-        <tr><td>Kontaktpflege zu Personen au&szlig;erhalb des direkten Umfelds</td>
-          <td><input type="radio" name="m6q6" value="0"></td><td><input type="radio" name="m6q6" value="1"></td><td><input type="radio" name="m6q6" value="2"></td><td><input type="radio" name="m6q6" value="3"></td></tr>
-      </tbody></table>
+      <div class="question">
+        <label>W&auml;hlen Sie alle zutreffenden Bereiche aus:</label>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m6_cat_tagesgestaltung" onchange="toggleM6Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Tagesgestaltung &amp; Ruhen</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m6_cat_beschaeftigung" onchange="toggleM6Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Besch&auml;ftigung &amp; Planung</span></label>
+          <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
+            <input type="checkbox" id="m6_cat_kontakte" onchange="toggleM6Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--navy);">Soziale Kontakte</span></label>
+          <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
+            <input type="checkbox" id="m6_cat_keine" onchange="toggleM6Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span style="font-size:0.9rem;color:var(--gray);">Keine Einschr&auml;nkungen</span></label>
+        </div>
+      </div>
+
+      <div id="m6_tagesgestaltung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Tagesgestaltung &amp; Ruhen</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>Gestaltung des Tagesablaufs</td><td><input type="radio" name="m6q1" value="0" checked></td><td><input type="radio" name="m6q1" value="1"></td><td><input type="radio" name="m6q1" value="2"></td><td><input type="radio" name="m6q1" value="3"></td></tr>
+          <tr><td>Ruhen und Schlafen</td><td><input type="radio" name="m6q2" value="0" checked></td><td><input type="radio" name="m6q2" value="1"></td><td><input type="radio" name="m6q2" value="2"></td><td><input type="radio" name="m6q2" value="3"></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="m6_beschaeftigung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Besch&auml;ftigung &amp; Planung</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>Sich besch&auml;ftigen</td><td><input type="radio" name="m6q3" value="0" checked></td><td><input type="radio" name="m6q3" value="1"></td><td><input type="radio" name="m6q3" value="2"></td><td><input type="radio" name="m6q3" value="3"></td></tr>
+          <tr><td>In die Zukunft gerichtete Planungen</td><td><input type="radio" name="m6q4" value="0" checked></td><td><input type="radio" name="m6q4" value="1"></td><td><input type="radio" name="m6q4" value="2"></td><td><input type="radio" name="m6q4" value="3"></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="m6_kontakte" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
+        <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Soziale Kontakte</h3>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+          <tr><td>Interaktion mit Personen im direkten Kontakt</td><td><input type="radio" name="m6q5" value="0" checked></td><td><input type="radio" name="m6q5" value="1"></td><td><input type="radio" name="m6q5" value="2"></td><td><input type="radio" name="m6q5" value="3"></td></tr>
+          <tr><td>Kontaktpflege au&szlig;erhalb des direkten Umfelds</td><td><input type="radio" name="m6q6" value="0" checked></td><td><input type="radio" name="m6q6" value="1"></td><td><input type="radio" name="m6q6" value="2"></td><td><input type="radio" name="m6q6" value="3"></td></tr>
+        </tbody></table>
+      </div>
     </div>
 
     <!-- STEP 7: Ergebnis -->
@@ -1191,12 +1217,12 @@ const stepNames = [
 ];
 
 const moduleQuestions = {
-  1: ['m1q1','m1q2','m1q3','m1q4','m1q5'],
-  2: ['m2q1','m2q2','m2q3','m2q4','m2q5','m2q6','m2q7','m2q8','m2q9','m2q10','m2q11'],
+  1: [], // Module 1 uses category checkboxes
+  2: [], // Module 2 uses category checkboxes
   3: [], // Module 3 uses category-based questions, handled separately
   4: [], // Module 4 uses category checkboxes
   5: [], // Module 5 uses category checkboxes
-  6: ['m6q1','m6q2','m6q3','m6q4','m6q5','m6q6']
+  6: [] // Module 6 uses category checkboxes
 };
 
 // All 13 official NBA Module 3 criteria
@@ -1229,6 +1255,54 @@ function toggleM3Cat() {
   if (anyChecked) document.getElementById('cat_keine').checked = false;
   checkStepComplete(3);
 }
+
+// Generic category toggle helper
+function genericToggle(catMap, keineId, stepNum) {
+  let anyChecked = false;
+  Object.entries(catMap).forEach(([cbId, {div, qs}]) => {
+    const checked = document.getElementById(cbId).checked;
+    document.getElementById(div).style.display = checked ? 'block' : 'none';
+    if (checked) anyChecked = true;
+    if (!checked) qs.forEach(q => {
+      const r = document.querySelector(`input[name="${q}"][value="0"]`);
+      if (r) r.checked = true;
+    });
+  });
+  if (anyChecked) document.getElementById(keineId).checked = false;
+  checkStepComplete(stepNum);
+}
+function genericToggleKeine(catMap, keineId, stepNum, extraReset) {
+  if (document.getElementById(keineId).checked) {
+    Object.entries(catMap).forEach(([cbId, {div, qs}]) => {
+      document.getElementById(cbId).checked = false;
+      document.getElementById(div).style.display = 'none';
+      qs.forEach(q => {
+        const r = document.querySelector(`input[name="${q}"][value="0"]`);
+        if (r) r.checked = true;
+      });
+    });
+    if (extraReset) extraReset();
+  }
+  checkStepComplete(stepNum);
+}
+
+// Module 1 category toggles
+const m1CatMap = {
+  'm1_cat_fortbewegen': { div: 'm1_fortbewegen', qs: ['m1q4','m1q5'] },
+  'm1_cat_sitzen': { div: 'm1_sitzen', qs: ['m1q1','m1q2','m1q3'] }
+};
+function toggleM1Cat() { genericToggle(m1CatMap, 'm1_cat_keine', 1); }
+function toggleM1Keine() { genericToggleKeine(m1CatMap, 'm1_cat_keine', 1); }
+
+// Module 2 category toggles
+const m2CatMap = {
+  'm2_cat_orientierung': { div: 'm2_orientierung', qs: ['m2q2','m2q3'] },
+  'm2_cat_entscheidungen': { div: 'm2_entscheidungen', qs: ['m2q5','m2q6','m2q7','m2q8'] },
+  'm2_cat_austausch': { div: 'm2_austausch', qs: ['m2q9','m2q10','m2q11'] },
+  'm2_cat_erkennen': { div: 'm2_erkennen', qs: ['m2q1','m2q4'] }
+};
+function toggleM2Cat() { genericToggle(m2CatMap, 'm2_cat_keine', 2); }
+function toggleM2Keine() { genericToggleKeine(m2CatMap, 'm2_cat_keine', 2); }
 
 // Module 4 category toggles
 const m4CatMap = {
@@ -1310,6 +1384,15 @@ function toggleM5Keine() {
   checkStepComplete(5);
 }
 
+// Module 6 category toggles
+const m6CatMap = {
+  'm6_cat_tagesgestaltung': { div: 'm6_tagesgestaltung', qs: ['m6q1','m6q2'] },
+  'm6_cat_beschaeftigung': { div: 'm6_beschaeftigung', qs: ['m6q3','m6q4'] },
+  'm6_cat_kontakte': { div: 'm6_kontakte', qs: ['m6q5','m6q6'] }
+};
+function toggleM6Cat() { genericToggle(m6CatMap, 'm6_cat_keine', 6); }
+function toggleM6Keine() { genericToggleKeine(m6CatMap, 'm6_cat_keine', 6); }
+
 function toggleM3Keine() {
   const keine = document.getElementById('cat_keine').checked;
   if (keine) {
@@ -1353,6 +1436,18 @@ function showStep(step) {
 
 function checkStepComplete(step) {
   if (step === 0 || step >= 7) return;
+  if (step === 1) {
+    const anyCat = Object.keys(m1CatMap).some(id => document.getElementById(id).checked);
+    const keine = document.getElementById('m1_cat_keine').checked;
+    document.getElementById('btnNext').disabled = !(anyCat || keine);
+    return;
+  }
+  if (step === 2) {
+    const anyCat = Object.keys(m2CatMap).some(id => document.getElementById(id).checked);
+    const keine = document.getElementById('m2_cat_keine').checked;
+    document.getElementById('btnNext').disabled = !(anyCat || keine);
+    return;
+  }
   if (step === 3) {
     // Module 3: at least one category or "Keine" must be checked
     const anyCategory = ['cat_aggression','cat_angst','cat_pflege','cat_motorik'].some(id => document.getElementById(id).checked);
@@ -1369,6 +1464,12 @@ function checkStepComplete(step) {
   if (step === 5) {
     const anyCat = Object.keys(m5CatMap).some(id => document.getElementById(id).checked);
     const keine = document.getElementById('m5_cat_keine').checked;
+    document.getElementById('btnNext').disabled = !(anyCat || keine);
+    return;
+  }
+  if (step === 6) {
+    const anyCat = Object.keys(m6CatMap).some(id => document.getElementById(id).checked);
+    const keine = document.getElementById('m6_cat_keine').checked;
     document.getElementById('btnNext').disabled = !(anyCat || keine);
     return;
   }
@@ -1418,9 +1519,13 @@ function getModuleRaw(moduleNum) {
 }
 
 function calculateResult() {
-  // Module 1: Mobilität (10%) - 5 questions (= official count), max 15
+  // Module 1: Mobilität (10%) - 5 questions, max 15
   // Official thresholds apply directly
-  const m1raw = getModuleRaw(1);
+  const m1Questions = ['m1q1','m1q2','m1q3','m1q4','m1q5'];
+  const m1raw = m1Questions.reduce((sum, q) => {
+    const el = document.querySelector(`input[name="${q}"]:checked`);
+    return sum + (el ? parseInt(el.value) : 0);
+  }, 0);
   let m1weighted;
   if (m1raw <= 1) m1weighted = 0;
   else if (m1raw <= 3) m1weighted = 2.5;
@@ -1430,7 +1535,11 @@ function calculateResult() {
 
   // Module 2: Kognitive Fähigkeiten - all 11 official NBA criteria, max 33
   // Official NBA thresholds apply directly
-  const m2raw = getModuleRaw(2);
+  const m2Questions = ['m2q1','m2q2','m2q3','m2q4','m2q5','m2q6','m2q7','m2q8','m2q9','m2q10','m2q11'];
+  const m2raw = m2Questions.reduce((sum, q) => {
+    const el = document.querySelector(`input[name="${q}"]:checked`);
+    return sum + (el ? parseInt(el.value) : 0);
+  }, 0);
   let m2weighted;
   if (m2raw <= 1) m2weighted = 0;
   else if (m2raw <= 5) m2weighted = 3.75;
@@ -1488,7 +1597,11 @@ function calculateResult() {
 
   // Module 6: Alltagsleben (15%) - all 6 official criteria, max 18
   // Official NBA thresholds apply directly
-  const m6raw = getModuleRaw(6);
+  const m6Questions = ['m6q1','m6q2','m6q3','m6q4','m6q5','m6q6'];
+  const m6raw = m6Questions.reduce((sum, q) => {
+    const el = document.querySelector(`input[name="${q}"]:checked`);
+    return sum + (el ? parseInt(el.value) : 0);
+  }, 0);
   let m6weighted;
   if (m6raw <= 0) m6weighted = 0;
   else if (m6raw <= 3) m6weighted = 3.75;
