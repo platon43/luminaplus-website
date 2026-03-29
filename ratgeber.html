@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pflege-Ratgeber | LuminaPlus eG &mdash; Tipps &amp; Wissen rund um Pflege</title>
+  <meta name="description" content="Unser Pflege-Ratgeber: Alles &uuml;ber Pflegegrad beantragen, Pflegeleistungen, Pflegegeld, Verhinderungspflege und mehr. Kostenlos von Ihrem Pflegedienst in Hamburg.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --green-soft: #d4f5db;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: #333; line-height: 1.7; background: var(--off-white); overflow-x: hidden; }
+
+    /* Navbar */
+    .navbar { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--light-gray); transition: box-shadow 0.3s; }
+    .navbar.scrolled { box-shadow: 0 2px 20px rgba(8,55,107,0.08); }
+    .navbar-inner { max-width: 1200px; margin: 0 auto; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo-img { height: 44px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; margin: 0 1.5rem; }
+    .mobile-only { display: none; }
+    @media (max-width: 768px) { .mobile-only { display: block; } }
+    .nav-links a { text-decoration: none; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; color: var(--navy); letter-spacing: 0.03em; position: relative; transition: color 0.3s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--light-blue); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--dark-blue); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { background: var(--light-blue); color: white !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: background 0.3s, transform 0.2s; }
+    .nav-cta:hover { background: var(--dark-blue); transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 200; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); margin: 5px 0; transition: all 0.3s; border-radius: 2px; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(8,55,107,0.5); z-index: 90; }
+    .mobile-overlay.active { display: block; }
+
+    /* Hero */
+    .hero {
+      background: var(--navy);
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(53,192,237,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Filter tabs */
+    .filter-bar {
+      max-width: 1100px;
+      margin: -1.5rem auto 0;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: white;
+      border-radius: 12px;
+      padding: 0.5rem;
+      box-shadow: 0 4px 20px rgba(8,55,107,0.1);
+      overflow-x: auto;
+    }
+    .filter-tab {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      border: none;
+      background: none;
+    }
+    .filter-tab:hover { background: var(--off-white); color: var(--navy); }
+    .filter-tab.active { background: var(--light-blue); color: white; }
+
+    /* Articles grid */
+    .articles-section { padding: 3rem 2rem 5rem; }
+    .articles-inner { max-width: 1100px; margin: 0 auto; }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .article-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--light-gray);
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .article-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(8,55,107,0.08);
+      border-color: var(--light-blue);
+    }
+    .article-header {
+      padding: 1.5rem 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .article-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .article-icon.blue { background: rgba(53,192,237,0.12); }
+    .article-icon.green { background: rgba(154,235,166,0.18); }
+    .article-icon.navy { background: rgba(8,55,107,0.08); }
+    .article-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(53,192,237,0.1);
+      color: var(--dark-blue);
+    }
+    .article-body {
+      padding: 1rem 1.5rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .article-body h3 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .article-body p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .article-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--light-blue);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-top: 1rem;
+      transition: gap 0.2s;
+    }
+    .article-link:hover { gap: 0.6rem; color: var(--dark-blue); }
+
+    /* Featured article */
+    .featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--dark-blue) 100%);
+      border: none;
+    }
+    .featured .article-header { display: none; }
+    .featured-left {
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      background: rgba(154,235,166,0.2);
+      color: var(--green);
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+    .featured h3 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: white;
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+    }
+    .featured p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .featured .article-link { color: var(--green); }
+    .featured .article-link:hover { color: white; }
+    .featured-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Tools banner */
+    .tools-banner {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .tool-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      border: 2px solid var(--light-gray);
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .tool-card:hover {
+      border-color: var(--light-blue);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    }
+    .tool-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .tool-icon.blue { background: rgba(53,192,237,0.12); }
+    .tool-icon.green { background: rgba(154,235,166,0.18); }
+    .tool-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+    .tool-card p {
+      font-size: 0.82rem;
+      color: var(--gray);
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .newsletter h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .newsletter p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.5rem;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transition: border-color 0.3s;
+    }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.5); }
+    .newsletter-form input:focus { outline: none; border-color: white; background: rgba(255,255,255,0.15); }
+    .newsletter-form button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      color: var(--navy);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .newsletter-form button:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+
+    /* Footer */
+    .footer { background: var(--navy); color: rgba(255,255,255,0.5); padding: 3rem 2rem 1.5rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { display: flex; align-items: center; gap: 0.8rem; }
+    .footer-logo { height: 32px; opacity: 0.8; }
+    .footer p { font-size: 0.8rem; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--light-blue); }
+    .footer-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.08); margin: 1.5rem 0 1rem; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; text-align: center; font-size: 0.75rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none; position: fixed; top: 0; right: 0; width: 280px; height: 100vh;
+        background: white; flex-direction: column; padding: 5rem 2rem 2rem; z-index: 100;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+      }
+      .nav-links.active { display: flex; }
+      .nav-links li { border-bottom: 1px solid var(--light-gray); }
+      .nav-links a { display: block; padding: 0.8rem 0; font-size: 1rem; }
+      .nav-links a::after { display: none; }
+      .nav-links .mobile-cta { color: var(--light-blue); font-weight: 700; }
+      .nav-cta { display: none; }
+      .featured { grid-template-columns: 1fr; }
+      .featured-right { display: none; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="./"><img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="logo-img"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./#services">Leistungen</a></li>
+      <li><a href="./pflegegrad-rechner">Pflegegrad-Rechner</a></li>
+      <li><a href="./pflegehilfsmittel">Pflegehilfsmittel</a></li>
+      <li><a href="./ratgeber">Ratgeber</a></li>
+      <li><a href="./karriere-luminaplus">Karriere</a></li>
+      <li><a href="./#contact">Kontakt</a></li>
+      <li class="mobile-only"><a href="tel:+494018035922" class="mobile-cta">Jetzt anrufen</a></li>
+    </ul>
+    <a href="tel:+494018035922" class="nav-cta">+49 40 18035922</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>Pflege-Ratgeber</h1>
+  <p>Wissen, Tipps und Antworten auf alle Fragen rund um Pflege, Pflegegrad und Pflegeleistungen &mdash; verst&auml;ndlich erkl&auml;rt.</p>
+</section>
+
+<!-- Filter -->
+<div class="filter-bar">
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterArticles('alle')">Alle Themen</button>
+    <button class="filter-tab" onclick="filterArticles('pflegegrad')">Pflegegrad</button>
+    <button class="filter-tab" onclick="filterArticles('leistungen')">Leistungen</button>
+    <button class="filter-tab" onclick="filterArticles('angehoerige')">F&uuml;r Angeh&ouml;rige</button>
+    <button class="filter-tab" onclick="filterArticles('recht')">Recht &amp; Finanzen</button>
+    <button class="filter-tab" onclick="filterArticles('alltag')">Pflege im Alltag</button>
+  </div>
+</div>
+
+<!-- Tools -->
+<div class="articles-section" style="padding-bottom: 0;">
+  <div class="tools-banner" style="padding: 0; margin-bottom: 0;">
+    <div class="tools-grid">
+      <a href="./pflegegrad-rechner" class="tool-card">
+        <div class="tool-icon blue">&#128202;</div>
+        <div>
+          <h3>Pflegegrad-Rechner</h3>
+          <p>Berechnen Sie kostenlos den voraussichtlichen Pflegegrad &rarr;</p>
+        </div>
+      </a>
+      <a href="./pflegegrad-antrag" class="tool-card">
+        <div class="tool-icon green">&#128203;</div>
+        <div>
+          <h3>Pflegegrad-Antrag</h3>
+          <p>Pflegegrad online beantragen &mdash; wir helfen Ihnen dabei &rarr;</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Articles -->
+<section class="articles-section">
+  <div class="articles-inner">
+    <div class="articles-grid" id="articlesGrid">
+
+      <!-- Featured Article -->
+      <div class="article-card featured" data-category="pflegegrad">
+        <div class="featured-left">
+          <div class="featured-tag">Wichtigster Ratgeber</div>
+          <h3>Pflegegrad beantragen: Schritt-f&uuml;r-Schritt Anleitung 2026</h3>
+          <p>Alles was Sie wissen m&uuml;ssen: Vom Erstantrag &uuml;ber die MD-Begutachtung bis zur Bewilligung. Mit Tipps f&uuml;r eine erfolgreiche Einstufung.</p>
+          <a href="./pflegegrad-antrag" class="article-link">Jetzt lesen &rarr;</a>
+        </div>
+        <div class="featured-right">&#128203;</div>
+      </div>
+
+      <!-- Pflegegrad Articles -->
+      <div class="article-card" data-category="pflegegrad">
+        <div class="article-header">
+          <div class="article-icon blue">&#128202;</div>
+          <span class="article-tag">Pflegegrad</span>
+        </div>
+        <div class="article-body">
+          <h3>Pflegegrade 1&ndash;5: &Uuml;bersicht aller Leistungen und Voraussetzungen</h3>
+          <p>Welcher Pflegegrad steht Ihnen zu? Welche Leistungen bekommen Sie? Alle f&uuml;nf Pflegegrade im &Uuml;berblick mit Leistungstabelle.</p>
+          <a href="./pflegegrad-rechner" class="article-link">Zum Pflegegrad-Rechner &rarr;</a>
+        </div>
+      </div>
+
+      <div class="article-card" data-category="pflegegrad">
+        <div class="article-header">
+          <div class="article-icon blue">&#128269;</div>
+          <span class="article-tag">Pflegegrad</span>
+        </div>
+        <div class="article-body">
+          <h3>MD-Begutachtung: So bereiten Sie sich optimal vor</h3>
+          <p>Der Medizinische Dienst kommt zu Besuch? Mit unserer Checkliste und Tipps aus der Praxis sind Sie bestens vorbereitet.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <div class="article-card" data-category="pflegegrad">
+        <div class="article-header">
+          <div class="article-icon blue">&#128200;</div>
+          <span class="article-tag">Pflegegrad</span>
+        </div>
+        <div class="article-body">
+          <h3>Pflegegrad erh&ouml;hen: Wann und wie ein H&ouml;herstufungsantrag sinnvoll ist</h3>
+          <p>Wenn sich der Gesundheitszustand verschlechtert, kann ein h&ouml;herer Pflegegrad beantragt werden. Wir erkl&auml;ren wann und wie.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Leistungen Articles -->
+      <div class="article-card" data-category="leistungen">
+        <div class="article-header">
+          <div class="article-icon green">&#128176;</div>
+          <span class="article-tag">Leistungen</span>
+        </div>
+        <div class="article-body">
+          <h3>Pflegegeld 2026: Alle Betr&auml;ge, Voraussetzungen und Tipps</h3>
+          <p>Pflegegeld ist die wichtigste Leistung f&uuml;r pflegende Angeh&ouml;rige. Aktuelle Betr&auml;ge, Antragsweg und was Sie beachten m&uuml;ssen.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <div class="article-card" data-category="leistungen">
+        <div class="article-header">
+          <div class="article-icon green">&#128197;</div>
+          <span class="article-tag">Leistungen</span>
+        </div>
+        <div class="article-body">
+          <h3>Verhinderungspflege: Bis zu 1.612&nbsp;&euro; f&uuml;r Ihre Auszeit</h3>
+          <p>Wenn pflegende Angeh&ouml;rige eine Pause brauchen: So nutzen Sie die Verhinderungspflege richtig und kombinieren sie mit Kurzzeitpflege.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <div class="article-card" data-category="leistungen">
+        <div class="article-header">
+          <div class="article-icon green">&#127873;</div>
+          <span class="article-tag">Leistungen</span>
+        </div>
+        <div class="article-body">
+          <h3>Entlastungsbetrag: 125&nbsp;&euro;/Monat sinnvoll nutzen</h3>
+          <p>Der Entlastungsbetrag wird oft nicht abgerufen. Erfahren Sie, wof&uuml;r Sie ihn einsetzen k&ouml;nnen und wie Sie keine Leistung verschenken.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <div class="article-card" data-category="leistungen">
+        <div class="article-header">
+          <div class="article-icon green">&#128230;</div>
+          <span class="article-tag">Leistungen</span>
+        </div>
+        <div class="article-body">
+          <h3>Kostenlose Pflegehilfsmittel: Bis zu 42&nbsp;&euro;/Monat</h3>
+          <p>Handschuhe, Desinfektionsmittel, Bettschutz &mdash; all das bezahlt die Pflegekasse. So bestellen Sie Ihre monatliche Pflegebox.</p>
+          <a href="./pflegehilfsmittel" class="article-link">Jetzt bestellen &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Angehörige Articles -->
+      <div class="article-card" data-category="angehoerige">
+        <div class="article-header">
+          <div class="article-icon navy">&#128150;</div>
+          <span class="article-tag">Angeh&ouml;rige</span>
+        </div>
+        <div class="article-body">
+          <h3>Pflege zu Hause: Tipps f&uuml;r pflegende Angeh&ouml;rige</h3>
+          <p>Die h&auml;usliche Pflege ist anspruchsvoll. Praktische Tipps, Entlastungsm&ouml;glichkeiten und wo Sie Unterst&uuml;tzung finden.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <div class="article-card" data-category="angehoerige">
+        <div class="article-header">
+          <div class="article-icon navy">&#128106;</div>
+          <span class="article-tag">Angeh&ouml;rige</span>
+        </div>
+        <div class="article-body">
+          <h3>Pflegekurse f&uuml;r Angeh&ouml;rige: Kostenlos und wertvoll</h3>
+          <p>Pflegekassen bieten kostenlose Schulungen an. Lernen Sie richtige Pflegetechniken und sch&uuml;tzen Sie Ihre eigene Gesundheit.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Recht & Finanzen -->
+      <div class="article-card" data-category="recht">
+        <div class="article-header">
+          <div class="article-icon blue">&#9878;</div>
+          <span class="article-tag">Recht</span>
+        </div>
+        <div class="article-body">
+          <h3>Vorsorgevollmacht und Patientenverf&uuml;gung: Was Sie jetzt regeln sollten</h3>
+          <p>Warum jeder eine Vorsorgevollmacht braucht, was eine Patientenverf&uuml;gung regelt und wie Sie beides rechtssicher erstellen.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <div class="article-card" data-category="recht">
+        <div class="article-header">
+          <div class="article-icon blue">&#128179;</div>
+          <span class="article-tag">Finanzen</span>
+        </div>
+        <div class="article-body">
+          <h3>Pflege und Steuern: Was Sie absetzen k&ouml;nnen</h3>
+          <p>Pflegekosten k&ouml;nnen steuerlich geltend gemacht werden. Ein &Uuml;berblick &uuml;ber Freibetr&auml;ge, Pauschalen und Absetzm&ouml;glichkeiten.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Alltag -->
+      <div class="article-card" data-category="alltag">
+        <div class="article-header">
+          <div class="article-icon green">&#127968;</div>
+          <span class="article-tag">Alltag</span>
+        </div>
+        <div class="article-body">
+          <h3>Wohnraumanpassung: Bis zu 4.000&nbsp;&euro; Zuschuss f&uuml;r barrierefreies Wohnen</h3>
+          <p>Haltegriffe, Rampen, ebenerdige Dusche &mdash; die Pflegekasse bezuschusst Ma&szlig;nahmen f&uuml;r ein sichereres Zuhause.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+
+      <div class="article-card" data-category="alltag">
+        <div class="article-header">
+          <div class="article-icon green">&#127860;</div>
+          <span class="article-tag">Alltag</span>
+        </div>
+        <div class="article-body">
+          <h3>Ern&auml;hrung im Alter: Gesund und ausgewogen essen</h3>
+          <p>Richtige Ern&auml;hrung ist im Alter besonders wichtig. Tipps f&uuml;r ausgewogene Mahlzeiten, Trinkmenge und Essen bei Schluckbeschwerden.</p>
+          <a href="#" class="article-link">Weiterlesen &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <h2>Pflege-Newsletter</h2>
+  <p>Monatlich: Aktuelle Pflege-Tipps, Gesetzes&auml;nderungen und Ratgeber direkt in Ihr Postfach.</p>
+  <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\'color:white;font-weight:600;padding:0.8rem;\'>Vielen Dank! Sie erhalten bald unseren Newsletter.</p>';">
+    <input type="email" placeholder="Ihre E-Mail-Adresse" required>
+    <button type="submit">Anmelden</button>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="footer-logo" style="filter: brightness(0) invert(1);">
+      <p>&copy; 2026 LuminaPlus eG</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="./impressum-luminaplus">Impressum</a></li>
+      <li><a href="./datenschutz-luminaplus">Datenschutz</a></li>
+    </ul>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <p>LuminaPlus eG &middot; Angerstra&szlig;e 42 &middot; 22087 Hamburg &middot; Amtsgericht Hamburg, GnR 1170</p>
+  </div>
+</footer>
+
+<script>
+// Navbar
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const overlay = document.getElementById('mobileOverlay');
+function toggleMenu() {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('active');
+  overlay.classList.toggle('active');
+}
+hamburger.addEventListener('click', toggleMenu);
+overlay.addEventListener('click', toggleMenu);
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// Filter
+function filterArticles(category) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const cards = document.querySelectorAll('.article-card');
+  cards.forEach(card => {
+    if (category === 'alle' || card.dataset.category === category) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

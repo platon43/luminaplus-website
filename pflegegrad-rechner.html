@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pflegegrad-Rechner | LuminaPlus eG &mdash; Kostenlos Pflegegrad berechnen</title>
+  <meta name="description" content="Berechnen Sie kostenlos Ihren voraussichtlichen Pflegegrad. Basierend auf dem offiziellen Begutachtungsassessment (NBA). Ambulanter Pflegedienst Hamburg.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --green-soft: #d4f5db;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: #333; line-height: 1.7; background: var(--off-white); overflow-x: hidden; }
+
+    /* Navbar */
+    .navbar { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--light-gray); transition: box-shadow 0.3s; }
+    .navbar.scrolled { box-shadow: 0 2px 20px rgba(8,55,107,0.08); }
+    .navbar-inner { max-width: 1200px; margin: 0 auto; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo-img { height: 44px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; margin: 0 1.5rem; }
+    .mobile-only { display: none; }
+    @media (max-width: 768px) { .mobile-only { display: block; } }
+    .nav-links a { text-decoration: none; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; color: var(--navy); letter-spacing: 0.03em; position: relative; transition: color 0.3s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--light-blue); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--dark-blue); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { background: var(--light-blue); color: white !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: background 0.3s, transform 0.2s; }
+    .nav-cta:hover { background: var(--dark-blue); transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 200; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); margin: 5px 0; transition: all 0.3s; border-radius: 2px; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(8,55,107,0.5); z-index: 90; }
+    .mobile-overlay.active { display: block; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--dark-blue) 100%);
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(53,192,237,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(154,235,166,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badges {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Calculator Container */
+    .calc-container {
+      max-width: 780px;
+      margin: -2rem auto 4rem;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .calc-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(8,55,107,0.1);
+      overflow: hidden;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+      height: 4px;
+      background: var(--light-gray);
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--light-blue), var(--green));
+      transition: width 0.5s ease;
+      border-radius: 0 2px 2px 0;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    .progress-step {
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* Step Content */
+    .step {
+      display: none;
+      padding: 2.5rem 2rem;
+    }
+    .step.active { display: block; }
+    .step-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.2rem;
+    }
+    .step-icon.blue { background: rgba(53,192,237,0.12); }
+    .step-icon.green { background: rgba(154,235,166,0.2); }
+    .step-icon.navy { background: rgba(8,55,107,0.08); }
+    .step h2 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+    .step-desc {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    /* Questions */
+    .question {
+      margin-bottom: 1.8rem;
+    }
+    .question:last-of-type { margin-bottom: 0; }
+    .question label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 0.8rem;
+    }
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .option {
+      position: relative;
+    }
+    .option input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1rem;
+      border: 2px solid var(--light-gray);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+      color: #555;
+      background: white;
+    }
+    .option-label:hover {
+      border-color: var(--light-blue);
+      background: rgba(53,192,237,0.03);
+    }
+    .option input:checked + .option-label {
+      border-color: var(--light-blue);
+      background: rgba(53,192,237,0.08);
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .option-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--light-gray);
+      flex-shrink: 0;
+      position: relative;
+      transition: all 0.2s;
+    }
+    .option input:checked + .option-label .option-dot {
+      border-color: var(--light-blue);
+      background: var(--light-blue);
+    }
+    .option input:checked + .option-label .option-dot::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    /* Buttons */
+    .step-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid var(--light-gray);
+      background: var(--off-white);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--light-blue);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--dark-blue); transform: translateY(-1px); }
+    .btn-primary:disabled { background: var(--light-gray); color: var(--gray); cursor: not-allowed; transform: none; }
+    .btn-secondary {
+      background: white;
+      color: var(--navy);
+      border: 2px solid var(--light-gray);
+    }
+    .btn-secondary:hover { border-color: var(--navy); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--gray);
+      padding: 0.8rem 1rem;
+    }
+    .btn-ghost:hover { color: var(--navy); }
+
+    /* Intro Step */
+    .intro-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .intro-feature {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+    .intro-feature-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(53,192,237,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .intro-feature h4 {
+      font-size: 0.85rem;
+      color: var(--navy);
+      margin-bottom: 0.15rem;
+    }
+    .intro-feature p {
+      font-size: 0.78rem;
+      color: var(--gray);
+      line-height: 1.4;
+    }
+    .intro-disclaimer {
+      background: rgba(53,192,237,0.06);
+      border-left: 3px solid var(--light-blue);
+      padding: 1rem 1.2rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.82rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* Result Step */
+    .result-card {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(53,192,237,0.06) 0%, rgba(154,235,166,0.06) 100%);
+      border-radius: 12px;
+      margin-bottom: 2rem;
+    }
+    .result-grade {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .result-grade-label {
+      font-size: 1.1rem;
+      color: var(--dark-blue);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .result-score {
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    .result-bar-container {
+      background: var(--light-gray);
+      border-radius: 50px;
+      height: 12px;
+      max-width: 400px;
+      margin: 0 auto 0.5rem;
+      overflow: hidden;
+    }
+    .result-bar {
+      height: 100%;
+      border-radius: 50px;
+      transition: width 1.5s ease;
+      background: linear-gradient(90deg, var(--green), var(--light-blue), var(--dark-blue), var(--navy));
+    }
+    .result-bar-labels {
+      display: flex;
+      justify-content: space-between;
+      max-width: 400px;
+      margin: 0 auto 1.5rem;
+      font-size: 0.7rem;
+      color: var(--gray);
+    }
+    .result-details {
+      text-align: left;
+    }
+    .result-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 0.9rem;
+    }
+    .result-detail-row:last-child { border: none; }
+    .result-detail-label { color: var(--gray); }
+    .result-detail-value {
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .result-detail-bar {
+      width: 80px;
+      height: 6px;
+      background: var(--light-gray);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-left: 0.8rem;
+    }
+    .result-detail-bar-fill {
+      height: 100%;
+      background: var(--light-blue);
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+    .result-detail-right {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Benefits info */
+    .benefits-info {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border: 1px solid var(--light-gray);
+    }
+    .benefits-info h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .benefit-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 0.85rem;
+    }
+    .benefit-row:last-child { border: none; }
+    .benefit-label { color: #555; }
+    .benefit-value { font-weight: 700; color: var(--navy); }
+
+    /* CTA Section */
+    .result-cta {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--dark-blue) 100%);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .result-cta h3 {
+      font-family: var(--font-heading);
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .result-cta p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .result-cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      background: white;
+      color: var(--navy);
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+    .btn-outline-white {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+    /* Footer */
+    .footer { background: var(--navy); color: rgba(255,255,255,0.5); padding: 3rem 2rem 1.5rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { display: flex; align-items: center; gap: 0.8rem; }
+    .footer-logo { height: 32px; opacity: 0.8; }
+    .footer p { font-size: 0.8rem; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--light-blue); }
+    .footer-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.08); margin: 1.5rem 0 1rem; }
+    .footer-bottom { max-width: 1200px; margin: 0 auto; text-align: center; font-size: 0.75rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 280px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        padding: 5rem 2rem 2rem;
+        z-index: 100;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+      }
+      .nav-links.active { display: flex; }
+      .nav-links li { border-bottom: 1px solid var(--light-gray); }
+      .nav-links a { display: block; padding: 0.8rem 0; font-size: 1rem; }
+      .nav-links a::after { display: none; }
+      .nav-links .mobile-cta { color: var(--light-blue); font-weight: 700; }
+      .nav-cta { display: none; }
+      .step { padding: 1.5rem; }
+      .step-actions { padding: 1rem 1.5rem; }
+      .options { grid-template-columns: 1fr; }
+      .intro-features { grid-template-columns: 1fr; }
+      .result-cta-buttons { flex-direction: column; align-items: center; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .calc-container { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="./"><img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="logo-img"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./#services">Leistungen</a></li>
+      <li><a href="./pflegegrad-rechner">Pflegegrad-Rechner</a></li>
+      <li><a href="./pflegehilfsmittel">Pflegehilfsmittel</a></li>
+      <li><a href="./ratgeber">Ratgeber</a></li>
+      <li><a href="./karriere-luminaplus">Karriere</a></li>
+      <li><a href="./#contact">Kontakt</a></li>
+      <li class="mobile-only"><a href="tel:+494018035922" class="mobile-cta">Jetzt anrufen</a></li>
+    </ul>
+    <a href="tel:+494018035922" class="nav-cta">+49 40 18035922</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>Pflegegrad-Rechner</h1>
+  <p>Finden Sie in wenigen Minuten heraus, welchen Pflegegrad Sie oder Ihr Angehöriger voraussichtlich erhalten können.</p>
+  <div class="hero-badges">
+    <span class="hero-badge">&#9201; Ca. 5 Minuten</span>
+    <span class="hero-badge">&#10003; Kostenlos</span>
+    <span class="hero-badge">&#128203; Basierend auf dem NBA</span>
+  </div>
+</section>
+
+<!-- Calculator -->
+<div class="calc-container">
+  <div class="calc-card">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <div class="progress-info">
+      <span class="progress-step" id="progressStep">Einleitung</span>
+      <span id="progressPercent">0 %</span>
+    </div>
+
+    <!-- STEP 0: Intro -->
+    <div class="step active" data-step="0">
+      <div class="step-icon blue">&#128209;</div>
+      <h2>Wie funktioniert der Rechner?</h2>
+      <p class="step-desc">
+        Unser Pflegegrad-Rechner orientiert sich am <strong>Neuen Begutachtungsassessment (NBA)</strong>,
+        das auch der Medizinische Dienst (MD) bei der offiziellen Begutachtung verwendet.
+      </p>
+      <div class="intro-features">
+        <div class="intro-feature">
+          <div class="intro-feature-icon">1</div>
+          <div>
+            <h4>Mobilit&auml;t</h4>
+            <p>K&ouml;rperliche Beweglichkeit</p>
+          </div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-feature-icon">2</div>
+          <div>
+            <h4>Geistige F&auml;higkeiten</h4>
+            <p>Orientierung &amp; Kommunikation</p>
+          </div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-feature-icon">3</div>
+          <div>
+            <h4>Verhalten</h4>
+            <p>Psychische Problemlagen</p>
+          </div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-feature-icon">4</div>
+          <div>
+            <h4>Selbstversorgung</h4>
+            <p>K&ouml;rperpflege, Ern&auml;hrung</p>
+          </div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-feature-icon">5</div>
+          <div>
+            <h4>Krankheitsbew&auml;ltigung</h4>
+            <p>Medikamente, Arztbesuche</p>
+          </div>
+        </div>
+        <div class="intro-feature">
+          <div class="intro-feature-icon">6</div>
+          <div>
+            <h4>Alltagsleben</h4>
+            <p>Tagesgestaltung, Kontakte</p>
+          </div>
+        </div>
+      </div>
+      <div class="intro-disclaimer">
+        <strong>Hinweis:</strong> Dieser Rechner liefert eine <strong>Sch&auml;tzung</strong>.
+        Die endg&uuml;ltige Einstufung erfolgt durch den Medizinischen Dienst.
+        Wir beraten Sie gerne pers&ouml;nlich &mdash; kostenlos und unverbindlich.
+      </div>
+    </div>
+
+    <!-- STEP 1: Mobilität -->
+    <div class="step" data-step="1">
+      <div class="step-icon blue">&#128694;</div>
+      <h2>Modul 1: Mobilit&auml;t</h2>
+      <p class="step-desc">Wie selbstst&auml;ndig kann sich die Person bewegen? (Gewichtung: 10 %)</p>
+
+      <div class="question">
+        <label>Kann die Person ihre Liegeposition im Bett selbstst&auml;ndig ver&auml;ndern?</label>
+        <div class="options">
+          <div class="option">
+            <input type="radio" name="m1q1" value="0" id="m1q1a">
+            <label class="option-label" for="m1q1a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q1" value="1" id="m1q1b">
+            <label class="option-label" for="m1q1b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q1" value="2" id="m1q1c">
+            <label class="option-label" for="m1q1c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q1" value="3" id="m1q1d">
+            <label class="option-label" for="m1q1d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person stabil und sicher sitzen (z.&thinsp;B. auf einem Stuhl)?</label>
+        <div class="options">
+          <div class="option">
+            <input type="radio" name="m1q2" value="0" id="m1q2a">
+            <label class="option-label" for="m1q2a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q2" value="1" id="m1q2b">
+            <label class="option-label" for="m1q2b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q2" value="2" id="m1q2c">
+            <label class="option-label" for="m1q2c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q2" value="3" id="m1q2d">
+            <label class="option-label" for="m1q2d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person selbstst&auml;ndig aufstehen und sich umsetzen (z.&thinsp;B. vom Bett in den Rollstuhl)?</label>
+        <div class="options">
+          <div class="option">
+            <input type="radio" name="m1q3" value="0" id="m1q3a">
+            <label class="option-label" for="m1q3a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q3" value="1" id="m1q3b">
+            <label class="option-label" for="m1q3b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q3" value="2" id="m1q3c">
+            <label class="option-label" for="m1q3c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q3" value="3" id="m1q3d">
+            <label class="option-label" for="m1q3d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person sich innerhalb der Wohnung fortbewegen (auch mit Hilfsmittel)?</label>
+        <div class="options">
+          <div class="option">
+            <input type="radio" name="m1q4" value="0" id="m1q4a">
+            <label class="option-label" for="m1q4a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q4" value="1" id="m1q4b">
+            <label class="option-label" for="m1q4b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q4" value="2" id="m1q4c">
+            <label class="option-label" for="m1q4c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q4" value="3" id="m1q4d">
+            <label class="option-label" for="m1q4d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person Treppen steigen?</label>
+        <div class="options">
+          <div class="option">
+            <input type="radio" name="m1q5" value="0" id="m1q5a">
+            <label class="option-label" for="m1q5a"><span class="option-dot"></span>Selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q5" value="1" id="m1q5b">
+            <label class="option-label" for="m1q5b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q5" value="2" id="m1q5c">
+            <label class="option-label" for="m1q5c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="m1q5" value="3" id="m1q5d">
+            <label class="option-label" for="m1q5d"><span class="option-dot"></span>Unselbstst&auml;ndig</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Kognitive Fähigkeiten -->
+    <div class="step" data-step="2">
+      <div class="step-icon green">&#129504;</div>
+      <h2>Modul 2: Geistige F&auml;higkeiten</h2>
+      <p class="step-desc">Wie gut kann sich die Person orientieren und verst&auml;ndigen? (Gewichtung: 15 %, h&ouml;herer Wert aus Modul 2 oder 3)</p>
+
+      <div class="question">
+        <label>Erkennt die Person vertraute Personen (Familie, Nachbarn, Pflegekr&auml;fte)?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m2q1" value="0" id="m2q1a"><label class="option-label" for="m2q1a"><span class="option-dot"></span>Ja, immer</label></div>
+          <div class="option"><input type="radio" name="m2q1" value="1" id="m2q1b"><label class="option-label" for="m2q1b"><span class="option-dot"></span>Meistens</label></div>
+          <div class="option"><input type="radio" name="m2q1" value="2" id="m2q1c"><label class="option-label" for="m2q1c"><span class="option-dot"></span>Selten</label></div>
+          <div class="option"><input type="radio" name="m2q1" value="3" id="m2q1d"><label class="option-label" for="m2q1d"><span class="option-dot"></span>Nie / nicht mehr</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Findet sich die Person &ouml;rtlich zurecht (wei&szlig; wo sie ist, findet R&auml;ume)?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m2q2" value="0" id="m2q2a"><label class="option-label" for="m2q2a"><span class="option-dot"></span>Ja, immer</label></div>
+          <div class="option"><input type="radio" name="m2q2" value="1" id="m2q2b"><label class="option-label" for="m2q2b"><span class="option-dot"></span>Meistens</label></div>
+          <div class="option"><input type="radio" name="m2q2" value="2" id="m2q2c"><label class="option-label" for="m2q2c"><span class="option-dot"></span>Selten</label></div>
+          <div class="option"><input type="radio" name="m2q2" value="3" id="m2q2d"><label class="option-label" for="m2q2d"><span class="option-dot"></span>Nie / nicht mehr</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person Gefahren erkennen und einsch&auml;tzen (z.&thinsp;B. hei&szlig;e Herdplatte, Sturzrisiken)?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m2q3" value="0" id="m2q3a"><label class="option-label" for="m2q3a"><span class="option-dot"></span>Ja, immer</label></div>
+          <div class="option"><input type="radio" name="m2q3" value="1" id="m2q3b"><label class="option-label" for="m2q3b"><span class="option-dot"></span>Meistens</label></div>
+          <div class="option"><input type="radio" name="m2q3" value="2" id="m2q3c"><label class="option-label" for="m2q3c"><span class="option-dot"></span>Selten</label></div>
+          <div class="option"><input type="radio" name="m2q3" value="3" id="m2q3d"><label class="option-label" for="m2q3d"><span class="option-dot"></span>Nie / nicht mehr</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person Bed&uuml;rfnisse mitteilen und einem Gespr&auml;ch folgen?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m2q4" value="0" id="m2q4a"><label class="option-label" for="m2q4a"><span class="option-dot"></span>Ja, problemlos</label></div>
+          <div class="option"><input type="radio" name="m2q4" value="1" id="m2q4b"><label class="option-label" for="m2q4b"><span class="option-dot"></span>&Uuml;berwiegend ja</label></div>
+          <div class="option"><input type="radio" name="m2q4" value="2" id="m2q4c"><label class="option-label" for="m2q4c"><span class="option-dot"></span>Nur eingeschr&auml;nkt</label></div>
+          <div class="option"><input type="radio" name="m2q4" value="3" id="m2q4d"><label class="option-label" for="m2q4d"><span class="option-dot"></span>Nein, nicht m&ouml;glich</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Verhaltensweisen -->
+    <div class="step" data-step="3">
+      <div class="step-icon navy">&#128150;</div>
+      <h2>Modul 3: Verhalten &amp; psychische Problemlagen</h2>
+      <p class="step-desc">Gibt es Verhaltensauff&auml;lligkeiten oder psychische Belastungen? (H&ouml;herer Wert aus Modul 2 oder 3 z&auml;hlt)</p>
+
+      <div class="question">
+        <label>Zeigt die Person n&auml;chtliche Unruhe, zielloses Umherwandern oder motorische Auff&auml;lligkeiten?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m3q1" value="0" id="m3q1a"><label class="option-label" for="m3q1a"><span class="option-dot"></span>Nie</label></div>
+          <div class="option"><input type="radio" name="m3q1" value="1" id="m3q1b"><label class="option-label" for="m3q1b"><span class="option-dot"></span>Selten (1&ndash;3x/Monat)</label></div>
+          <div class="option"><input type="radio" name="m3q1" value="3" id="m3q1c"><label class="option-label" for="m3q1c"><span class="option-dot"></span>H&auml;ufig (1&ndash;3x/Woche)</label></div>
+          <div class="option"><input type="radio" name="m3q1" value="5" id="m3q1d"><label class="option-label" for="m3q1d"><span class="option-dot"></span>T&auml;glich</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Zeigt die Person aggressives oder selbstsch&auml;digendes Verhalten?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m3q2" value="0" id="m3q2a"><label class="option-label" for="m3q2a"><span class="option-dot"></span>Nie</label></div>
+          <div class="option"><input type="radio" name="m3q2" value="1" id="m3q2b"><label class="option-label" for="m3q2b"><span class="option-dot"></span>Selten (1&ndash;3x/Monat)</label></div>
+          <div class="option"><input type="radio" name="m3q2" value="3" id="m3q2c"><label class="option-label" for="m3q2c"><span class="option-dot"></span>H&auml;ufig (1&ndash;3x/Woche)</label></div>
+          <div class="option"><input type="radio" name="m3q2" value="5" id="m3q2d"><label class="option-label" for="m3q2d"><span class="option-dot"></span>T&auml;glich</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Leidet die Person unter &Auml;ngsten, Wahnvorstellungen, Antriebslosigkeit oder depressiven Verstimmungen?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m3q3" value="0" id="m3q3a"><label class="option-label" for="m3q3a"><span class="option-dot"></span>Nie</label></div>
+          <div class="option"><input type="radio" name="m3q3" value="1" id="m3q3b"><label class="option-label" for="m3q3b"><span class="option-dot"></span>Selten (1&ndash;3x/Monat)</label></div>
+          <div class="option"><input type="radio" name="m3q3" value="3" id="m3q3c"><label class="option-label" for="m3q3c"><span class="option-dot"></span>H&auml;ufig (1&ndash;3x/Woche)</label></div>
+          <div class="option"><input type="radio" name="m3q3" value="5" id="m3q3d"><label class="option-label" for="m3q3d"><span class="option-dot"></span>T&auml;glich</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: Selbstversorgung -->
+    <div class="step" data-step="4">
+      <div class="step-icon blue">&#128703;</div>
+      <h2>Modul 4: Selbstversorgung</h2>
+      <p class="step-desc">Wie selbstst&auml;ndig kann die Person f&uuml;r sich selbst sorgen? (Gewichtung: 40 % &mdash; wichtigstes Modul)</p>
+
+      <div class="question">
+        <label>Kann die Person sich selbstst&auml;ndig waschen und pflegen (Gesicht, K&ouml;rper, Haare)?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m4q1" value="0" id="m4q1a"><label class="option-label" for="m4q1a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q1" value="1" id="m4q1b"><label class="option-label" for="m4q1b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q1" value="2" id="m4q1c"><label class="option-label" for="m4q1c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q1" value="3" id="m4q1d"><label class="option-label" for="m4q1d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person sich selbstst&auml;ndig an- und auskleiden?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m4q2" value="0" id="m4q2a"><label class="option-label" for="m4q2a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q2" value="1" id="m4q2b"><label class="option-label" for="m4q2b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q2" value="2" id="m4q2c"><label class="option-label" for="m4q2c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q2" value="3" id="m4q2d"><label class="option-label" for="m4q2d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person selbstst&auml;ndig essen und trinken?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m4q3" value="0" id="m4q3a"><label class="option-label" for="m4q3a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q3" value="1" id="m4q3b"><label class="option-label" for="m4q3b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q3" value="2" id="m4q3c"><label class="option-label" for="m4q3c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q3" value="3" id="m4q3d"><label class="option-label" for="m4q3d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person die Toilette selbstst&auml;ndig benutzen?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m4q4" value="0" id="m4q4a"><label class="option-label" for="m4q4a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q4" value="1" id="m4q4b"><label class="option-label" for="m4q4b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q4" value="2" id="m4q4c"><label class="option-label" for="m4q4c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q4" value="3" id="m4q4d"><label class="option-label" for="m4q4d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person Mahlzeiten zubereiten (einfache Speisen, Getr&auml;nke)?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m4q5" value="0" id="m4q5a"><label class="option-label" for="m4q5a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q5" value="1" id="m4q5b"><label class="option-label" for="m4q5b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q5" value="2" id="m4q5c"><label class="option-label" for="m4q5c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m4q5" value="3" id="m4q5d"><label class="option-label" for="m4q5d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5: Krankheitsbewältigung -->
+    <div class="step" data-step="5">
+      <div class="step-icon green">&#128138;</div>
+      <h2>Modul 5: Krankheitsbew&auml;ltigung</h2>
+      <p class="step-desc">Wie selbstst&auml;ndig bew&auml;ltigt die Person krankheitsbedingte Anforderungen? (Gewichtung: 20 %)</p>
+
+      <div class="question">
+        <label>Kann die Person Medikamente selbstst&auml;ndig und zuverl&auml;ssig einnehmen?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m5q1" value="0" id="m5q1a"><label class="option-label" for="m5q1a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m5q1" value="1" id="m5q1b"><label class="option-label" for="m5q1b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m5q1" value="2" id="m5q1c"><label class="option-label" for="m5q1c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m5q1" value="3" id="m5q1d"><label class="option-label" for="m5q1d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person Arztbesuche und Therapien selbstst&auml;ndig organisieren und wahrnehmen?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m5q2" value="0" id="m5q2a"><label class="option-label" for="m5q2a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m5q2" value="1" id="m5q2b"><label class="option-label" for="m5q2b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m5q2" value="2" id="m5q2c"><label class="option-label" for="m5q2c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m5q2" value="3" id="m5q2d"><label class="option-label" for="m5q2d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Ben&ouml;tigt die Person regelm&auml;&szlig;ige medizinische Ma&szlig;nahmen (Verbandswechsel, Injektionen, Messung von Werten)?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m5q3" value="0" id="m5q3a"><label class="option-label" for="m5q3a"><span class="option-dot"></span>Keine notwendig</label></div>
+          <div class="option"><input type="radio" name="m5q3" value="1" id="m5q3b"><label class="option-label" for="m5q3b"><span class="option-dot"></span>1&ndash;3x pro Woche</label></div>
+          <div class="option"><input type="radio" name="m5q3" value="2" id="m5q3c"><label class="option-label" for="m5q3c"><span class="option-dot"></span>1&ndash;2x t&auml;glich</label></div>
+          <div class="option"><input type="radio" name="m5q3" value="3" id="m5q3d"><label class="option-label" for="m5q3d"><span class="option-dot"></span>3x oder mehr t&auml;glich</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6: Alltagsleben -->
+    <div class="step" data-step="6">
+      <div class="step-icon navy">&#127968;</div>
+      <h2>Modul 6: Alltagsleben &amp; soziale Kontakte</h2>
+      <p class="step-desc">Wie selbstst&auml;ndig gestaltet die Person ihren Alltag? (Gewichtung: 15 %)</p>
+
+      <div class="question">
+        <label>Kann die Person ihren Tagesablauf selbstst&auml;ndig planen und einhalten?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m6q1" value="0" id="m6q1a"><label class="option-label" for="m6q1a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q1" value="1" id="m6q1b"><label class="option-label" for="m6q1b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q1" value="2" id="m6q1c"><label class="option-label" for="m6q1c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q1" value="3" id="m6q1d"><label class="option-label" for="m6q1d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person soziale Kontakte pflegen und an Aktivit&auml;ten teilnehmen?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m6q2" value="0" id="m6q2a"><label class="option-label" for="m6q2a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q2" value="1" id="m6q2b"><label class="option-label" for="m6q2b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q2" value="2" id="m6q2c"><label class="option-label" for="m6q2c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q2" value="3" id="m6q2d"><label class="option-label" for="m6q2d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label>Kann die Person sich selbstst&auml;ndig besch&auml;ftigen (Lesen, Fernsehen, Hobbys)?</label>
+        <div class="options">
+          <div class="option"><input type="radio" name="m6q3" value="0" id="m6q3a"><label class="option-label" for="m6q3a"><span class="option-dot"></span>Selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q3" value="1" id="m6q3b"><label class="option-label" for="m6q3b"><span class="option-dot"></span>&Uuml;berwiegend selbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q3" value="2" id="m6q3c"><label class="option-label" for="m6q3c"><span class="option-dot"></span>&Uuml;berwiegend unselbstst&auml;ndig</label></div>
+          <div class="option"><input type="radio" name="m6q3" value="3" id="m6q3d"><label class="option-label" for="m6q3d"><span class="option-dot"></span>Unselbstst&auml;ndig</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7: Ergebnis -->
+    <div class="step" data-step="7">
+      <div class="step-icon green">&#127942;</div>
+      <h2>Ihr Ergebnis</h2>
+      <p class="step-desc">Basierend auf Ihren Angaben haben wir den voraussichtlichen Pflegegrad berechnet.</p>
+
+      <div class="result-card">
+        <div class="result-grade-label">Voraussichtlicher Pflegegrad</div>
+        <div class="result-grade" id="resultGrade">--</div>
+        <div class="result-score" id="resultScore"></div>
+        <div class="result-bar-container">
+          <div class="result-bar" id="resultBar" style="width: 0%"></div>
+        </div>
+        <div class="result-bar-labels">
+          <span>0</span>
+          <span>PG 1</span>
+          <span>PG 2</span>
+          <span>PG 3</span>
+          <span>PG 4</span>
+          <span>PG 5</span>
+        </div>
+      </div>
+
+      <div class="result-details" id="resultDetails"></div>
+
+      <div class="benefits-info" id="benefitsInfo" style="display:none">
+        <h3>M&ouml;gliche Leistungen bei diesem Pflegegrad</h3>
+        <div id="benefitsList"></div>
+      </div>
+
+      <div class="result-cta">
+        <h3>Kostenlose Beratung durch LuminaPlus</h3>
+        <p>Wir helfen Ihnen beim Pflegegrad-Antrag, bereiten Sie auf die MD-Begutachtung vor und &uuml;bernehmen auf Wunsch die ambulante Pflege.</p>
+        <div class="result-cta-buttons">
+          <a href="tel:+494018035922" class="btn-white">&#128222; Jetzt anrufen</a>
+          <a href="./pflegegrad-antrag" class="btn-outline-white">&#128203; Pflegegrad beantragen</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="step-actions">
+      <button class="btn btn-ghost" id="btnBack" onclick="prevStep()" style="visibility:hidden">&#8592; Zur&uuml;ck</button>
+      <button class="btn btn-primary" id="btnNext" onclick="nextStep()">Jetzt starten &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="footer-logo" style="filter: brightness(0) invert(1);">
+      <p>&copy; 2026 LuminaPlus eG</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="./impressum-luminaplus">Impressum</a></li>
+      <li><a href="./datenschutz-luminaplus">Datenschutz</a></li>
+    </ul>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <p>LuminaPlus eG &middot; Angerstra&szlig;e 42 &middot; 22087 Hamburg &middot; Amtsgericht Hamburg, GnR 1170</p>
+  </div>
+</footer>
+
+<script>
+// ===== NAVIGATION =====
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const overlay = document.getElementById('mobileOverlay');
+function toggleMenu() {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('active');
+  overlay.classList.toggle('active');
+}
+hamburger.addEventListener('click', toggleMenu);
+overlay.addEventListener('click', toggleMenu);
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// ===== CALCULATOR STATE =====
+let currentStep = 0;
+const totalModules = 6;
+const totalSteps = 8; // 0=intro, 1-6=modules, 7=result
+
+const stepNames = [
+  'Einleitung',
+  'Modul 1: Mobilität',
+  'Modul 2: Geistige Fähigkeiten',
+  'Modul 3: Verhalten',
+  'Modul 4: Selbstversorgung',
+  'Modul 5: Krankheitsbewältigung',
+  'Modul 6: Alltagsleben',
+  'Ergebnis'
+];
+
+const moduleQuestions = {
+  1: ['m1q1','m1q2','m1q3','m1q4','m1q5'],
+  2: ['m2q1','m2q2','m2q3','m2q4'],
+  3: ['m3q1','m3q2','m3q3'],
+  4: ['m4q1','m4q2','m4q3','m4q4','m4q5'],
+  5: ['m5q1','m5q2','m5q3'],
+  6: ['m6q1','m6q2','m6q3']
+};
+
+function showStep(step) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.querySelector(`.step[data-step="${step}"]`).classList.add('active');
+
+  const pct = step === 0 ? 0 : step >= 7 ? 100 : Math.round((step / totalModules) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPercent').textContent = pct + ' %';
+  document.getElementById('progressStep').textContent = stepNames[step];
+
+  document.getElementById('btnBack').style.visibility = step === 0 ? 'hidden' : 'visible';
+
+  if (step === 0) {
+    document.getElementById('btnNext').textContent = 'Jetzt starten →';
+    document.getElementById('btnNext').disabled = false;
+  } else if (step >= 7) {
+    document.getElementById('btnNext').style.display = 'none';
+  } else {
+    document.getElementById('btnNext').textContent = step === 6 ? 'Ergebnis berechnen →' : 'Weiter →';
+    document.getElementById('btnNext').style.display = '';
+    checkStepComplete(step);
+  }
+}
+
+function checkStepComplete(step) {
+  if (step === 0 || step >= 7) return;
+  const questions = moduleQuestions[step];
+  const allAnswered = questions.every(q => document.querySelector(`input[name="${q}"]:checked`));
+  document.getElementById('btnNext').disabled = !allAnswered;
+}
+
+function nextStep() {
+  if (currentStep >= 7) return;
+  if (currentStep >= 1 && currentStep <= 6) {
+    const questions = moduleQuestions[currentStep];
+    const allAnswered = questions.every(q => document.querySelector(`input[name="${q}"]:checked`));
+    if (!allAnswered) return;
+  }
+  currentStep++;
+  if (currentStep === 7) calculateResult();
+  showStep(currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevStep() {
+  if (currentStep <= 0) return;
+  if (currentStep === 7) {
+    document.getElementById('btnNext').style.display = '';
+  }
+  currentStep--;
+  showStep(currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Listen for radio changes to enable/disable next button
+document.querySelectorAll('input[type="radio"]').forEach(r => {
+  r.addEventListener('change', () => checkStepComplete(currentStep));
+});
+
+// ===== SCORING ALGORITHM =====
+// Based on the official NBA (Neues Begutachtungsassessment)
+// Thresholds are proportionally adapted for the reduced number of questions per module.
+
+function getModuleRaw(moduleNum) {
+  const questions = moduleQuestions[moduleNum];
+  return questions.reduce((sum, q) => {
+    const el = document.querySelector(`input[name="${q}"]:checked`);
+    return sum + (el ? parseInt(el.value) : 0);
+  }, 0);
+}
+
+function calculateResult() {
+  // Module 1: Mobilität (10%) - 5 questions (= official count), max 15
+  // Official thresholds apply directly
+  const m1raw = getModuleRaw(1);
+  let m1weighted;
+  if (m1raw <= 1) m1weighted = 0;
+  else if (m1raw <= 3) m1weighted = 2.5;
+  else if (m1raw <= 5) m1weighted = 5;
+  else if (m1raw <= 9) m1weighted = 7.5;
+  else m1weighted = 10;
+
+  // Module 2: Kognitive Fähigkeiten - 4 questions (of 11 official), max 12
+  // Direct thresholds proportional to 4 questions
+  const m2raw = getModuleRaw(2);
+  let m2weighted;
+  if (m2raw <= 0) m2weighted = 0;
+  else if (m2raw <= 2) m2weighted = 3.75;
+  else if (m2raw <= 5) m2weighted = 7.5;
+  else if (m2raw <= 8) m2weighted = 11.25;
+  else m2weighted = 15;
+
+  // Module 3: Verhaltensweisen - 3 questions (of 13 official), values 0/1/3/5, max 15
+  // Direct thresholds for frequency-based scoring
+  const m3raw = getModuleRaw(3);
+  let m3weighted;
+  if (m3raw <= 0) m3weighted = 0;
+  else if (m3raw <= 2) m3weighted = 3.75;
+  else if (m3raw <= 5) m3weighted = 7.5;
+  else if (m3raw <= 9) m3weighted = 11.25;
+  else m3weighted = 15;
+
+  // Higher of Module 2 or 3 counts (official NBA rule)
+  const m23weighted = Math.max(m2weighted, m3weighted);
+
+  // Module 4: Selbstversorgung (40%) - 5 questions (of 13 official), max 15
+  // Direct thresholds proportional to 5 questions
+  const m4raw = getModuleRaw(4);
+  let m4weighted;
+  if (m4raw <= 0) m4weighted = 0;
+  else if (m4raw <= 2) m4weighted = 10;
+  else if (m4raw <= 5) m4weighted = 20;
+  else if (m4raw <= 10) m4weighted = 30;
+  else m4weighted = 40;
+
+  // Module 5: Krankheitsbewältigung (20%) - 3 questions, max 9
+  // Direct thresholds for 3 questions
+  const m5raw = getModuleRaw(5);
+  let m5weighted;
+  if (m5raw <= 0) m5weighted = 0;
+  else if (m5raw <= 1) m5weighted = 5;
+  else if (m5raw <= 3) m5weighted = 10;
+  else if (m5raw <= 5) m5weighted = 15;
+  else m5weighted = 20;
+
+  // Module 6: Alltagsleben (15%) - 3 questions (of 6 official), max 9
+  // Direct thresholds proportional to 3 questions
+  const m6raw = getModuleRaw(6);
+  let m6weighted;
+  if (m6raw <= 0) m6weighted = 0;
+  else if (m6raw <= 2) m6weighted = 3.75;
+  else if (m6raw <= 4) m6weighted = 7.5;
+  else if (m6raw <= 6) m6weighted = 11.25;
+  else m6weighted = 15;
+
+  // Total score
+  const total = m1weighted + m23weighted + m4weighted + m5weighted + m6weighted;
+
+  // Determine Pflegegrad
+  let grade, gradeLabel;
+  if (total < 12.5) { grade = 'Kein Pflegegrad'; gradeLabel = 'Unter 12,5 Punkte'; }
+  else if (total < 27) { grade = 'Pflegegrad 1'; gradeLabel = '12,5 bis unter 27 Punkte'; }
+  else if (total < 47.5) { grade = 'Pflegegrad 2'; gradeLabel = '27 bis unter 47,5 Punkte'; }
+  else if (total < 70) { grade = 'Pflegegrad 3'; gradeLabel = '47,5 bis unter 70 Punkte'; }
+  else if (total < 90) { grade = 'Pflegegrad 4'; gradeLabel = '70 bis unter 90 Punkte'; }
+  else { grade = 'Pflegegrad 5'; gradeLabel = '90 bis 100 Punkte'; }
+
+  // Display result
+  document.getElementById('resultGrade').textContent = grade;
+  document.getElementById('resultScore').textContent = `${total.toFixed(1)} von 100 Punkten (${gradeLabel})`;
+
+  setTimeout(() => {
+    document.getElementById('resultBar').style.width = total + '%';
+  }, 200);
+
+  // Module details
+  const modules = [
+    { name: 'Mobilität', score: m1weighted, max: 10 },
+    { name: 'Geistige Fähigkeiten / Verhalten', score: m23weighted, max: 15 },
+    { name: 'Selbstversorgung', score: m4weighted, max: 40 },
+    { name: 'Krankheitsbewältigung', score: m5weighted, max: 20 },
+    { name: 'Alltagsleben', score: m6weighted, max: 15 }
+  ];
+
+  const detailsHtml = modules.map(m => `
+    <div class="result-detail-row">
+      <span class="result-detail-label">${m.name}</span>
+      <div class="result-detail-right">
+        <span class="result-detail-value">${m.score.toFixed(1)} / ${m.max}</span>
+        <div class="result-detail-bar">
+          <div class="result-detail-bar-fill" style="width: ${(m.score / m.max * 100).toFixed(0)}%"></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('resultDetails').innerHTML = detailsHtml;
+
+  // Benefits based on Pflegegrad (Stand: 2025)
+  const benefits = {
+    'Kein Pflegegrad': null,
+    'Pflegegrad 1': [
+      ['Entlastungsbetrag', '131 €/Monat'],
+      ['Pflegehilfsmittel', 'bis 42 €/Monat'],
+      ['Hausnotruf', 'bis 25,50 €/Monat'],
+      ['Wohnraumanpassung', 'bis 4.180 €']
+    ],
+    'Pflegegrad 2': [
+      ['Pflegegeld', '347 €/Monat'],
+      ['Pflegesachleistung', '796 €/Monat'],
+      ['Entlastungsbetrag', '131 €/Monat'],
+      ['Verhinderungs- & Kurzzeitpflege', 'bis 3.539 €/Jahr'],
+      ['Pflegehilfsmittel', 'bis 42 €/Monat'],
+      ['Wohnraumanpassung', 'bis 4.180 €']
+    ],
+    'Pflegegrad 3': [
+      ['Pflegegeld', '599 €/Monat'],
+      ['Pflegesachleistung', '1.497 €/Monat'],
+      ['Entlastungsbetrag', '131 €/Monat'],
+      ['Verhinderungs- & Kurzzeitpflege', 'bis 3.539 €/Jahr'],
+      ['Pflegehilfsmittel', 'bis 42 €/Monat'],
+      ['Wohnraumanpassung', 'bis 4.180 €']
+    ],
+    'Pflegegrad 4': [
+      ['Pflegegeld', '800 €/Monat'],
+      ['Pflegesachleistung', '1.859 €/Monat'],
+      ['Entlastungsbetrag', '131 €/Monat'],
+      ['Verhinderungs- & Kurzzeitpflege', 'bis 3.539 €/Jahr'],
+      ['Pflegehilfsmittel', 'bis 42 €/Monat'],
+      ['Wohnraumanpassung', 'bis 4.180 €']
+    ],
+    'Pflegegrad 5': [
+      ['Pflegegeld', '990 €/Monat'],
+      ['Pflegesachleistung', '2.299 €/Monat'],
+      ['Entlastungsbetrag', '131 €/Monat'],
+      ['Verhinderungs- & Kurzzeitpflege', 'bis 3.539 €/Jahr'],
+      ['Pflegehilfsmittel', 'bis 42 €/Monat'],
+      ['Wohnraumanpassung', 'bis 4.180 €']
+    ]
+  };
+
+  const gradeBenefits = benefits[grade];
+  const benefitsEl = document.getElementById('benefitsInfo');
+  if (gradeBenefits) {
+    benefitsEl.style.display = 'block';
+    document.getElementById('benefitsList').innerHTML = gradeBenefits.map(([label, value]) =>
+      `<div class="benefit-row"><span class="benefit-label">${label}</span><span class="benefit-value">${value}</span></div>`
+    ).join('');
+  } else {
+    benefitsEl.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>
