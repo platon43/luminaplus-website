@@ -550,7 +550,6 @@
       .hero { padding: 7rem 1.5rem 3rem; }
       .calc-container { padding: 0 1rem; }
       .freq-table { font-size: 0.78rem; }
-      .freq-table th { font-size: 0.7rem; padding: 0.4rem 0.3rem; }
       .freq-table td:first-child { min-width: 120px; }
     }
 
@@ -590,8 +589,8 @@
       background: rgba(53,192,237,0.05);
     }
     .cat-icon {
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
       border-radius: 8px;
       background: rgba(53,192,237,0.08);
       display: flex;
@@ -600,8 +599,8 @@
       flex-shrink: 0;
     }
     .cat-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       stroke: var(--dark-blue);
       fill: none;
       stroke-width: 1.8;
@@ -610,6 +609,98 @@
     }
     .cat-keine .cat-icon { background: rgba(107,125,138,0.08); }
     .cat-keine .cat-icon svg { stroke: var(--gray); }
+
+    /* Module Navigation Bar */
+    .module-nav {
+      display: flex;
+      gap: 0.25rem;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--light-gray);
+      background: white;
+      position: sticky;
+      top: 60px;
+      z-index: 10;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .module-nav::-webkit-scrollbar { display: none; }
+    .module-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      padding: 0.4rem 0.6rem;
+      border: none;
+      background: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex: 1 0 0;
+      min-width: 70px;
+      position: relative;
+    }
+    .module-nav-item:hover { background: rgba(53,192,237,0.05); }
+    .module-nav-item.active {
+      background: rgba(53,192,237,0.1);
+      border-bottom: 2px solid var(--light-blue);
+    }
+    .module-nav-item.active .module-nav-label {
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .module-nav-item.active .module-nav-icon svg {
+      stroke: var(--light-blue);
+    }
+    .module-nav-item.completed .module-nav-icon::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      right: 12px;
+      width: 12px;
+      height: 12px;
+      background: var(--green);
+      border-radius: 50%;
+      border: 2px solid white;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 8px 8px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .module-nav-item.locked {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .module-nav-item.locked:hover { background: none; }
+    .module-nav-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .module-nav-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gray);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .module-nav-label {
+      font-size: 0.6rem;
+      color: var(--gray);
+      white-space: nowrap;
+      font-family: var(--font-body);
+    }
+    @media (max-width: 768px) {
+      .module-nav { gap: 0.1rem; padding: 0.4rem 0.5rem; }
+      .module-nav-item { min-width: 58px; padding: 0.3rem 0.3rem; }
+      .module-nav-label { font-size: 0.52rem; }
+      .freq-table th { font-size: 0.65rem; }
+    }
   </style>
 </head>
 <body>
@@ -655,6 +746,33 @@
     <div class="progress-info">
       <span class="progress-step" id="progressStep">Einleitung</span>
       <span id="progressPercent">0 %</span>
+    </div>
+
+    <div class="module-nav" id="moduleNav">
+      <button class="module-nav-item active" data-target="1" onclick="jumpToStep(1)">
+        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="4" r="2"/><path d="M6 21l2-6h1l2-5-1-2H8l-1 2"/><path d="M14 9l-1 2 2 5h1l2 6"/><path d="M10 10l-3-1"/><path d="M14 9l3-1"/></svg></span>
+        <span class="module-nav-label">Mobilit&auml;t</span>
+      </button>
+      <button class="module-nav-item locked" data-target="2" onclick="jumpToStep(2)">
+        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7v0a7 7 0 0 0 7 7v0a7 7 0 0 0 7-7v0a7 7 0 0 0-7-7z"/><path d="M12 16v6"/><path d="M8 22h8"/><circle cx="10" cy="8" r="0.5" fill="currentColor"/><circle cx="14" cy="8" r="0.5" fill="currentColor"/><path d="M9 11c1 1 2 1.5 3 1.5s2-.5 3-1.5"/></svg></span>
+        <span class="module-nav-label">Kognition</span>
+      </button>
+      <button class="module-nav-item locked" data-target="3" onclick="jumpToStep(3)">
+        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7v0a7 7 0 0 0 7 7v0a7 7 0 0 0 7-7v0a7 7 0 0 0-7-7z"/><path d="M12 16v6"/><path d="M8 22h8"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/><path d="M8 12s1.5 1 4 1 4-1 4-1"/></svg></span>
+        <span class="module-nav-label">Verhalten</span>
+      </button>
+      <button class="module-nav-item locked" data-target="4" onclick="jumpToStep(4)">
+        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 3.19-9 7.13 0 2.95 2.56 5.48 6 6.63V21l4-3c4.97 0 9-3.19 9-7.13C22 6.19 16.97 3 12 3z" stroke-width="0" fill="none"/><path d="M7 9.5a1 1 0 0 1 2 0v3a1 1 0 0 1-2 0z"/><path d="M5 12h6"/><path d="M17 4v8"/><path d="M13 8h8"/><path d="M3 20l1.5-3.5"/><path d="M21 20l-1.5-3.5"/><path d="M8 16.5C8 16.5 10 19 12 19s4-2.5 4-2.5"/></svg></span>
+        <span class="module-nav-label">Selbstvers.</span>
+      </button>
+      <button class="module-nav-item locked" data-target="5" onclick="jumpToStep(5)">
+        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><path d="M19.5 12.572l-7.5 7.428l-7.5-7.428A5 5 0 1 1 12 6.006a5 5 0 1 1 7.5 6.572"/><path d="M12 6v4"/><path d="M10 10h4"/></svg></span>
+        <span class="module-nav-label">Krankheit</span>
+      </button>
+      <button class="module-nav-item locked" data-target="6" onclick="jumpToStep(6)">
+        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <span class="module-nav-label">Alltag</span>
+      </button>
     </div>
 
     <!-- STEP 0: Intro -->
@@ -727,11 +845,11 @@
         <div style="display:flex;flex-direction:column;gap:0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m1_cat_fortbewegen" onchange="toggleM1Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M13 4a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="currentColor" stroke="none"/><path d="M4 17l3-3 2 2 4-4 3 3"/><path d="M19 21l-4-4-2 2-4-4-3 3"/><circle cx="7" cy="21" r="2"/><circle cx="17" cy="21" r="2"/><path d="M7 19h10"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="10" cy="3.5" r="2"/><path d="M13 8l-3 5.5-4 2.5"/><path d="M10 13.5l2 7.5"/><path d="M7 13l-1 8"/><path d="M13 8l3-1"/><path d="M18 3v18" stroke-dasharray="0"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Fortbewegen</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m1_cat_sitzen" onchange="toggleM1Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 11V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5"/><path d="M4 15h16"/><path d="M6 15v4"/><path d="M18 15v4"/><path d="M12 7v4"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M5 11V5h3v6"/><path d="M5 11h11v4H5z"/><path d="M5 15v5"/><path d="M16 15v5"/><path d="M19 8l-2-3-2 3"/><path d="M17 5v7"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Sitzen und Aufstehen</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m1_cat_keine" onchange="toggleM1Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
@@ -742,7 +860,7 @@
 
       <div id="m1_fortbewegen" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Fortbewegen</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>Fortbewegen innerhalb der Wohnung</td><td><input type="radio" name="m1q4" value="0" checked></td><td><input type="radio" name="m1q4" value="1"></td><td><input type="radio" name="m1q4" value="2"></td><td><input type="radio" name="m1q4" value="3"></td></tr>
           <tr><td>Treppensteigen</td><td><input type="radio" name="m1q5" value="0" checked></td><td><input type="radio" name="m1q5" value="1"></td><td><input type="radio" name="m1q5" value="2"></td><td><input type="radio" name="m1q5" value="3"></td></tr>
         </tbody></table>
@@ -750,7 +868,7 @@
 
       <div id="m1_sitzen" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Sitzen und Aufstehen</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>Positionswechsel im Bett</td><td><input type="radio" name="m1q1" value="0" checked></td><td><input type="radio" name="m1q1" value="1"></td><td><input type="radio" name="m1q1" value="2"></td><td><input type="radio" name="m1q1" value="3"></td></tr>
           <tr><td>Halten einer stabilen Sitzposition</td><td><input type="radio" name="m1q2" value="0" checked></td><td><input type="radio" name="m1q2" value="1"></td><td><input type="radio" name="m1q2" value="2"></td><td><input type="radio" name="m1q2" value="3"></td></tr>
           <tr><td>Aufstehen und Umsetzen</td><td><input type="radio" name="m1q3" value="0" checked></td><td><input type="radio" name="m1q3" value="1"></td><td><input type="radio" name="m1q3" value="2"></td><td><input type="radio" name="m1q3" value="3"></td></tr>
@@ -769,19 +887,19 @@
         <div style="display:flex;flex-direction:column;gap:0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m2_cat_orientierung" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 12h2m14 0h2M12 3v2m0 14v2"/><circle cx="12" cy="12" r="7"/><path d="M12 9v3l2 2"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="none"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M2 12h2"/><path d="M20 12h2"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">R&auml;umliche und zeitliche Orientierung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m2_cat_entscheidungen" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M9 18l3-3-3-3"/><path d="M5 6h14"/><path d="M5 12h8"/><path d="M5 18h4"/><circle cx="18" cy="14" r="4"/><path d="M18 12v4"/><path d="M16 14h4"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2z"/><circle cx="12" cy="9" r="1.5" fill="none"/><path d="M12 12v-0.5"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Allt&auml;gliche Entscheidungen treffen und umsetzen</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m2_cat_austausch" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M14 8h.01"/><path d="M10 8h.01"/><path d="M8 12s1.5 2 4 2 4-2 4-2"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Austausch mit Umfeld</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m2_cat_erkennen" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Erkennen und Erinnern</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m2_cat_keine" onchange="toggleM2Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
@@ -792,7 +910,7 @@
 
       <div id="m2_orientierung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">R&auml;umliche und zeitliche Orientierung</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorh.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorhanden</th></tr></thead><tbody>
           <tr><td>&Ouml;rtliche Orientierung</td><td><input type="radio" name="m2q2" value="0" checked></td><td><input type="radio" name="m2q2" value="1"></td><td><input type="radio" name="m2q2" value="2"></td><td><input type="radio" name="m2q2" value="3"></td></tr>
           <tr><td>Zeitliche Orientierung</td><td><input type="radio" name="m2q3" value="0" checked></td><td><input type="radio" name="m2q3" value="1"></td><td><input type="radio" name="m2q3" value="2"></td><td><input type="radio" name="m2q3" value="3"></td></tr>
         </tbody></table>
@@ -800,7 +918,7 @@
 
       <div id="m2_entscheidungen" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Allt&auml;gliche Entscheidungen treffen und umsetzen</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorh.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorhanden</th></tr></thead><tbody>
           <tr><td>Steuern von mehrschrittigen Alltagshandlungen</td><td><input type="radio" name="m2q5" value="0" checked></td><td><input type="radio" name="m2q5" value="1"></td><td><input type="radio" name="m2q5" value="2"></td><td><input type="radio" name="m2q5" value="3"></td></tr>
           <tr><td>Treffen von Entscheidungen im Alltag</td><td><input type="radio" name="m2q6" value="0" checked></td><td><input type="radio" name="m2q6" value="1"></td><td><input type="radio" name="m2q6" value="2"></td><td><input type="radio" name="m2q6" value="3"></td></tr>
           <tr><td>Verstehen von Sachverhalten und Informationen</td><td><input type="radio" name="m2q7" value="0" checked></td><td><input type="radio" name="m2q7" value="1"></td><td><input type="radio" name="m2q7" value="2"></td><td><input type="radio" name="m2q7" value="3"></td></tr>
@@ -810,7 +928,7 @@
 
       <div id="m2_austausch" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Austausch mit Umfeld</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorh.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorhanden</th></tr></thead><tbody>
           <tr><td>Mitteilen von elementaren Bed&uuml;rfnissen</td><td><input type="radio" name="m2q9" value="0" checked></td><td><input type="radio" name="m2q9" value="1"></td><td><input type="radio" name="m2q9" value="2"></td><td><input type="radio" name="m2q9" value="3"></td></tr>
           <tr><td>Verstehen von Aufforderungen</td><td><input type="radio" name="m2q10" value="0" checked></td><td><input type="radio" name="m2q10" value="1"></td><td><input type="radio" name="m2q10" value="2"></td><td><input type="radio" name="m2q10" value="3"></td></tr>
           <tr><td>Beteiligen an einem Gespr&auml;ch</td><td><input type="radio" name="m2q11" value="0" checked></td><td><input type="radio" name="m2q11" value="1"></td><td><input type="radio" name="m2q11" value="2"></td><td><input type="radio" name="m2q11" value="3"></td></tr>
@@ -819,7 +937,7 @@
 
       <div id="m2_erkennen" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Erkennen und Erinnern</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorh.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Vorhanden</th><th>Gr&ouml;&szlig;tenteils</th><th>Gering</th><th>Nicht vorhanden</th></tr></thead><tbody>
           <tr><td>Erkennen von Personen aus dem n&auml;heren Umfeld</td><td><input type="radio" name="m2q1" value="0" checked></td><td><input type="radio" name="m2q1" value="1"></td><td><input type="radio" name="m2q1" value="2"></td><td><input type="radio" name="m2q1" value="3"></td></tr>
           <tr><td>Erinnern an wesentliche Ereignisse</td><td><input type="radio" name="m2q4" value="0" checked></td><td><input type="radio" name="m2q4" value="1"></td><td><input type="radio" name="m2q4" value="2"></td><td><input type="radio" name="m2q4" value="3"></td></tr>
         </tbody></table>
@@ -837,17 +955,17 @@
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
             <input type="checkbox" id="cat_aggression" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M18 11V6a1 1 0 0 0-2 0"/><path d="M16 8V4a1 1 0 0 0-2 0"/><path d="M14 8V3a1 1 0 0 0-2 0v5"/><path d="M12 8V6a1 1 0 0 0-2 0v5"/><path d="M10 11V6"/><path d="M8 13a4 4 0 0 0 0 1"/><path d="M18 11a4 4 0 0 1 1 3v2a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-1"/><path d="M7 11V8a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1"/><path d="M18 11a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v2"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Aggressionen</span>
           </label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="cat_angst" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5-2 4-2 4 2 4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="16" x2="8" y2="20"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="16" y1="16" x2="16" y2="20"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">&Auml;ngste und Wahnvorstellungen</span>
           </label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="cat_pflege" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Handlungen, die die Pflege erschweren</span>
           </label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
@@ -867,7 +985,7 @@
       <div id="m3_aggression" class="m3-detail" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
         <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem;">Aggressionen</h3>
         <p style="font-size: 0.82rem; color: var(--gray); margin-bottom: 1rem;">Wie h&auml;ufig treten die folgenden Verhaltensweisen auf?</p>
-        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;gl.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;glich</th></tr></thead><tbody>
           <tr><td>Verbale Aggression</td><td><input type="radio" name="m3_a1" value="0" checked></td><td><input type="radio" name="m3_a1" value="1"></td><td><input type="radio" name="m3_a1" value="3"></td><td><input type="radio" name="m3_a1" value="5"></td></tr>
           <tr><td>Selbstsch&auml;digendes Verhalten</td><td><input type="radio" name="m3_a2" value="0" checked></td><td><input type="radio" name="m3_a2" value="1"></td><td><input type="radio" name="m3_a2" value="3"></td><td><input type="radio" name="m3_a2" value="5"></td></tr>
           <tr><td>Physische Aggression gegen andere</td><td><input type="radio" name="m3_a3" value="0" checked></td><td><input type="radio" name="m3_a3" value="1"></td><td><input type="radio" name="m3_a3" value="3"></td><td><input type="radio" name="m3_a3" value="5"></td></tr>
@@ -879,7 +997,7 @@
       <div id="m3_angst" class="m3-detail" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
         <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem;">&Auml;ngste und Wahnvorstellungen</h3>
         <p style="font-size: 0.82rem; color: var(--gray); margin-bottom: 1rem;">Wie h&auml;ufig treten die folgenden Verhaltensweisen auf?</p>
-        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;gl.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;glich</th></tr></thead><tbody>
           <tr><td>Wahnvorstellungen</td><td><input type="radio" name="m3_b1" value="0" checked></td><td><input type="radio" name="m3_b1" value="1"></td><td><input type="radio" name="m3_b1" value="3"></td><td><input type="radio" name="m3_b1" value="5"></td></tr>
           <tr><td>&Auml;ngste</td><td><input type="radio" name="m3_b2" value="0" checked></td><td><input type="radio" name="m3_b2" value="1"></td><td><input type="radio" name="m3_b2" value="3"></td><td><input type="radio" name="m3_b2" value="5"></td></tr>
           <tr><td>N&auml;chtliche Unruhe</td><td><input type="radio" name="m3_b3" value="0" checked></td><td><input type="radio" name="m3_b3" value="1"></td><td><input type="radio" name="m3_b3" value="3"></td><td><input type="radio" name="m3_b3" value="5"></td></tr>
@@ -890,7 +1008,7 @@
       <div id="m3_pflege" class="m3-detail" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
         <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem;">Handlungen, die die Pflege erschweren</h3>
         <p style="font-size: 0.82rem; color: var(--gray); margin-bottom: 1rem;">Wie h&auml;ufig treten die folgenden Verhaltensweisen auf?</p>
-        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;gl.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;glich</th></tr></thead><tbody>
           <tr><td>Abwehr pflegerischer Ma&szlig;nahmen</td><td><input type="radio" name="m3_c1" value="0" checked></td><td><input type="radio" name="m3_c1" value="1"></td><td><input type="radio" name="m3_c1" value="3"></td><td><input type="radio" name="m3_c1" value="5"></td></tr>
           <tr><td>Pflegerelevante vokale Auff&auml;lligkeiten</td><td><input type="radio" name="m3_c2" value="0" checked></td><td><input type="radio" name="m3_c2" value="1"></td><td><input type="radio" name="m3_c2" value="3"></td><td><input type="radio" name="m3_c2" value="5"></td></tr>
           <tr><td>Sonstige inad&auml;quate Handlungen</td><td><input type="radio" name="m3_c3" value="0" checked></td><td><input type="radio" name="m3_c3" value="1"></td><td><input type="radio" name="m3_c3" value="3"></td><td><input type="radio" name="m3_c3" value="5"></td></tr>
@@ -901,7 +1019,7 @@
       <div id="m3_motorik" class="m3-detail" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-gray);">
         <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--navy); margin-bottom: 0.3rem;">Motorische oder soziale Auff&auml;lligkeiten</h3>
         <p style="font-size: 0.82rem; color: var(--gray); margin-bottom: 1rem;">Wie h&auml;ufig treten die folgenden Verhaltensweisen auf?</p>
-        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;gl.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Nie</th><th>Selten</th><th>H&auml;ufig</th><th>T&auml;glich</th></tr></thead><tbody>
           <tr><td>Antriebslosigkeit / depressive Stimmung</td><td><input type="radio" name="m3_d1" value="0" checked></td><td><input type="radio" name="m3_d1" value="1"></td><td><input type="radio" name="m3_d1" value="3"></td><td><input type="radio" name="m3_d1" value="5"></td></tr>
           <tr><td>Motorisch gepr&auml;gte Verhaltensauff&auml;lligkeiten</td><td><input type="radio" name="m3_d2" value="0" checked></td><td><input type="radio" name="m3_d2" value="1"></td><td><input type="radio" name="m3_d2" value="3"></td><td><input type="radio" name="m3_d2" value="5"></td></tr>
           <tr><td>Sozial inad&auml;quate Verhaltensweisen</td><td><input type="radio" name="m3_d3" value="0" checked></td><td><input type="radio" name="m3_d3" value="1"></td><td><input type="radio" name="m3_d3" value="3"></td><td><input type="radio" name="m3_d3" value="5"></td></tr>
@@ -920,19 +1038,19 @@
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_pflege" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="none"/><path d="M8 12l2 2 4-4"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 2v6"/><path d="M8 12a4 4 0 0 0 8 0"/><path d="M6 12h12"/><path d="M7 16l-1 5"/><path d="M17 16l1 5"/><circle cx="9" cy="19" r="0.5" fill="currentColor"/><circle cx="12" cy="20" r="0.5" fill="currentColor"/><circle cx="15" cy="19" r="0.5" fill="currentColor"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">K&ouml;rperpflege</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_kleidung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2 12 5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10h12V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2l-4 3-4-3-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10h12V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">An- und Auskleiden</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_ernaehrung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Ern&auml;hrung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_ausscheidung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2z"/><path d="M9 7h6"/><path d="M12 7v5"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v4a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V4z"/><path d="M18 4h2v3a1 1 0 0 1-1 1h-1"/><path d="M9 14v3a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3v-3"/><path d="M8 21h8"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Ausscheidung</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m4_cat_keine" onchange="toggleM4Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
@@ -943,7 +1061,7 @@
 
       <div id="m4_pflege" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">K&ouml;rperpflege</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>Waschen des vorderen Oberk&ouml;rpers</td><td><input type="radio" name="m4q1" value="0" checked></td><td><input type="radio" name="m4q1" value="1"></td><td><input type="radio" name="m4q1" value="2"></td><td><input type="radio" name="m4q1" value="3"></td></tr>
           <tr><td>K&ouml;rperpflege im Bereich des Kopfes</td><td><input type="radio" name="m4q2" value="0" checked></td><td><input type="radio" name="m4q2" value="1"></td><td><input type="radio" name="m4q2" value="2"></td><td><input type="radio" name="m4q2" value="3"></td></tr>
           <tr><td>Waschen des Intimbereichs</td><td><input type="radio" name="m4q3" value="0" checked></td><td><input type="radio" name="m4q3" value="1"></td><td><input type="radio" name="m4q3" value="2"></td><td><input type="radio" name="m4q3" value="3"></td></tr>
@@ -953,7 +1071,7 @@
 
       <div id="m4_kleidung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">An- und Auskleiden</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>An-/Auskleiden Oberk&ouml;rper</td><td><input type="radio" name="m4q5" value="0" checked></td><td><input type="radio" name="m4q5" value="1"></td><td><input type="radio" name="m4q5" value="2"></td><td><input type="radio" name="m4q5" value="3"></td></tr>
           <tr><td>An-/Auskleiden Unterk&ouml;rper</td><td><input type="radio" name="m4q6" value="0" checked></td><td><input type="radio" name="m4q6" value="1"></td><td><input type="radio" name="m4q6" value="2"></td><td><input type="radio" name="m4q6" value="3"></td></tr>
         </tbody></table>
@@ -961,7 +1079,7 @@
 
       <div id="m4_ernaehrung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Ern&auml;hrung</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>Mundgerechtes Zubereiten der Nahrung</td><td><input type="radio" name="m4q7" value="0" checked></td><td><input type="radio" name="m4q7" value="1"></td><td><input type="radio" name="m4q7" value="2"></td><td><input type="radio" name="m4q7" value="3"></td></tr>
           <tr><td>Essen</td><td><input type="radio" name="m4q8" value="0" checked></td><td><input type="radio" name="m4q8" value="1"></td><td><input type="radio" name="m4q8" value="2"></td><td><input type="radio" name="m4q8" value="3"></td></tr>
           <tr><td>Trinken</td><td><input type="radio" name="m4q9" value="0" checked></td><td><input type="radio" name="m4q9" value="1"></td><td><input type="radio" name="m4q9" value="2"></td><td><input type="radio" name="m4q9" value="3"></td></tr>
@@ -978,7 +1096,7 @@
 
       <div id="m4_ausscheidung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Ausscheidung</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>Benutzen einer Toilette / Toilettenstuhl</td><td><input type="radio" name="m4q10" value="0" checked></td><td><input type="radio" name="m4q10" value="1"></td><td><input type="radio" name="m4q10" value="2"></td><td><input type="radio" name="m4q10" value="3"></td></tr>
           <tr><td>Bew&auml;ltigen der Folgen einer Harninkontinenz</td><td><input type="radio" name="m4q11" value="0" checked></td><td><input type="radio" name="m4q11" value="1"></td><td><input type="radio" name="m4q11" value="2"></td><td><input type="radio" name="m4q11" value="3"></td></tr>
           <tr><td>Bew&auml;ltigen der Folgen einer Stuhlinkontinenz</td><td><input type="radio" name="m4q12" value="0" checked></td><td><input type="radio" name="m4q12" value="1"></td><td><input type="radio" name="m4q12" value="2"></td><td><input type="radio" name="m4q12" value="3"></td></tr>
@@ -997,11 +1115,11 @@
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_medikamente" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75A2.25 2.25 0 0 0 15.75 1.5H13.5m-3 0V3h3V1.5m-3 0h3m-6 18h9"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l6-6a4.95 4.95 0 1 1 7 7l-6 6a4.95 4.95 0 1 1-7-7z"/><path d="M8 16l8-8"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Medikamente, Injektionen &amp; Hilfsmittel</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_wundversorgung" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M6 8H5a4 4 0 0 0 0 8h1"/><line x1="6" y1="12" x2="18" y2="12"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Wundversorgung &amp; Spezialversorgung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_therapie" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
@@ -1009,7 +1127,7 @@
             <span style="font-size:0.9rem;color:var(--navy);">Therapie &amp; Intensivma&szlig;nahmen</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_arzt" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 2v6a6 6 0 0 0 12 0V2"/><path d="M6 2a2 2 0 0 0-2 2"/><path d="M18 2a2 2 0 0 1 2 2"/><path d="M12 14v4"/><circle cx="12" cy="20" r="2"/></svg></div>
             <span style="font-size:0.9rem;color:var(--navy);">Arztbesuche &amp; Di&auml;t</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m5_cat_keine" onchange="toggleM5Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
@@ -1020,7 +1138,7 @@
 
       <div id="m5_medikamente" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Medikamente, Injektionen &amp; Hilfsmittel</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentl.</th><th>T&auml;glich</th><th>Mehrfach tgl.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentlich</th><th>T&auml;glich</th><th>Mehrfach t&auml;glich</th></tr></thead><tbody>
           <tr><td>Medikation</td><td><input type="radio" name="m5q1" value="0" checked></td><td><input type="radio" name="m5q1" value="1"></td><td><input type="radio" name="m5q1" value="2"></td><td><input type="radio" name="m5q1" value="3"></td></tr>
           <tr><td>Injektionen (z.&thinsp;B. Insulin)</td><td><input type="radio" name="m5q2" value="0" checked></td><td><input type="radio" name="m5q2" value="1"></td><td><input type="radio" name="m5q2" value="2"></td><td><input type="radio" name="m5q2" value="3"></td></tr>
           <tr><td>Versorgung intraven&ouml;ser Zug&auml;nge (Port)</td><td><input type="radio" name="m5q3" value="0" checked></td><td><input type="radio" name="m5q3" value="1"></td><td><input type="radio" name="m5q3" value="2"></td><td><input type="radio" name="m5q3" value="3"></td></tr>
@@ -1033,7 +1151,7 @@
 
       <div id="m5_wundversorgung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Wundversorgung &amp; Spezialversorgung</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentl.</th><th>T&auml;glich</th><th>Mehrfach tgl.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentlich</th><th>T&auml;glich</th><th>Mehrfach t&auml;glich</th></tr></thead><tbody>
           <tr><td>Verbandswechsel und Wundversorgung</td><td><input type="radio" name="m5q8" value="0" checked></td><td><input type="radio" name="m5q8" value="1"></td><td><input type="radio" name="m5q8" value="2"></td><td><input type="radio" name="m5q8" value="3"></td></tr>
           <tr><td>Versorgung mit Stoma</td><td><input type="radio" name="m5q9" value="0" checked></td><td><input type="radio" name="m5q9" value="1"></td><td><input type="radio" name="m5q9" value="2"></td><td><input type="radio" name="m5q9" value="3"></td></tr>
           <tr><td>Einmalkatheterisierung / Abf&uuml;hrmethoden</td><td><input type="radio" name="m5q10" value="0" checked></td><td><input type="radio" name="m5q10" value="1"></td><td><input type="radio" name="m5q10" value="2"></td><td><input type="radio" name="m5q10" value="3"></td></tr>
@@ -1042,7 +1160,7 @@
 
       <div id="m5_therapie" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Therapie &amp; Intensivma&szlig;nahmen</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentl.</th><th>T&auml;glich</th><th>Mehrfach tgl.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Entf&auml;llt</th><th>W&ouml;chentlich</th><th>T&auml;glich</th><th>Mehrfach t&auml;glich</th></tr></thead><tbody>
           <tr><td>Therapiema&szlig;nahmen zu Hause</td><td><input type="radio" name="m5q11" value="0" checked></td><td><input type="radio" name="m5q11" value="1"></td><td><input type="radio" name="m5q11" value="2"></td><td><input type="radio" name="m5q11" value="3"></td></tr>
           <tr><td>Zeit-/technikintensive Ma&szlig;nahmen</td><td><input type="radio" name="m5q12" value="0" checked></td><td><input type="radio" name="m5q12" value="1"></td><td><input type="radio" name="m5q12" value="2"></td><td><input type="radio" name="m5q12" value="3"></td></tr>
         </tbody></table>
@@ -1095,7 +1213,7 @@
 
       <div id="m6_tagesgestaltung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Tagesgestaltung &amp; Ruhen</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>Gestaltung des Tagesablaufs</td><td><input type="radio" name="m6q1" value="0" checked></td><td><input type="radio" name="m6q1" value="1"></td><td><input type="radio" name="m6q1" value="2"></td><td><input type="radio" name="m6q1" value="3"></td></tr>
           <tr><td>Ruhen und Schlafen</td><td><input type="radio" name="m6q2" value="0" checked></td><td><input type="radio" name="m6q2" value="1"></td><td><input type="radio" name="m6q2" value="2"></td><td><input type="radio" name="m6q2" value="3"></td></tr>
         </tbody></table>
@@ -1103,7 +1221,7 @@
 
       <div id="m6_beschaeftigung" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Besch&auml;ftigung &amp; Planung</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>Sich besch&auml;ftigen</td><td><input type="radio" name="m6q3" value="0" checked></td><td><input type="radio" name="m6q3" value="1"></td><td><input type="radio" name="m6q3" value="2"></td><td><input type="radio" name="m6q3" value="3"></td></tr>
           <tr><td>In die Zukunft gerichtete Planungen</td><td><input type="radio" name="m6q4" value="0" checked></td><td><input type="radio" name="m6q4" value="1"></td><td><input type="radio" name="m6q4" value="2"></td><td><input type="radio" name="m6q4" value="3"></td></tr>
         </tbody></table>
@@ -1111,7 +1229,7 @@
 
       <div id="m6_kontakte" class="m3-detail" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--light-gray);">
         <h3 style="font-family:var(--font-heading);font-size:1rem;color:var(--navy);margin-bottom:0.8rem;">Soziale Kontakte</h3>
-        <table class="freq-table"><thead><tr><th></th><th>Selbst.</th><th>&Uuml;berw. s.</th><th>&Uuml;berw. u.</th><th>Unselbst.</th></tr></thead><tbody>
+        <table class="freq-table"><thead><tr><th></th><th>Selbst&auml;ndig</th><th>&Uuml;berwiegend selbst&auml;ndig</th><th>&Uuml;berwiegend unselbst&auml;ndig</th><th>Unselbst&auml;ndig</th></tr></thead><tbody>
           <tr><td>Interaktion mit Personen im direkten Kontakt</td><td><input type="radio" name="m6q5" value="0" checked></td><td><input type="radio" name="m6q5" value="1"></td><td><input type="radio" name="m6q5" value="2"></td><td><input type="radio" name="m6q5" value="3"></td></tr>
           <tr><td>Kontaktpflege au&szlig;erhalb des direkten Umfelds</td><td><input type="radio" name="m6q6" value="0" checked></td><td><input type="radio" name="m6q6" value="1"></td><td><input type="radio" name="m6q6" value="2"></td><td><input type="radio" name="m6q6" value="3"></td></tr>
         </tbody></table>
@@ -1202,6 +1320,7 @@ window.addEventListener('scroll', () => {
 
 // ===== CALCULATOR STATE =====
 let currentStep = 0;
+let highestCompletedStep = 0; // Track the highest step the user has completed
 const totalModules = 6;
 const totalSteps = 8; // 0=intro, 1-6=modules, 7=result
 
@@ -1411,6 +1530,38 @@ function toggleM3Keine() {
   checkStepComplete(3);
 }
 
+function updateModuleNav(step) {
+  const navItems = document.querySelectorAll('.module-nav-item');
+  const moduleNav = document.getElementById('moduleNav');
+  // Hide module nav on intro (step 0) and result (step 7)
+  if (step === 0 || step >= 7) {
+    moduleNav.style.display = 'none';
+    return;
+  }
+  moduleNav.style.display = 'flex';
+
+  navItems.forEach(item => {
+    const target = parseInt(item.getAttribute('data-target'));
+    item.classList.remove('active', 'completed', 'locked');
+    if (target === step) {
+      item.classList.add('active');
+    } else if (target < step || target <= highestCompletedStep) {
+      item.classList.add('completed');
+    } else {
+      item.classList.add('locked');
+    }
+  });
+}
+
+function jumpToStep(targetStep) {
+  // Only allow jumping to steps that have been completed or the current step
+  if (targetStep > highestCompletedStep && targetStep > currentStep) return;
+  if (targetStep < 1 || targetStep > 6) return;
+  currentStep = targetStep;
+  showStep(currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function showStep(step) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.querySelector(`.step[data-step="${step}"]`).classList.add('active');
@@ -1432,6 +1583,9 @@ function showStep(step) {
     document.getElementById('btnNext').style.display = '';
     checkStepComplete(step);
   }
+
+  // Update module navigation bar
+  updateModuleNav(step);
 }
 
 function checkStepComplete(step) {
@@ -1485,8 +1639,15 @@ function nextStep() {
     const allAnswered = questions.every(q => document.querySelector(`input[name="${q}"]:checked`));
     if (!allAnswered) return;
   }
+  // Track highest completed step before advancing
+  if (currentStep > highestCompletedStep) {
+    highestCompletedStep = currentStep;
+  }
   currentStep++;
-  if (currentStep === 7) calculateResult();
+  if (currentStep === 7) {
+    highestCompletedStep = 7;
+    calculateResult();
+  }
   showStep(currentStep);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1505,6 +1666,9 @@ function prevStep() {
 document.querySelectorAll('input[type="radio"]').forEach(r => {
   r.addEventListener('change', () => checkStepComplete(currentStep));
 });
+
+// Initialize module nav (hidden on intro)
+updateModuleNav(0);
 
 // ===== SCORING ALGORITHM =====
 // Based on the official NBA (Neues Begutachtungsassessment)
