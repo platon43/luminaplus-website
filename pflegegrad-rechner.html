@@ -1115,7 +1115,7 @@
           <tr><td>🥤 Trinken</td><td><input type="radio" name="m4q9" value="0"></td><td><input type="radio" name="m4q9" value="1"></td><td><input type="radio" name="m4q9" value="2"></td><td><input type="radio" name="m4q9" value="3"></td></tr>
         </tbody></table>
         <table class="freq-table" style="margin-top:1rem;"><thead><tr><th></th><th>Nein / oral</th><th>Teilweise</th><th>Vollst&auml;ndig</th></tr></thead><tbody>
-          <tr><td>🏥 Ern&auml;hrung &uuml;ber Sonde / parenteral</td><td><input type="radio" name="m4q13" value="0" checked></td><td><input type="radio" name="m4q13" value="3"></td><td><input type="radio" name="m4q13" value="6"></td></tr>
+          <tr><td>🏥 Ern&auml;hrung &uuml;ber Sonde / parenteral</td><td><input type="radio" name="m4q13" value="0"></td><td><input type="radio" name="m4q13" value="3"></td><td><input type="radio" name="m4q13" value="6"></td></tr>
         </tbody></table>
       </div>
 
@@ -1199,7 +1199,7 @@
           <tr><td>⏰ Zeitlich ausgedehnte Besuche (&uuml;ber 3&nbsp;Std.)</td><td><input type="radio" name="m5q15" value="0"></td><td><input type="radio" name="m5q15" value="1"></td><td><input type="radio" name="m5q15" value="2"></td><td><input type="radio" name="m5q15" value="3"></td></tr>
         </tbody></table>
         <table class="freq-table" style="margin-top:1rem;"><thead><tr><th></th><th>Nein / entf&auml;llt</th><th>Ja, erforderlich</th></tr></thead><tbody>
-          <tr><td>🥗 Einhaltung einer Di&auml;t / Verhaltensvorschriften</td><td><input type="radio" name="m5q16" value="0" checked></td><td><input type="radio" name="m5q16" value="1"></td></tr>
+          <tr><td>🥗 Einhaltung einer Di&auml;t / Verhaltensvorschriften</td><td><input type="radio" name="m5q16" value="0"></td><td><input type="radio" name="m5q16" value="1"></td></tr>
         </tbody></table>
       </div>
     </div>
@@ -1396,9 +1396,9 @@ function toggleM3Cat() {
     const checked = document.getElementById(c.cb).checked;
     document.getElementById(c.div).style.display = checked ? 'block' : 'none';
     if (checked) anyChecked = true;
-    // Reset unchecked category radios to "Nie" (0)
+    // Clear unchecked category radios completely
     if (!checked) {
-      document.querySelectorAll(`#${c.div} input[type="radio"][value="0"]`).forEach(r => r.checked = true);
+      document.querySelectorAll(`#${c.div} input[type="radio"]`).forEach(r => r.checked = false);
     }
   });
   // Uncheck "Keine" if any category is checked
@@ -1414,8 +1414,7 @@ function genericToggle(catMap, keineId, stepNum) {
     document.getElementById(div).style.display = checked ? 'block' : 'none';
     if (checked) anyChecked = true;
     if (!checked) qs.forEach(q => {
-      const r = document.querySelector(`input[name="${q}"][value="0"]`);
-      if (r) r.checked = true;
+      document.querySelectorAll(`input[name="${q}"]`).forEach(r => r.checked = false);
     });
   });
   if (anyChecked) document.getElementById(keineId).checked = false;
@@ -1427,8 +1426,7 @@ function genericToggleKeine(catMap, keineId, stepNum, extraReset) {
       document.getElementById(cbId).checked = false;
       document.getElementById(div).style.display = 'none';
       qs.forEach(q => {
-        const r = document.querySelector(`input[name="${q}"][value="0"]`);
-        if (r) r.checked = true;
+        document.querySelectorAll(`input[name="${q}"]`).forEach(r => r.checked = false);
       });
     });
     if (extraReset) extraReset();
@@ -1485,9 +1483,8 @@ function toggleM4Keine() {
         if (r) r.checked = true;
       });
     });
-    // Reset m4q13 to 0
-    const s = document.querySelector('input[name="m4q13"][value="0"]');
-    if (s) s.checked = true;
+    // Clear m4q13
+    document.querySelectorAll('input[name="m4q13"]').forEach(r => r.checked = false);
   }
   checkStepComplete(4);
 }
@@ -1511,10 +1508,9 @@ function toggleM5Cat() {
     });
   });
   if (anyChecked) document.getElementById('m5_cat_keine').checked = false;
-  // Reset m5q16 when arzt category unchecked
+  // Clear m5q16 when arzt category unchecked
   if (!document.getElementById('m5_cat_arzt').checked) {
-    const r = document.querySelector('input[name="m5q16"][value="0"]');
-    if (r) r.checked = true;
+    document.querySelectorAll('input[name="m5q16"]').forEach(r => r.checked = false);
   }
   checkStepComplete(5);
 }
@@ -1524,12 +1520,10 @@ function toggleM5Keine() {
       document.getElementById(cbId).checked = false;
       document.getElementById(div).style.display = 'none';
       qs.forEach(q => {
-        const r = document.querySelector(`input[name="${q}"][value="0"]`);
-        if (r) r.checked = true;
+        document.querySelectorAll(`input[name="${q}"]`).forEach(r => r.checked = false);
       });
     });
-    const r = document.querySelector('input[name="m5q16"][value="0"]');
-    if (r) r.checked = true;
+    document.querySelectorAll('input[name="m5q16"]').forEach(r => r.checked = false);
   }
   checkStepComplete(5);
 }
@@ -1552,10 +1546,9 @@ function toggleM3Keine() {
     ['m3_aggression','m3_angst','m3_pflege','m3_motorik'].forEach(id => {
       document.getElementById(id).style.display = 'none';
     });
-    // Reset all M3 radios to "Nie"
+    // Clear all M3 radios completely
     m3AllQuestions.forEach(q => {
-      const r = document.querySelector(`input[name="${q}"][value="0"]`);
-      if (r) r.checked = true;
+      document.querySelectorAll(`input[name="${q}"]`).forEach(r => r.checked = false);
     });
   }
   checkStepComplete(3);
