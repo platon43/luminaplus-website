@@ -174,14 +174,7 @@
     .step-icon.blue { background: rgba(53,192,237,0.12); }
     .step-icon.green { background: rgba(154,235,166,0.2); }
     .step-icon.navy { background: rgba(8,55,107,0.08); }
-    /* SVG Icon Styling */
-    .step-icon svg, .cat-icon svg, .module-nav-icon svg {
-      width: 70%;
-      height: 70%;
-    }
-    .step-icon.blue { color: var(--dark-blue); }
-    .step-icon.green { color: #4a9a5a; }
-    .step-icon.navy { color: var(--navy); }
+    /* Emoji sizing */
     .cat-icon { color: var(--dark-blue); }
     .cat-keine .cat-icon { color: var(--gray); }
     .module-nav-icon { color: var(--navy); }
@@ -787,34 +780,34 @@
 
     <div class="module-nav" id="moduleNav">
       <button class="module-nav-item active" data-target="1" onclick="jumpToStep(1)">
-        <span class="module-nav-icon"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="34" r="9" stroke="#9AEBA6" stroke-width="1.5"/><circle cx="15" cy="34" r="1.5" fill="#9AEBA6"/><circle cx="40" cy="41" r="3" stroke="#9AEBA6" stroke-width="1.5"/><circle cx="40" cy="41" r="1" fill="#9AEBA6"/><circle cx="24" cy="10" r="3.5" stroke="#9AEBA6" stroke-width="1.5"/><path d="M15 7v18h18" stroke="#2F90B0" stroke-width="1.5"/><path d="M33 25l7 13" stroke="#2F90B0" stroke-width="1.5"/><path d="M15 7h-3" stroke="#2F90B0" stroke-width="1.5"/><circle cx="12" cy="7" r="1" fill="#9AEBA6"/><path d="M20 19h14" stroke="#2F90B0" stroke-width="1.5"/><path d="M29 33h5" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 13.5v11.5" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 18h6" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 25l6 8" stroke="#2F90B0" stroke-width="1.5"/></svg></span>
+        <span class="module-nav-icon">&#x1F6B6;</span>
         <span class="module-nav-label">Mobilit&auml;t</span>
       </button>
       <button class="module-nav-item locked" data-target="2" onclick="jumpToStep(2)">
-        <span class="module-nav-icon"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4 C18 4 12 6 9 12 C6 18 6 22 8 26 C6 30 6 34 9 38 C12 42 18 44 24 44" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 4 C30 4 36 6 39 12 C42 18 42 22 40 26 C42 30 42 34 39 38 C36 42 30 44 24 44" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 4v40" stroke="#2F90B0" stroke-width="1.5" opacity="0.2"/><path d="M10 16c5 3 10 3 14 0" stroke="#2F90B0" stroke-width="1.2"/><path d="M24 16c4 3 9 3 14 0" stroke="#2F90B0" stroke-width="1.2"/><path d="M10 34c4 2 10 2 14 0" stroke="#2F90B0" stroke-width="1.2"/><path d="M24 34c4 2 10 2 14 0" stroke="#2F90B0" stroke-width="1.2"/><circle cx="14" cy="12" r="2" fill="#9AEBA6"/><circle cx="34" cy="12" r="2" fill="#9AEBA6"/><circle cx="12" cy="26" r="1.5" fill="#9AEBA6"/><circle cx="36" cy="26" r="1.5" fill="#9AEBA6"/><circle cx="16" cy="38" r="1.5" fill="#9AEBA6"/><circle cx="32" cy="38" r="1.5" fill="#9AEBA6"/></svg></span>
+        <span class="module-nav-icon">&#x1F9E0;</span>
         <span class="module-nav-label">Kognition</span>
       </button>
       <button class="module-nav-item locked" data-target="3" onclick="jumpToStep(3)">
-        <span class="module-nav-icon"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40 C12 30 4 24 4 16 C4 10 8 6 14 6 C18 6 21 8 24 12 C27 8 30 6 34 6 C40 6 44 10 44 16 C44 24 36 30 24 40z" stroke="#2F90B0" stroke-width="1.5"/><circle cx="16" cy="16" r="2" fill="#9AEBA6"/><circle cx="32" cy="16" r="2" fill="#9AEBA6"/><circle cx="24" cy="28" r="2" fill="#9AEBA6"/></svg></span>
+        <span class="module-nav-icon">&#x1F49C;</span>
         <span class="module-nav-label">Verhalten</span>
       </button>
       <button class="module-nav-item locked" data-target="4" onclick="jumpToStep(4)">
-        <span class="module-nav-icon"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 42a12 12 0 0 0 12-12c0-4-2-7.5-5-10.5S26 12 24 6c-2 6-4 10-7 13.5S12 26 12 30a12 12 0 0 0 12 12z" stroke="#2F90B0" stroke-width="1.5"/><circle cx="24" cy="34" r="4" stroke="#9AEBA6" stroke-width="1.5"/><circle cx="24" cy="34" r="1.5" fill="#9AEBA6"/><circle cx="20" cy="28" r="1" fill="#9AEBA6"/></svg></span>
+        <span class="module-nav-icon">&#x1F6BF;</span>
         <span class="module-nav-label">Selbstversorgung</span>
       </button>
       <button class="module-nav-item locked" data-target="5" onclick="jumpToStep(5)">
-        <span class="module-nav-icon"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="18" width="32" height="12" rx="6" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 18v12" stroke="#2F90B0" stroke-width="1.5" opacity="0.4"/><circle cx="16" cy="24" r="2" fill="#9AEBA6"/><circle cx="32" cy="24" r="2" fill="#9AEBA6"/></svg></span>
+        <span class="module-nav-icon">&#x1F48A;</span>
         <span class="module-nav-label">Krankheit</span>
       </button>
       <button class="module-nav-item locked" data-target="6" onclick="jumpToStep(6)">
-        <span class="module-nav-icon"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="8" stroke="#2F90B0" stroke-width="1.5"/><circle cx="24" cy="24" r="2.5" fill="#9AEBA6"/><path d="M24 6v6M24 36v6M6 24h6M36 24h6" stroke="#2F90B0" stroke-width="1.5"/><path d="M11.27 11.27l4.24 4.24M32.49 32.49l4.24 4.24M11.27 36.73l4.24-4.24M32.49 15.51l4.24-4.24" stroke="#2F90B0" stroke-width="1.5"/></svg></span>
+        <span class="module-nav-icon">&#x2600;&#xFE0F;</span>
         <span class="module-nav-label">Alltag</span>
       </button>
     </div>
 
     <!-- STEP 0: Intro -->
     <div class="step active" data-step="0">
-      <div class="step-icon blue"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="24" height="36" rx="2" stroke="#2F90B0" stroke-width="1.5"/><rect x="18" y="2" width="12" height="6" rx="1.5" stroke="#2F90B0" stroke-width="1.5"/><circle cx="17" cy="18" r="1.5" fill="#9AEBA6"/><path d="M22 18h12" stroke="#2F90B0" stroke-width="1.5"/><circle cx="17" cy="26" r="1.5" fill="#9AEBA6"/><path d="M22 26h10" stroke="#2F90B0" stroke-width="1.5"/><circle cx="17" cy="34" r="1.5" fill="#9AEBA6"/><path d="M22 34h8" stroke="#2F90B0" stroke-width="1.5"/></svg></div>
+      <div class="step-icon blue">📋</div>
       <h2>Wie funktioniert der Rechner?</h2>
       <p class="step-desc">
         Unser Pflegegrad-Rechner orientiert sich am <strong>Neuen Begutachtungsassessment (NBA)</strong>,
@@ -873,7 +866,7 @@
 
     <!-- STEP 1: Mobilität - Kategorien -->
     <div class="step" data-step="1">
-      <div class="step-icon blue"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="15" cy="34" r="9" stroke="#9AEBA6" stroke-width="1.5"/><circle cx="15" cy="34" r="1.5" fill="#9AEBA6"/><circle cx="40" cy="41" r="3" stroke="#9AEBA6" stroke-width="1.5"/><circle cx="40" cy="41" r="1" fill="#9AEBA6"/><circle cx="24" cy="10" r="3.5" stroke="#9AEBA6" stroke-width="1.5"/><path d="M15 7v18h18" stroke="#2F90B0" stroke-width="1.5"/><path d="M33 25l7 13" stroke="#2F90B0" stroke-width="1.5"/><path d="M15 7h-3" stroke="#2F90B0" stroke-width="1.5"/><circle cx="12" cy="7" r="1" fill="#9AEBA6"/><path d="M20 19h14" stroke="#2F90B0" stroke-width="1.5"/><path d="M29 33h5" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 13.5v11.5" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 18h6" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 25l6 8" stroke="#2F90B0" stroke-width="1.5"/></svg></div>
+      <div class="step-icon blue">🚶</div>
       <h2>Modul 1: Mobilit&auml;t</h2>
       <p class="step-desc">In welchen Bereichen ben&ouml;tigt die Person Unterst&uuml;tzung? (Gewichtung: 10&nbsp;%)</p>
 
@@ -915,7 +908,7 @@
 
     <!-- STEP 2: Kognitive Fähigkeiten - 4 Kategorien -->
     <div class="step" data-step="2">
-      <div class="step-icon green"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4 C18 4 12 6 9 12 C6 18 6 22 8 26 C6 30 6 34 9 38 C12 42 18 44 24 44" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 4 C30 4 36 6 39 12 C42 18 42 22 40 26 C42 30 42 34 39 38 C36 42 30 44 24 44" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 4v40" stroke="#2F90B0" stroke-width="1.5" opacity="0.2"/><path d="M10 16c5 3 10 3 14 0" stroke="#2F90B0" stroke-width="1.2"/><path d="M24 16c4 3 9 3 14 0" stroke="#2F90B0" stroke-width="1.2"/><path d="M10 34c4 2 10 2 14 0" stroke="#2F90B0" stroke-width="1.2"/><path d="M24 34c4 2 10 2 14 0" stroke="#2F90B0" stroke-width="1.2"/><circle cx="14" cy="12" r="2" fill="#9AEBA6"/><circle cx="34" cy="12" r="2" fill="#9AEBA6"/><circle cx="12" cy="26" r="1.5" fill="#9AEBA6"/><circle cx="36" cy="26" r="1.5" fill="#9AEBA6"/><circle cx="16" cy="38" r="1.5" fill="#9AEBA6"/><circle cx="32" cy="38" r="1.5" fill="#9AEBA6"/></svg></div>
+      <div class="step-icon green">🧠</div>
       <h2>Modul 2: Kognitive &amp; kommunikative F&auml;higkeiten</h2>
       <p class="step-desc">Welche F&auml;higkeiten bereiten der Person Schwierigkeiten? (Gewichtung: 15&nbsp;%, h&ouml;herer Wert aus Modul 2 oder 3)</p>
 
@@ -983,7 +976,7 @@
 
     <!-- STEP 3: Verhaltensweisen - Kategorieauswahl -->
     <div class="step" data-step="3">
-      <div class="step-icon navy"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 40 C12 30 4 24 4 16 C4 10 8 6 14 6 C18 6 21 8 24 12 C27 8 30 6 34 6 C40 6 44 10 44 16 C44 24 36 30 24 40z" stroke="#2F90B0" stroke-width="1.5"/><circle cx="16" cy="16" r="2" fill="#9AEBA6"/><circle cx="32" cy="16" r="2" fill="#9AEBA6"/><circle cx="24" cy="28" r="2" fill="#9AEBA6"/></svg></div>
+      <div class="step-icon navy">💜</div>
       <h2>Modul 3: Verhalten &amp; psychische Problemlagen</h2>
       <p class="step-desc">Welche Verhaltensauff&auml;lligkeiten treten bei der pflegebed&uuml;rftigen Person auf? (H&ouml;herer Wert aus Modul 2 oder 3 z&auml;hlt)</p>
 
@@ -1066,7 +1059,7 @@
 
     <!-- STEP 4: Selbstversorgung - Kategorien + Detailfragen -->
     <div class="step" data-step="4">
-      <div class="step-icon blue"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M24 42a12 12 0 0 0 12-12c0-4-2-7.5-5-10.5S26 12 24 6c-2 6-4 10-7 13.5S12 26 12 30a12 12 0 0 0 12 12z" stroke="#2F90B0" stroke-width="1.5"/><circle cx="24" cy="34" r="4" stroke="#9AEBA6" stroke-width="1.5"/><circle cx="24" cy="34" r="1.5" fill="#9AEBA6"/><circle cx="20" cy="28" r="1" fill="#9AEBA6"/></svg></div>
+      <div class="step-icon blue">🚿</div>
       <h2>Modul 4: Selbstversorgung</h2>
       <p class="step-desc">In welchen Bereichen ben&ouml;tigt die Person Hilfe? (Gewichtung: 40&nbsp;% &mdash; wichtigstes Modul)</p>
 
@@ -1138,7 +1131,7 @@
 
     <!-- STEP 5: Krankheitsbewältigung - Kategorien + Detailfragen -->
     <div class="step" data-step="5">
-      <div class="step-icon green"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="18" width="32" height="12" rx="6" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 18v12" stroke="#2F90B0" stroke-width="1.5" opacity="0.4"/><circle cx="16" cy="24" r="2" fill="#9AEBA6"/><circle cx="32" cy="24" r="2" fill="#9AEBA6"/></svg></div>
+      <div class="step-icon green">💊</div>
       <h2>Modul 5: Krankheits- &amp; therapiebedingte Anforderungen</h2>
       <p class="step-desc">Welche medizinischen Ma&szlig;nahmen sind erforderlich? (Gewichtung: 20&nbsp;%)</p>
 
@@ -1213,7 +1206,7 @@
 
     <!-- STEP 6: Alltagsleben - 3 Kategorien -->
     <div class="step" data-step="6">
-      <div class="step-icon navy"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="8" stroke="#2F90B0" stroke-width="1.5"/><circle cx="24" cy="24" r="2.5" fill="#9AEBA6"/><path d="M24 6v6M24 36v6M6 24h6M36 24h6" stroke="#2F90B0" stroke-width="1.5"/><path d="M11.27 11.27l4.24 4.24M32.49 32.49l4.24 4.24M11.27 36.73l4.24-4.24M32.49 15.51l4.24-4.24" stroke="#2F90B0" stroke-width="1.5"/></svg></div>
+      <div class="step-icon navy">☀️</div>
       <h2>Modul 6: Alltagsleben &amp; soziale Kontakte</h2>
       <p class="step-desc">In welchen Bereichen ben&ouml;tigt die Person Unterst&uuml;tzung? (Gewichtung: 15&nbsp;%)</p>
 
@@ -1266,7 +1259,7 @@
 
     <!-- STEP 7: Ergebnis -->
     <div class="step" data-step="7">
-      <div class="step-icon green"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h20v14a10 10 0 0 1-20 0V4z" stroke="#2F90B0" stroke-width="1.5"/><path d="M14 10H8a4 4 0 0 0 0 8h4" stroke="#2F90B0" stroke-width="1.5"/><path d="M34 10h6a4 4 0 0 1 0 8h-4" stroke="#2F90B0" stroke-width="1.5"/><path d="M24 28v8" stroke="#2F90B0" stroke-width="1.5"/><path d="M16 40h16" stroke="#2F90B0" stroke-width="1.5"/><circle cx="24" cy="14" r="3" stroke="#9AEBA6" stroke-width="1.5"/><circle cx="24" cy="14" r="1" fill="#9AEBA6"/><circle cx="24" cy="40" r="1.5" fill="#9AEBA6"/></svg></div>
+      <div class="step-icon green">🏆</div>
       <h2>Ihr Ergebnis</h2>
       <p class="step-desc">Basierend auf Ihren Angaben haben wir den voraussichtlichen Pflegegrad berechnet.</p>
 
