@@ -589,26 +589,18 @@
       background: rgba(53,192,237,0.05);
     }
     .cat-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      background: rgba(53,192,237,0.08);
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(53,192,237,0.06);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      font-size: 1.5rem;
+      line-height: 1;
     }
-    .cat-icon svg {
-      width: 24px;
-      height: 24px;
-      stroke: var(--dark-blue);
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .cat-keine .cat-icon { background: rgba(107,125,138,0.08); }
-    .cat-keine .cat-icon svg { stroke: var(--gray); }
+    .cat-keine .cat-icon { background: rgba(107,125,138,0.06); }
 
     /* Module Navigation Bar */
     .module-nav {
@@ -649,14 +641,11 @@
       color: var(--navy);
       font-weight: 600;
     }
-    .module-nav-item.active .module-nav-icon svg {
-      stroke: var(--light-blue);
-    }
     .module-nav-item.completed .module-nav-icon::after {
       content: '';
       position: absolute;
-      top: 2px;
-      right: 12px;
+      top: -2px;
+      right: -2px;
       width: 12px;
       height: 12px;
       background: var(--green);
@@ -682,14 +671,9 @@
       background: rgba(53,192,237,0.06);
       border-radius: 8px;
     }
-    .module-nav-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--gray);
-      fill: none;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .module-nav-icon {
+      font-size: 1.3rem;
+      line-height: 1;
     }
     .module-nav-label {
       font-size: 0.6rem;
@@ -752,27 +736,27 @@
 
     <div class="module-nav" id="moduleNav">
       <button class="module-nav-item active" data-target="1" onclick="jumpToStep(1)">
-        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><circle cx="10" cy="4" r="2"/><path d="M14 22v-6l-3-3-1-4h-2l-1 4-3 3v6"/><path d="M6 14l-2 2"/><path d="M14 12l2-1"/><path d="M19 8v-1a2 2 0 0 0-2-2h-1"/></svg></span>
+        <span class="module-nav-icon">&#x1F6B6;</span>
         <span class="module-nav-label">Mobilit&auml;t</span>
       </button>
       <button class="module-nav-item locked" data-target="2" onclick="jumpToStep(2)">
-        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.5V20h6v-2.5c2.9-1.2 5-4.1 5-7.5a8 8 0 0 0-8-8z"/><path d="M10 20v2h4v-2"/><path d="M9 10h.01M15 10h.01"/><path d="M12 14a2 2 0 0 0 2-2"/></svg></span>
+        <span class="module-nav-icon">&#x1F9E0;</span>
         <span class="module-nav-label">Kognition</span>
       </button>
       <button class="module-nav-item locked" data-target="3" onclick="jumpToStep(3)">
-        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span>
+        <span class="module-nav-icon">&#x1F49C;</span>
         <span class="module-nav-label">Verhalten</span>
       </button>
       <button class="module-nav-item locked" data-target="4" onclick="jumpToStep(4)">
-        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><path d="M12 8v3"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/><path d="M7 11h10"/></svg></span>
+        <span class="module-nav-icon">&#x1F6BF;</span>
         <span class="module-nav-label">Selbstversorgung</span>
       </button>
       <button class="module-nav-item locked" data-target="5" onclick="jumpToStep(5)">
-        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><path d="M19.5 12.572l-7.5 7.428-7.5-7.428A5 5 0 1 1 12 6.006a5 5 0 1 1 7.5 6.572z"/><path d="M12 6v4"/><path d="M10 10h4"/></svg></span>
+        <span class="module-nav-icon">&#x1F48A;</span>
         <span class="module-nav-label">Krankheit</span>
       </button>
       <button class="module-nav-item locked" data-target="6" onclick="jumpToStep(6)">
-        <span class="module-nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg></span>
+        <span class="module-nav-icon">&#x2600;&#xFE0F;</span>
         <span class="module-nav-label">Alltag</span>
       </button>
     </div>
@@ -847,15 +831,15 @@
         <div style="display:flex;flex-direction:column;gap:0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m1_cat_fortbewegen" onchange="toggleM1Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="3" r="2"/><path d="M15 21h-2l-1-5-2-3"/><path d="M10 13l-3 8"/><path d="M9 8l-3 5"/><path d="M12 8l2-1"/><path d="M19 6v15"/><path d="M17 8h4"/><path d="M19 6a2 2 0 0 0-2-2"/></svg></div>
+            <div class="cat-icon">&#x1F6B6;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Fortbewegen</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m1_cat_sitzen" onchange="toggleM1Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="4" r="2"/><path d="M7 13h4v8"/><path d="M7 13V9h10v4h-6"/><path d="M17 13v8"/><path d="M12 7v2"/><path d="M9 3l-2-2M15 3l2-2"/></svg></div>
+            <div class="cat-icon">&#x1FA91;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Sitzen und Aufstehen</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m1_cat_keine" onchange="toggleM1Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="cat-icon">&#x2705;</div>
             <span style="font-size:0.9rem;color:var(--gray);">Keiner der genannten Bereiche</span></label>
         </div>
       </div>
@@ -889,23 +873,23 @@
         <div style="display:flex;flex-direction:column;gap:0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m2_cat_orientierung" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="none"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M2 12h2"/><path d="M20 12h2"/></svg></div>
+            <div class="cat-icon">&#x1F9ED;</div>
             <span style="font-size:0.9rem;color:var(--navy);">R&auml;umliche und zeitliche Orientierung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m2_cat_entscheidungen" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2z"/><circle cx="12" cy="9" r="1.5" fill="none"/><path d="M12 12v-0.5"/></svg></div>
+            <div class="cat-icon">&#x1F4A1;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Allt&auml;gliche Entscheidungen treffen und umsetzen</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m2_cat_austausch" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M14 8h.01"/><path d="M10 8h.01"/><path d="M8 12s1.5 2 4 2 4-2 4-2"/></svg></div>
+            <div class="cat-icon">&#x1F4AC;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Austausch mit Umfeld</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m2_cat_erkennen" onchange="toggleM2Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="cat-icon">&#x1F441;&#xFE0F;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Erkennen und Erinnern</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m2_cat_keine" onchange="toggleM2Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="cat-icon">&#x2705;</div>
             <span style="font-size:0.9rem;color:var(--gray);">Keine Einschr&auml;nkungen</span></label>
         </div>
       </div>
@@ -957,27 +941,27 @@
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.2rem; border: 2px solid var(--light-gray); border-radius: 10px; cursor: pointer; transition: all 0.2s;">
             <input type="checkbox" id="cat_aggression" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M18 11V6a1 1 0 0 0-2 0"/><path d="M16 8V4a1 1 0 0 0-2 0"/><path d="M14 8V3a1 1 0 0 0-2 0v5"/><path d="M12 8V6a1 1 0 0 0-2 0v5"/><path d="M10 11V6"/><path d="M8 13a4 4 0 0 0 0 1"/><path d="M18 11a4 4 0 0 1 1 3v2a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-1"/><path d="M7 11V8a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1"/><path d="M18 11a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v2"/></svg></div>
+            <div class="cat-icon">&#x270B;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Aggressionen</span>
           </label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="cat_angst" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><line x1="8" y1="16" x2="8" y2="20"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="16" y1="16" x2="16" y2="20"/></svg></div>
+            <div class="cat-icon">&#x1F327;&#xFE0F;</div>
             <span style="font-size:0.9rem;color:var(--navy);">&Auml;ngste und Wahnvorstellungen</span>
           </label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="cat_pflege" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div>
+            <div class="cat-icon">&#x1F6E1;&#xFE0F;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Handlungen, die die Pflege erschweren</span>
           </label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="cat_motorik" onchange="toggleM3Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
+            <div class="cat-icon">&#x1F504;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Motorische oder soziale Verhaltensauff&auml;lligkeiten</span>
           </label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="cat_keine" onchange="toggleM3Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="cat-icon">&#x2705;</div>
             <span style="font-size:0.9rem;color:var(--gray);">Keine Verhaltensauff&auml;lligkeiten</span>
           </label>
         </div>
@@ -1040,23 +1024,23 @@
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_pflege" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 2v6"/><path d="M8 12a4 4 0 0 0 8 0"/><path d="M6 12h12"/><path d="M7 16l-1 5"/><path d="M17 16l1 5"/><circle cx="9" cy="19" r="0.5" fill="currentColor"/><circle cx="12" cy="20" r="0.5" fill="currentColor"/><circle cx="15" cy="19" r="0.5" fill="currentColor"/></svg></div>
+            <div class="cat-icon">&#x1F6BF;</div>
             <span style="font-size:0.9rem;color:var(--navy);">K&ouml;rperpflege</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_kleidung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M20.38 3.46L16 2l-4 3-4-3-4.38 1.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10h12V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg></div>
+            <div class="cat-icon">&#x1F455;</div>
             <span style="font-size:0.9rem;color:var(--navy);">An- und Auskleiden</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_ernaehrung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg></div>
+            <div class="cat-icon">&#x1F37D;&#xFE0F;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Ern&auml;hrung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m4_cat_ausscheidung" onchange="toggleM4Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v4a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6V4z"/><path d="M18 4h2v3a1 1 0 0 1-1 1h-1"/><path d="M9 14v3a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3v-3"/><path d="M8 21h8"/></svg></div>
+            <div class="cat-icon">&#x1F6BD;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Ausscheidung</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m4_cat_keine" onchange="toggleM4Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="cat-icon">&#x2705;</div>
             <span style="font-size:0.9rem;color:var(--gray);">Komplett selbstst&auml;ndig in allen Bereichen</span></label>
         </div>
       </div>
@@ -1117,23 +1101,23 @@
         <div style="display: flex; flex-direction: column; gap: 0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_medikamente" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l6-6a4.95 4.95 0 1 1 7 7l-6 6a4.95 4.95 0 1 1-7-7z"/><path d="M8 16l8-8"/></svg></div>
+            <div class="cat-icon">&#x1F48A;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Medikamente, Injektionen &amp; Hilfsmittel</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_wundversorgung" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg></div>
+            <div class="cat-icon">&#x1FA79;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Wundversorgung &amp; Spezialversorgung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_therapie" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <div class="cat-icon">&#x1F493;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Therapie &amp; Intensivma&szlig;nahmen</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m5_cat_arzt" onchange="toggleM5Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 2v6a6 6 0 0 0 12 0V2"/><path d="M6 2a2 2 0 0 0-2 2"/><path d="M18 2a2 2 0 0 1 2 2"/><path d="M12 14v4"/><circle cx="12" cy="20" r="2"/></svg></div>
+            <div class="cat-icon">&#x1FA7A;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Arztbesuche &amp; Di&auml;t</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m5_cat_keine" onchange="toggleM5Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="cat-icon">&#x2705;</div>
             <span style="font-size:0.9rem;color:var(--gray);">Keine medizinischen Ma&szlig;nahmen erforderlich</span></label>
         </div>
       </div>
@@ -1196,19 +1180,19 @@
         <div style="display:flex;flex-direction:column;gap:0.6rem;">
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m6_cat_tagesgestaltung" onchange="toggleM6Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+            <div class="cat-icon">&#x2600;&#xFE0F;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Tagesgestaltung &amp; Ruhen</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m6_cat_beschaeftigung" onchange="toggleM6Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+            <div class="cat-icon">&#x1F4D6;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Besch&auml;ftigung &amp; Planung</span></label>
           <label class="cat-check" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;">
             <input type="checkbox" id="m6_cat_kontakte" onchange="toggleM6Cat()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="cat-icon">&#x1F465;</div>
             <span style="font-size:0.9rem;color:var(--navy);">Soziale Kontakte</span></label>
           <label class="cat-check cat-keine" style="display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1.2rem;border:2px solid var(--light-gray);border-radius:10px;cursor:pointer;transition:all 0.2s;background:var(--off-white);">
             <input type="checkbox" id="m6_cat_keine" onchange="toggleM6Keine()" style="width:20px;height:20px;accent-color:var(--light-blue);flex-shrink:0;">
-            <div class="cat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="cat-icon">&#x2705;</div>
             <span style="font-size:0.9rem;color:var(--gray);">Keine Einschr&auml;nkungen</span></label>
         </div>
       </div>
