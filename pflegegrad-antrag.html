@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
   <title>Pflegegrad beantragen | LuminaPlus eG</title>
   <meta name="description" content="Beantragen Sie einfach und schnell einen Pflegegrad. Wir begleiten Sie durch den gesamten Antragsprozess.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -203,13 +204,26 @@
       width: 10%;
     }
     .progress-steps {
-      display: flex; justify-content: space-between; margin-top: 0.8rem; gap: 0.25rem;
+      display: flex; justify-content: space-between; margin-top: 0.8rem; gap: 0.15rem;
     }
     .progress-dot {
-      width: 100%; height: 3px; border-radius: 2px; background: #e8eef1; transition: background 0.3s;
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; padding: 0.35rem 0; border-radius: 8px;
+      background: #f0f4f7; transition: all 0.3s; opacity: 0.4;
+      filter: grayscale(100%); cursor: not-allowed;
     }
-    .progress-dot.active { background: #35C0ED; }
-    .progress-dot.completed { background: #9AEBA6; }
+    .progress-dot.active {
+      background: rgba(53,192,237,0.12); opacity: 1;
+      filter: grayscale(0%); transform: scale(1.1);
+      cursor: pointer;
+    }
+    .progress-dot.completed {
+      background: rgba(154,235,166,0.15); opacity: 0.8;
+      filter: grayscale(0%); cursor: pointer;
+    }
+    .progress-dot.completed:hover, .progress-dot.active:hover {
+      transform: scale(1.15); opacity: 1;
+    }
 
     /* ===== FORM CONTAINER ===== */
     .form-container {
@@ -226,13 +240,11 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     .step-icon {
-      width: 48px; height: 48px; border-radius: 12px;
+      width: 52px; height: 52px; border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; margin-bottom: 1rem;
+      font-size: 1.7rem; margin-bottom: 1rem;
+      background: rgba(8,55,107,0.04);
     }
-    .step-icon.blue { background: rgba(53,192,237,0.1); }
-    .step-icon.green { background: rgba(154,235,166,0.2); }
-    .step-icon.navy { background: rgba(8,55,107,0.08); }
 
     .step h2 {
       font-family: 'Tenor Sans', serif; font-size: 1.4rem;
@@ -479,7 +491,7 @@
 
     <!-- ====== STEP 1: Antragsart ====== -->
     <div class="step active" data-step="1">
-      <div class="step-icon blue">1</div>
+      <div class="step-icon">&#x1F4CB;</div>
       <h2>Art des Antrags</h2>
       <p class="step-desc">Was moechten Sie beantragen?</p>
 
@@ -530,7 +542,7 @@
 
     <!-- ====== STEP 2: Pflegebeduerftige Person ====== -->
     <div class="step" data-step="2">
-      <div class="step-icon blue">2</div>
+      <div class="step-icon">&#x1F9D3;</div>
       <h2>Pflegebeduerftige Person</h2>
       <p class="step-desc">Angaben zur Person, fuer die der Pflegegrad beantragt wird.</p>
 
@@ -595,7 +607,7 @@
 
     <!-- ====== STEP 3: Versicherung ====== -->
     <div class="step" data-step="3">
-      <div class="step-icon green">3</div>
+      <div class="step-icon">&#x1F3E5;</div>
       <h2>Kranken- und Pflegeversicherung</h2>
       <p class="step-desc">Angaben zur Versicherung der pflegebeduerftigen Person.</p>
 
@@ -639,7 +651,7 @@
 
     <!-- ====== STEP 4: Antragsteller ====== -->
     <div class="step" data-step="4">
-      <div class="step-icon navy">4</div>
+      <div class="step-icon">&#x1F465;</div>
       <h2>Antragsteller</h2>
       <p class="step-desc">Wer stellt den Antrag?</p>
 
@@ -731,7 +743,7 @@
 
     <!-- ====== STEP 5: Pflegesituation ====== -->
     <div class="step" data-step="5">
-      <div class="step-icon blue">5</div>
+      <div class="step-icon">&#x1F9D1;&#x200D;&#x1F9AF;</div>
       <h2>Aktuelle Pflegesituation</h2>
       <p class="step-desc">Wie sieht die aktuelle Pflege- und Wohnsituation aus?</p>
 
@@ -819,7 +831,7 @@
 
     <!-- ====== STEP 6: Gewuenschte Leistungen ====== -->
     <div class="step" data-step="6">
-      <div class="step-icon green">6</div>
+      <div class="step-icon">&#x1F9E9;</div>
       <h2>Gewuenschte Pflegeleistungen</h2>
       <p class="step-desc">Welche Leistungen moechten Sie beantragen?</p>
 
@@ -932,7 +944,7 @@
 
     <!-- ====== STEP 7: Pflegeperson & Hausarzt ====== -->
     <div class="step" data-step="7">
-      <div class="step-icon navy">7</div>
+      <div class="step-icon">&#x1FA7A;</div>
       <h2>Pflegeperson &amp; Hausarzt</h2>
       <p class="step-desc">Angaben zu den Personen, die an der Pflege beteiligt sind.</p>
 
@@ -1001,7 +1013,7 @@
 
     <!-- ====== STEP 8: Ergaenzende Angaben & Einwilligung ====== -->
     <div class="step" data-step="8">
-      <div class="step-icon green">8</div>
+      <div class="step-icon">&#x270D;&#xFE0F;</div>
       <h2>Ergaenzende Angaben &amp; Einwilligung</h2>
       <p class="step-desc">Letzte Angaben und rechtliche Einwilligungen.</p>
 
@@ -1114,7 +1126,7 @@
 
     <!-- ====== STEP 9: Zusammenfassung ====== -->
     <div class="step" data-step="9">
-      <div class="step-icon navy">&#10003;</div>
+      <div class="step-icon">&#x1F4CB;</div>
       <h2>Zusammenfassung</h2>
       <p class="step-desc">Bitte ueberpruefen Sie Ihre Angaben vor dem Absenden.</p>
 
@@ -1168,6 +1180,7 @@
   const C = PFLEGE_CONFIG;
   const TOTAL_STEPS = 9;
   let currentStep = 1;
+  let highestStep = 1;
   let generatedPdfBlob = null;
 
   // Pflegekassen E-Mail-Zuordnung (Frontend-Mapping fuer UI-Hinweise)
@@ -1262,11 +1275,22 @@
       }
     }
 
-    // Progress dots
+    // Progress dots with emojis
+    const stepEmojis = ['\u{1F4CB}', '\u{1F9D3}', '\u{1F3E5}', '\u{1F465}', '\u{1F9D1}\u{200D}\u{1F9AF}', '\u{1F9E9}', '\u{1FA7A}', '\u{270D}\u{FE0F}', '\u{1F4CB}'];
     const dotsEl = document.getElementById('progressDots');
     for (let i = 0; i < TOTAL_STEPS; i++) {
       const dot = document.createElement('div');
       dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
+      dot.textContent = stepEmojis[i] || '';
+      dot.title = ['Antragsart', 'Person', 'Versicherung', 'Antragsteller', 'Pflegesituation', 'Leistungen', 'Arzt', 'Einwilligung', 'Fertig'][i];
+      dot.dataset.step = i + 1;
+      dot.addEventListener('click', function() {
+        const targetStep = parseInt(this.dataset.step);
+        // Nur zu bereits besuchten oder aktuellen Schritten springen
+        if (targetStep <= highestStep) {
+          showStep(targetStep);
+        }
+      });
       dotsEl.appendChild(dot);
     }
 
@@ -1282,8 +1306,8 @@
 
     document.querySelectorAll('.progress-dot').forEach((dot, i) => {
       dot.className = 'progress-dot';
-      if (i < currentStep - 1) dot.classList.add('completed');
-      else if (i === currentStep - 1) dot.classList.add('active');
+      if (i === currentStep - 1) dot.classList.add('active');
+      else if (i < highestStep) dot.classList.add('completed');
     });
   }
 
@@ -1295,6 +1319,7 @@
       window.scrollTo({ top: document.querySelector('.progress-container').offsetTop - 80, behavior: 'smooth' });
     }
     currentStep = step;
+    if (step > highestStep) highestStep = step;
     updateProgress();
 
     if (step === 8) {

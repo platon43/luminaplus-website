@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
   <title>Kostenlose Pflegehilfsmittel | LuminaPlus eG &mdash; Bis 42&euro;/Monat</title>
   <meta name="description" content="Pflegehilfsmittel kostenlos nach Hause geliefert. Bis 42&euro; monatlich von der Pflegekasse &uuml;bernommen. Ab Pflegegrad 1. Jetzt beantragen!">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -165,39 +166,115 @@
     }
     .step-card p { font-size: 0.88rem; color: var(--gray); }
 
-    /* Products */
+    /* Budget Tracker */
+    .budget-bar {
+      background: white;
+      border: 2px solid var(--light-gray);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      position: sticky;
+      top: 72px;
+      z-index: 50;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+    .budget-bar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .budget-label { font-weight: 600; font-size: 0.9rem; color: var(--navy); }
+    .budget-amount { font-weight: 700; font-size: 1.1rem; color: var(--navy); }
+    .budget-amount .used { color: var(--dark-blue); }
+    .budget-track {
+      height: 8px;
+      background: var(--light-gray);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .budget-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green) 0%, var(--dark-blue) 100%);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .budget-fill.over { background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%); }
+    .budget-hint { font-size: 0.78rem; color: var(--gray); margin-top: 0.4rem; text-align: right; }
+
+    /* Product Configurator */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
     }
     .product-card {
       background: white;
       border: 2px solid var(--light-gray);
       border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
+      padding: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       transition: all 0.3s;
     }
-    .product-card:hover { border-color: var(--green); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
+    .product-card.selected { border-color: var(--green); background: rgba(154,235,166,0.05); }
+    .product-card.disabled { opacity: 0.45; pointer-events: none; }
     .product-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
       background: rgba(154,235,166,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      margin: 0 auto 1rem;
+      font-size: 1.3rem;
+      flex-shrink: 0;
     }
-    .product-card h3 {
+    .product-info { flex: 1; min-width: 0; }
+    .product-info h3 {
       font-family: var(--font-heading);
+      font-size: 0.9rem;
+      color: var(--navy);
+      margin-bottom: 0.15rem;
+    }
+    .product-meta { font-size: 0.78rem; color: var(--gray); }
+    .product-price { font-size: 0.82rem; font-weight: 600; color: var(--dark-blue); }
+    .product-qty {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 2px solid var(--light-gray);
+      background: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .qty-btn:hover { border-color: var(--light-blue); background: rgba(53,192,237,0.05); }
+    .qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .qty-value {
+      width: 28px;
+      text-align: center;
+      font-weight: 700;
       font-size: 0.95rem;
       color: var(--navy);
-      margin-bottom: 0.4rem;
     }
-    .product-card p { font-size: 0.82rem; color: var(--gray); line-height: 1.5; }
+    .configurator-cta {
+      text-align: center;
+      margin-top: 2rem;
+    }
 
     /* Benefits */
     .benefits-section { background: var(--off-white); }
@@ -508,42 +585,32 @@
   </div>
 </section>
 
-<!-- Produkte -->
-<section style="background: var(--off-white);">
+<!-- Produktkonfigurator -->
+<section style="background: var(--off-white);" id="pflegebox">
   <div class="section-inner">
-    <h2 class="section-title reveal">Was ist in Ihrer Pflegebox?</h2>
-    <p class="section-subtitle reveal">Zum Verbrauch bestimmte Pflegehilfsmittel nach &sect;&nbsp;40 SGB&nbsp;XI</p>
-    <div class="products-grid">
-      <div class="product-card reveal">
-        <div class="product-icon">&#129507;</div>
-        <h3>Einmalhandschuhe</h3>
-        <p>Latexfrei, in verschiedenen Gr&ouml;&szlig;en. F&uuml;r hygienische Pflege.</p>
+    <h2 class="section-title reveal">Stellen Sie Ihre Pflegebox zusammen</h2>
+    <p class="section-subtitle reveal">W&auml;hlen Sie die Produkte, die Sie ben&ouml;tigen &mdash; bis zu 42&nbsp;&euro;/Monat von der Pflegekasse &uuml;bernommen</p>
+
+    <!-- Budget-Tracker -->
+    <div class="budget-bar reveal" id="budgetBar">
+      <div class="budget-bar-top">
+        <span class="budget-label">Ihr monatliches Budget</span>
+        <span class="budget-amount"><span class="used" id="budgetUsed">0,00</span> &euro; / 42,00 &euro;</span>
       </div>
-      <div class="product-card reveal">
-        <div class="product-icon">&#129532;</div>
-        <h3>Desinfektionsmittel</h3>
-        <p>H&auml;nde- und Fl&auml;chendesinfektion f&uuml;r den t&auml;glichen Gebrauch.</p>
+      <div class="budget-track">
+        <div class="budget-fill" id="budgetFill"></div>
       </div>
-      <div class="product-card reveal">
-        <div class="product-icon">&#128703;</div>
-        <h3>Bettschutzeinlagen</h3>
-        <p>Saugstarke Einlagen zum Schutz von Matratze und Bettw&auml;sche.</p>
-      </div>
-      <div class="product-card reveal">
-        <div class="product-icon">&#129659;</div>
-        <h3>Schutzsch&uuml;rzen</h3>
-        <p>Einweg-Sch&uuml;rzen f&uuml;r die t&auml;gliche Pfleget&auml;tigkeit.</p>
-      </div>
-      <div class="product-card reveal">
-        <div class="product-icon">&#128719;</div>
-        <h3>Mundschutz</h3>
-        <p>Medizinische Masken zum Schutz bei der Pflege.</p>
-      </div>
-      <div class="product-card reveal">
-        <div class="product-icon">&#128230;</div>
-        <h3>Weitere Hilfsmittel</h3>
-        <p>Fingerlinge, Schutzkleidung und mehr &mdash; individuell zusammengestellt.</p>
-      </div>
+      <div class="budget-hint" id="budgetHint">Noch 42,00 &euro; verf&uuml;gbar</div>
+    </div>
+
+    <!-- Produkte -->
+    <div class="products-grid" id="productsGrid">
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="configurator-cta reveal">
+      <a href="#bestellen" class="hero-cta" id="configCta" style="opacity:0.5;pointer-events:none;">&#128230; Weiter zur Bestellung</a>
+      <p style="font-size:0.82rem;color:var(--gray);margin-top:0.8rem;">W&auml;hlen Sie mindestens ein Produkt aus</p>
     </div>
   </div>
 </section>
@@ -607,13 +674,18 @@
 
         <div class="form-row">
           <div class="form-group">
+            <label>Geburtsdatum <span class="required">*</span></label>
+            <input type="date" name="geburtsdatum" required>
+          </div>
+          <div class="form-group">
             <label>Telefon <span class="required">*</span></label>
             <input type="tel" name="telefon" required placeholder="040 ...">
           </div>
-          <div class="form-group">
-            <label>E-Mail</label>
-            <input type="email" name="email" placeholder="optional">
-          </div>
+        </div>
+
+        <div class="form-group">
+          <label>E-Mail</label>
+          <input type="email" name="email" placeholder="optional">
         </div>
 
         <div class="form-row">
@@ -641,9 +713,14 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Krankenkasse</label>
-            <input type="text" name="krankenkasse" placeholder="z.B. AOK, TK, BARMER">
+            <label>Krankenkasse <span class="required">*</span></label>
+            <input type="text" name="krankenkasse" required placeholder="z.B. AOK, TK, BARMER">
           </div>
+        </div>
+
+        <div class="form-group">
+          <label>Versichertennummer</label>
+          <input type="text" name="versichertennummer" placeholder="Steht auf Ihrer Versichertenkarte (optional)">
         </div>
 
         <div class="form-group">
@@ -801,18 +878,213 @@ function toggleFaq(el) {
   }
 }
 
-// Form submit
-function submitForm(e) {
-  e.preventDefault();
-  const form = document.getElementById('hilfsmittelForm');
-  const data = new FormData(form);
+// Supabase Config
+const SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
+const NOTIFY_EMAIL = 'redouane.bensfia@luminaplus.de';
+const BUDGET = 42.00;
 
-  // In production, this would send to Supabase or email
-  // For now, show success message
-  form.style.display = 'none';
-  document.getElementById('successMsg').classList.add('show');
-  window.scrollTo({ top: document.getElementById('bestellen').offsetTop - 80, behavior: 'smooth' });
+// Produkte (Unizell Medicare Katalog)
+const PRODUCTS = [
+  { id: 'handschuhe',   name: 'Einmalhandschuhe',              icon: '\u{1F9E4}', meta: '100 St\u00fcck \u00b7 Gr\u00f6\u00dfe S/M/L/XL', price: 9.52 },
+  { id: 'haende_desinf', name: 'H\u00e4ndedesinfektionsmittel', icon: '\u{1F9F4}', meta: '500 ml',                                           price: 7.14 },
+  { id: 'haende_tuch',  name: 'H\u00e4ndedesinfektionst\u00fccher', icon: '\u{1F9FB}', meta: '20 St\u00fcck',                                  price: 4.28 },
+  { id: 'flaeche_desinf', name: 'Fl\u00e4chendesinfektionsmittel', icon: '\u{1F9F9}', meta: '500 ml',                                         price: 6.78 },
+  { id: 'flaeche_tuch', name: 'Fl\u00e4chendesinfektionst\u00fccher', icon: '\u{1F9F4}', meta: '60 St\u00fcck',                                price: 7.14 },
+  { id: 'desinf_spray', name: 'Desinfektionsreiniger mit Spr\u00fchkopf', icon: '\u{1F4A7}', meta: '500 ml',                                   price: 6.78 },
+  { id: 'bettschutz',   name: 'Bettschutzeinlagen',             icon: '\u{1F6CF}', meta: '30 St\u00fcck \u00b7 Einmal',                        price: 14.64 },
+  { id: 'masken',       name: 'Schutzmasken',                   icon: '\u{1F637}', meta: '50 St\u00fcck',                                      price: 8.33 },
+  { id: 'ffp2',         name: 'FFP2-Masken',                    icon: '\u{1F637}', meta: '5 St\u00fcck',                                       price: 3.87 },
+  { id: 'schuerzen_50', name: 'Schutzsch\u00fcrzen (Einmal)',   icon: '\u{1F97C}', meta: '50 St\u00fcck',                                      price: 7.74 },
+  { id: 'schuerzen_100', name: 'Schutzsch\u00fcrzen (Einmal)',  icon: '\u{1F97C}', meta: '100 St\u00fcck',                                     price: 15.47 },
+  { id: 'fingerlinge',  name: 'Fingerlinge',                    icon: '\u{1F9E4}', meta: '100 St\u00fcck \u00b7 Gr\u00f6\u00dfe M/L/XL',      price: 5.95 },
+];
+
+// State
+const quantities = {};
+PRODUCTS.forEach(p => quantities[p.id] = 0);
+
+function getTotal() {
+  return PRODUCTS.reduce((sum, p) => sum + p.price * quantities[p.id], 0);
 }
+
+function updateBudgetUI() {
+  const total = getTotal();
+  const remaining = BUDGET - total;
+  const pct = Math.min((total / BUDGET) * 100, 100);
+  document.getElementById('budgetUsed').textContent = total.toFixed(2).replace('.', ',');
+  const fill = document.getElementById('budgetFill');
+  fill.style.width = pct + '%';
+  fill.classList.toggle('over', total > BUDGET);
+  const hint = document.getElementById('budgetHint');
+  if (total > BUDGET) {
+    hint.textContent = (total - BUDGET).toFixed(2).replace('.', ',') + ' \u20ac \u00fcber Budget \u2013 bitte Auswahl anpassen';
+    hint.style.color = '#e74c3c';
+  } else {
+    hint.textContent = 'Noch ' + remaining.toFixed(2).replace('.', ',') + ' \u20ac verf\u00fcgbar';
+    hint.style.color = '';
+  }
+  // Enable/disable CTA
+  const cta = document.getElementById('configCta');
+  const hasProducts = total > 0 && total <= BUDGET;
+  cta.style.opacity = hasProducts ? '1' : '0.5';
+  cta.style.pointerEvents = hasProducts ? 'auto' : 'none';
+  // Disable + buttons when over budget
+  document.querySelectorAll('.qty-btn-plus').forEach(btn => {
+    const pid = btn.dataset.id;
+    const prod = PRODUCTS.find(p => p.id === pid);
+    btn.disabled = (total + prod.price > BUDGET) && quantities[pid] === 0;
+  });
+}
+
+function changeQty(id, delta) {
+  const newQty = Math.max(0, quantities[id] + delta);
+  const prod = PRODUCTS.find(p => p.id === id);
+  if (delta > 0 && getTotal() + prod.price > BUDGET) return;
+  quantities[id] = newQty;
+  document.getElementById('qty-' + id).textContent = newQty;
+  const card = document.getElementById('card-' + id);
+  card.classList.toggle('selected', newQty > 0);
+  updateBudgetUI();
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = PRODUCTS.map(p => `
+    <div class="product-card reveal" id="card-${p.id}">
+      <div class="product-icon">${p.icon}</div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <span class="product-meta">${p.meta}</span><br>
+        <span class="product-price">${p.price.toFixed(2).replace('.', ',')} &euro;</span>
+      </div>
+      <div class="product-qty">
+        <button class="qty-btn" onclick="changeQty('${p.id}', -1)" aria-label="Weniger">&#8722;</button>
+        <span class="qty-value" id="qty-${p.id}">0</span>
+        <button class="qty-btn qty-btn-plus" data-id="${p.id}" onclick="changeQty('${p.id}', 1)" aria-label="Mehr">&#43;</button>
+      </div>
+    </div>
+  `).join('');
+  // Re-observe reveal elements
+  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+
+function getSelectedProducts() {
+  return PRODUCTS.filter(p => quantities[p.id] > 0).map(p => ({
+    id: p.id,
+    name: p.name,
+    meta: p.meta,
+    qty: quantities[p.id],
+    unit_price: p.price,
+    total: p.price * quantities[p.id],
+  }));
+}
+
+// Form submit
+async function submitForm(e) {
+  e.preventDefault();
+  const selected = getSelectedProducts();
+  if (selected.length === 0) {
+    alert('Bitte stellen Sie zuerst Ihre Pflegebox zusammen.');
+    document.getElementById('pflegebox').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  const form = document.getElementById('hilfsmittelForm');
+  const btn = form.querySelector('button[type="submit"]');
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '&#9203; Wird gesendet...';
+
+  const fd = new FormData(form);
+  const order = {
+    vorname: fd.get('vorname'),
+    nachname: fd.get('nachname'),
+    geburtsdatum: fd.get('geburtsdatum'),
+    telefon: fd.get('telefon'),
+    email: fd.get('email') || null,
+    strasse: fd.get('strasse'),
+    plz_ort: fd.get('plzort'),
+    pflegegrad: fd.get('pflegegrad'),
+    krankenkasse: fd.get('krankenkasse') || null,
+    versichertennummer: fd.get('versichertennummer') || null,
+    anmerkungen: fd.get('anmerkungen') || null,
+    produkte: selected,
+  };
+
+  try {
+    // 1. Bestellung in Supabase speichern
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/pflegehilfsmittel_orders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=representation',
+      },
+      body: JSON.stringify(order),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Speichern fehlgeschlagen (${res.status})`);
+    }
+
+    // 2. E-Mail-Benachrichtigung senden
+    const pflegegradText = order.pflegegrad === 'beantragt' ? 'Beantragt / noch nicht bekannt' : `Pflegegrad ${order.pflegegrad}`;
+    const now = new Date().toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' });
+    const produkteRows = selected.map(p =>
+      `<tr><td>${p.name} (${p.meta})</td><td>${p.qty}x</td><td>${p.total.toFixed(2).replace('.', ',')} \u20ac</td></tr>`
+    ).join('');
+    const totalText = getTotal().toFixed(2).replace('.', ',');
+
+    fetch(`${SUPABASE_URL}/functions/v1/send-notification`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        subject: `Neue Pflegehilfsmittel-Bestellung: ${order.vorname} ${order.nachname}`,
+        recipient_email: NOTIFY_EMAIL,
+        recipient_name: 'Redouane Bensfia',
+        message: `
+          <h2>Neue Bestellung eingegangen</h2>
+          <p>Am <strong>${now}</strong> wurde eine neue Pflegehilfsmittel-Bestellung aufgegeben:</p>
+          <table class="info-table">
+            <tr><td>Name</td><td>${order.vorname} ${order.nachname}</td></tr>
+            <tr><td>Geburtsdatum</td><td>${order.geburtsdatum}</td></tr>
+            <tr><td>Telefon</td><td>${order.telefon}</td></tr>
+            <tr><td>E-Mail</td><td>${order.email || '\u2014'}</td></tr>
+            <tr><td>Adresse</td><td>${order.strasse}, ${order.plz_ort}</td></tr>
+            <tr><td>Pflegegrad</td><td>${pflegegradText}</td></tr>
+            <tr><td>Krankenkasse</td><td>${order.krankenkasse}</td></tr>
+            <tr><td>Versichertennr.</td><td>${order.versichertennummer || '\u2014'}</td></tr>
+            <tr><td>Anmerkungen</td><td>${order.anmerkungen || '\u2014'}</td></tr>
+          </table>
+          <h3 style="color:#08376B;margin-top:24px;">Gew\u00e4hlte Produkte (${totalText} \u20ac)</h3>
+          <table class="info-table">
+            <tr style="background:#e8eef1;"><td><strong>Produkt</strong></td><td><strong>Menge</strong></td><td><strong>Preis</strong></td></tr>
+            ${produkteRows}
+            <tr style="background:#d4f5db;"><td><strong>Gesamt</strong></td><td></td><td><strong>${totalText} \u20ac</strong></td></tr>
+          </table>
+          <p style="margin-top:20px;color:#6b7d8a;font-size:13px;">
+            Bitte Bestellung an <strong>Unizell Medicare GmbH</strong> weiterleiten.
+          </p>`,
+      }),
+    }).catch(err => console.warn('Notification error:', err));
+
+    // Erfolg anzeigen
+    form.style.display = 'none';
+    document.getElementById('successMsg').classList.add('show');
+    window.scrollTo({ top: document.getElementById('bestellen').offsetTop - 80, behavior: 'smooth' });
+
+  } catch (err) {
+    console.error('Submit error:', err);
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+    alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns an: 040 18035922');
+  }
+}
+
+// Init configurator
+renderProducts();
 </script>
 </body>
 </html>
