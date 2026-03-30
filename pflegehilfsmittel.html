@@ -271,6 +271,24 @@
       font-size: 0.95rem;
       color: var(--navy);
     }
+    .size-select {
+      display: flex;
+      gap: 0.3rem;
+      margin-top: 0.35rem;
+    }
+    .size-btn {
+      padding: 0.15rem 0.5rem;
+      border: 1.5px solid var(--light-gray);
+      border-radius: 5px;
+      background: white;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .size-btn:hover { border-color: var(--light-blue); color: var(--navy); }
+    .size-btn.active { border-color: var(--dark-blue); background: rgba(47,144,176,0.08); color: var(--dark-blue); }
     .configurator-cta {
       text-align: center;
       margin-top: 2rem;
@@ -886,23 +904,27 @@ const BUDGET = 42.00;
 
 // Produkte (Unizell Medicare Katalog)
 const PRODUCTS = [
-  { id: 'handschuhe',   name: 'Einmalhandschuhe',              icon: '\u{1F9E4}', meta: '100 St\u00fcck \u00b7 Gr\u00f6\u00dfe S/M/L/XL', price: 9.52 },
-  { id: 'haende_desinf', name: 'H\u00e4ndedesinfektionsmittel', icon: '\u{1F9F4}', meta: '500 ml',                                           price: 7.14 },
-  { id: 'haende_tuch',  name: 'H\u00e4ndedesinfektionst\u00fccher', icon: '\u{1F9FB}', meta: '20 St\u00fcck',                                  price: 4.28 },
-  { id: 'flaeche_desinf', name: 'Fl\u00e4chendesinfektionsmittel', icon: '\u{1F9F9}', meta: '500 ml',                                         price: 6.78 },
-  { id: 'flaeche_tuch', name: 'Fl\u00e4chendesinfektionst\u00fccher', icon: '\u{1F9F4}', meta: '60 St\u00fcck',                                price: 7.14 },
-  { id: 'desinf_spray', name: 'Desinfektionsreiniger mit Spr\u00fchkopf', icon: '\u{1F4A7}', meta: '500 ml',                                   price: 6.78 },
-  { id: 'bettschutz',   name: 'Bettschutzeinlagen',             icon: '\u{1F6CF}', meta: '30 St\u00fcck \u00b7 Einmal',                        price: 14.64 },
-  { id: 'masken',       name: 'Schutzmasken',                   icon: '\u{1F637}', meta: '50 St\u00fcck',                                      price: 8.33 },
-  { id: 'ffp2',         name: 'FFP2-Masken',                    icon: '\u{1F637}', meta: '5 St\u00fcck',                                       price: 3.87 },
-  { id: 'schuerzen_50', name: 'Schutzsch\u00fcrzen (Einmal)',   icon: '\u{1F97C}', meta: '50 St\u00fcck',                                      price: 7.74 },
-  { id: 'schuerzen_100', name: 'Schutzsch\u00fcrzen (Einmal)',  icon: '\u{1F97C}', meta: '100 St\u00fcck',                                     price: 15.47 },
-  { id: 'fingerlinge',  name: 'Fingerlinge',                    icon: '\u{1F9E4}', meta: '100 St\u00fcck \u00b7 Gr\u00f6\u00dfe M/L/XL',      price: 5.95 },
+  { id: 'handschuhe',   name: 'Einmalhandschuhe',              icon: '\u{1F9E4}', meta: '100 St\u00fcck', price: 9.52,  sizes: ['S','M','L','XL'] },
+  { id: 'haende_desinf', name: 'H\u00e4ndedesinfektionsmittel', icon: '\u{1F9F4}', meta: '500 ml',         price: 7.14 },
+  { id: 'haende_tuch',  name: 'H\u00e4ndedesinfektionst\u00fccher', icon: '\u{1F9FB}', meta: '20 St\u00fcck', price: 4.28 },
+  { id: 'flaeche_desinf', name: 'Fl\u00e4chendesinfektionsmittel', icon: '\u{1F9F9}', meta: '500 ml',       price: 6.78 },
+  { id: 'flaeche_tuch', name: 'Fl\u00e4chendesinfektionst\u00fccher', icon: '\u{1F9F4}', meta: '60 St\u00fcck', price: 7.14 },
+  { id: 'desinf_spray', name: 'Desinfektionsreiniger mit Spr\u00fchkopf', icon: '\u{1F4A7}', meta: '500 ml', price: 6.78 },
+  { id: 'bettschutz',   name: 'Bettschutzeinlagen',             icon: '\u{1F6CF}', meta: '30 St\u00fcck \u00b7 Einmal', price: 14.64 },
+  { id: 'masken',       name: 'Schutzmasken',                   icon: '\u{1F637}', meta: '50 St\u00fcck',   price: 8.33 },
+  { id: 'ffp2',         name: 'FFP2-Masken',                    icon: '\u{1F637}', meta: '5 St\u00fcck',    price: 3.87 },
+  { id: 'schuerzen_50', name: 'Schutzsch\u00fcrzen (Einmal)',   icon: '\u{1F97C}', meta: '50 St\u00fcck',   price: 7.74 },
+  { id: 'schuerzen_100', name: 'Schutzsch\u00fcrzen (Einmal)',  icon: '\u{1F97C}', meta: '100 St\u00fcck',  price: 15.47 },
+  { id: 'fingerlinge',  name: 'Fingerlinge',                    icon: '\u{1F9E4}', meta: '100 St\u00fcck',  price: 5.95, sizes: ['M','L','XL'] },
 ];
 
 // State
 const quantities = {};
-PRODUCTS.forEach(p => quantities[p.id] = 0);
+const selectedSizes = {};
+PRODUCTS.forEach(p => {
+  quantities[p.id] = 0;
+  if (p.sizes) selectedSizes[p.id] = p.sizes[1] || p.sizes[0]; // default M or first
+});
 
 function getTotal() {
   return PRODUCTS.reduce((sum, p) => sum + p.price * quantities[p.id], 0);
@@ -948,14 +970,26 @@ function changeQty(id, delta) {
   updateBudgetUI();
 }
 
+function selectSize(id, size) {
+  selectedSizes[id] = size;
+  document.querySelectorAll(`#card-${id} .size-btn`).forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.size === size);
+  });
+}
+
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
-  grid.innerHTML = PRODUCTS.map(p => `
+  grid.innerHTML = PRODUCTS.map(p => {
+    const sizeHtml = p.sizes ? `
+      <div class="size-select">
+        ${p.sizes.map(s => `<button type="button" class="size-btn${s === selectedSizes[p.id] ? ' active' : ''}" data-size="${s}" onclick="selectSize('${p.id}','${s}')">${s}</button>`).join('')}
+      </div>` : '';
+    return `
     <div class="product-card reveal" id="card-${p.id}">
       <div class="product-icon">${p.icon}</div>
       <div class="product-info">
         <h3>${p.name}</h3>
-        <span class="product-meta">${p.meta}</span><br>
+        <span class="product-meta">${p.meta}</span>${sizeHtml}
         <span class="product-price">${p.price.toFixed(2).replace('.', ',')} &euro;</span>
       </div>
       <div class="product-qty">
@@ -963,9 +997,8 @@ function renderProducts() {
         <span class="qty-value" id="qty-${p.id}">0</span>
         <button class="qty-btn qty-btn-plus" data-id="${p.id}" onclick="changeQty('${p.id}', 1)" aria-label="Mehr">&#43;</button>
       </div>
-    </div>
-  `).join('');
-  // Re-observe reveal elements
+    </div>`;
+  }).join('');
   grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 }
 
@@ -974,6 +1007,7 @@ function getSelectedProducts() {
     id: p.id,
     name: p.name,
     meta: p.meta,
+    size: p.sizes ? selectedSizes[p.id] : null,
     qty: quantities[p.id],
     unit_price: p.price,
     total: p.price * quantities[p.id],
@@ -1032,9 +1066,10 @@ async function submitForm(e) {
     // 2. E-Mail-Benachrichtigung senden
     const pflegegradText = order.pflegegrad === 'beantragt' ? 'Beantragt / noch nicht bekannt' : `Pflegegrad ${order.pflegegrad}`;
     const now = new Date().toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' });
-    const produkteRows = selected.map(p =>
-      `<tr><td>${p.name} (${p.meta})</td><td>${p.qty}x</td><td>${p.total.toFixed(2).replace('.', ',')} \u20ac</td></tr>`
-    ).join('');
+    const produkteRows = selected.map(p => {
+      const sizeInfo = p.size ? ` \u00b7 Gr. ${p.size}` : '';
+      return `<tr><td>${p.name} (${p.meta}${sizeInfo})</td><td>${p.qty}x</td><td>${p.total.toFixed(2).replace('.', ',')} \u20ac</td></tr>`;
+    }).join('');
     const totalText = getTotal().toFixed(2).replace('.', ',');
 
     fetch(`${SUPABASE_URL}/functions/v1/send-notification`, {
