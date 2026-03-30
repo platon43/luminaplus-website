@@ -294,6 +294,46 @@
       margin-top: 2rem;
     }
 
+    /* Signature Pad */
+    .signature-group { margin-bottom: 1rem; }
+    .signature-group label { display: block; font-weight: 600; font-size: 0.85rem; color: var(--navy); margin-bottom: 0.4rem; }
+    .signature-pad-wrapper {
+      border: 2px solid var(--light-gray);
+      border-radius: 8px;
+      background: white;
+      position: relative;
+      overflow: hidden;
+      touch-action: none;
+    }
+    .signature-pad-wrapper.signed { border-color: var(--green); }
+    .signature-pad-wrapper.error { border-color: #e74c3c; }
+    #signatureCanvas {
+      display: block;
+      width: 100%;
+      height: 140px;
+      cursor: crosshair;
+    }
+    .signature-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0.8rem;
+      background: var(--off-white);
+      border-top: 1px solid var(--light-gray);
+    }
+    .signature-hint { font-size: 0.78rem; color: var(--gray); }
+    .signature-clear {
+      background: none;
+      border: 1px solid var(--light-gray);
+      border-radius: 6px;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.78rem;
+      color: var(--gray);
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+    .signature-clear:hover { border-color: var(--dark-blue); color: var(--navy); }
+
     /* Benefits */
     .benefits-section { background: var(--off-white); }
     .benefits-grid {
@@ -746,6 +786,17 @@
           <textarea name="anmerkungen" placeholder="Besondere W&uuml;nsche oder Fragen? (optional)"></textarea>
         </div>
 
+        <div class="signature-group">
+          <label>Unterschrift <span class="required">*</span></label>
+          <div class="signature-pad-wrapper" id="sigWrapper">
+            <canvas id="signatureCanvas"></canvas>
+            <div class="signature-actions">
+              <span class="signature-hint">Mit Finger oder Maus unterschreiben</span>
+              <button type="button" class="signature-clear" onclick="clearSignature()">L&ouml;schen</button>
+            </div>
+          </div>
+        </div>
+
         <div class="checkbox-group">
           <input type="checkbox" id="agreeDs" required>
           <label for="agreeDs">Ich stimme der Verarbeitung meiner Daten gem&auml;&szlig; der <a href="./datenschutz-luminaplus" style="color: var(--dark-blue);">Datenschutzerkl&auml;rung</a> zu. <span class="required">*</span></label>
@@ -1024,6 +1075,14 @@ async function submitForm(e) {
     return;
   }
 
+  // Unterschrift prüfen
+  const signatureData = getSignatureBase64();
+  if (!signatureData) {
+    sigWrapper.classList.add('error');
+    sigCanvas.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   const form = document.getElementById('hilfsmittelForm');
   const btn = form.querySelector('button[type="submit"]');
   const originalText = btn.innerHTML;
@@ -1044,6 +1103,7 @@ async function submitForm(e) {
     versichertennummer: fd.get('versichertennummer') || null,
     anmerkungen: fd.get('anmerkungen') || null,
     produkte: selected,
+    unterschrift: signatureData,
   };
 
   try {
@@ -1099,6 +1159,10 @@ async function submitForm(e) {
             ${produkteRows}
             <tr style="background:#d4f5db;"><td><strong>Gesamt</strong></td><td></td><td><strong>${totalText} \u20ac</strong></td></tr>
           </table>
+          <h3 style="color:#08376B;margin-top:24px;">Unterschrift</h3>
+          <div style="background:#f7fafa;border:1px solid #e8eef1;border-radius:8px;padding:12px;text-align:center;">
+            <img src="${signatureData}" alt="Unterschrift" style="max-width:400px;height:auto;">
+          </div>
           <p style="margin-top:20px;color:#6b7d8a;font-size:13px;">
             Bitte Bestellung an <strong>Unizell Medicare GmbH</strong> weiterleiten.
           </p>`,
@@ -1120,6 +1184,73 @@ async function submitForm(e) {
 
 // Init configurator
 renderProducts();
+
+// ===== SIGNATURE PAD =====
+const sigCanvas = document.getElementById('signatureCanvas');
+const sigCtx = sigCanvas.getContext('2d');
+const sigWrapper = document.getElementById('sigWrapper');
+let isDrawing = false;
+let hasSigned = false;
+
+function resizeCanvas() {
+  const rect = sigCanvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  sigCanvas.width = rect.width * dpr;
+  sigCanvas.height = rect.height * dpr;
+  sigCtx.scale(dpr, dpr);
+  sigCtx.strokeStyle = '#08376B';
+  sigCtx.lineWidth = 2;
+  sigCtx.lineCap = 'round';
+  sigCtx.lineJoin = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', () => { if (!hasSigned) resizeCanvas(); });
+
+function getPos(e) {
+  const rect = sigCanvas.getBoundingClientRect();
+  const touch = e.touches ? e.touches[0] : e;
+  return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+}
+
+function startDraw(e) {
+  e.preventDefault();
+  isDrawing = true;
+  const pos = getPos(e);
+  sigCtx.beginPath();
+  sigCtx.moveTo(pos.x, pos.y);
+}
+
+function draw(e) {
+  if (!isDrawing) return;
+  e.preventDefault();
+  const pos = getPos(e);
+  sigCtx.lineTo(pos.x, pos.y);
+  sigCtx.stroke();
+  hasSigned = true;
+  sigWrapper.classList.add('signed');
+  sigWrapper.classList.remove('error');
+}
+
+function endDraw() { isDrawing = false; }
+
+sigCanvas.addEventListener('mousedown', startDraw);
+sigCanvas.addEventListener('mousemove', draw);
+sigCanvas.addEventListener('mouseup', endDraw);
+sigCanvas.addEventListener('mouseleave', endDraw);
+sigCanvas.addEventListener('touchstart', startDraw, { passive: false });
+sigCanvas.addEventListener('touchmove', draw, { passive: false });
+sigCanvas.addEventListener('touchend', endDraw);
+
+function clearSignature() {
+  sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+  hasSigned = false;
+  sigWrapper.classList.remove('signed');
+}
+
+function getSignatureBase64() {
+  if (!hasSigned) return null;
+  return sigCanvas.toDataURL('image/png');
+}
 </script>
 </body>
 </html>
