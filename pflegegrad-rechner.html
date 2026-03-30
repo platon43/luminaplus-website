@@ -549,8 +549,46 @@
       .result-cta-buttons { flex-direction: column; align-items: center; }
       .hero { padding: 7rem 1.5rem 3rem; }
       .calc-container { padding: 0 1rem; }
-      .freq-table { font-size: 0.78rem; }
-      .freq-table td:first-child { min-width: 120px; }
+      /* Mobile: Transform tables into card layout */
+      .freq-table thead { display: none; }
+      .freq-table, .freq-table tbody { display: block; width: 100%; }
+      .freq-table tr {
+        display: block;
+        background: var(--off-white);
+        border-radius: 10px;
+        padding: 0.8rem 1rem 0.6rem;
+        margin-bottom: 0.6rem;
+        border: 1px solid var(--light-gray);
+      }
+      .freq-table td:first-child {
+        display: block;
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: var(--navy);
+        margin-bottom: 0.5rem;
+        padding: 0;
+        border: none;
+        text-align: left;
+        min-width: 0;
+      }
+      .freq-table td:not(:first-child) {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.35rem 0.5rem;
+        border: none;
+        vertical-align: middle;
+      }
+      .freq-table td:not(:first-child)::before {
+        content: attr(data-label);
+        font-size: 0.68rem;
+        color: var(--gray);
+        font-weight: 500;
+      }
+      .freq-table input[type="radio"] {
+        width: 22px;
+        height: 22px;
+      }
     }
 
     /* Frequency table for Module 3 */
@@ -1299,6 +1337,16 @@ function toggleMenu() {
   overlay.classList.toggle('active');
 }
 hamburger.addEventListener('click', toggleMenu);
+
+// Add data-label attributes to table cells for mobile card layout
+document.querySelectorAll('.freq-table').forEach(table => {
+  const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent.trim());
+  table.querySelectorAll('tbody tr').forEach(tr => {
+    Array.from(tr.children).forEach((td, i) => {
+      if (i > 0 && headers[i]) td.setAttribute('data-label', headers[i]);
+    });
+  });
+});
 overlay.addEventListener('click', toggleMenu);
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
