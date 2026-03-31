@@ -127,6 +127,8 @@
     }
     .nav-links a:hover { color: #2F90B0; }
     .nav-links a:hover::after { width: 100%; }
+    .mobile-only { display: none; }
+    @media (max-width: 768px) { .mobile-only { display: block; } }
     .nav-cta {
       background: #35C0ED; color: white !important; padding: 0.5rem 1.2rem;
       border-radius: 6px; font-weight: 600; font-size: 0.85rem;
