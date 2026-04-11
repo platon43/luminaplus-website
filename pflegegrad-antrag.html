@@ -66,15 +66,159 @@
       enableEmailNotification: false, // Interne Benachrichtigung senden
       enableEmailToKasse: true,      // Antrag per E-Mail an Pflegekasse senden
 
-      // --- Krankenkassen-Liste (haeufigste) ---
-      krankenkassen: [
-        'AOK', 'BARMER', 'DAK-Gesundheit', 'Techniker Krankenkasse (TK)',
-        'IKK classic', 'IKK gesund plus', 'KKH', 'hkk Krankenkasse',
-        'HEK', 'Mobil Krankenkasse', 'BIG direkt gesund',
-        'Pronova BKK', 'Viactiv Krankenkasse', 'mhplus Krankenkasse',
-        'Novitas BKK', 'Audi BKK', 'BMW BKK', 'Bosch BKK',
-        'Debeka BKK', 'Heimat Krankenkasse', 'mkk',
-        'Knappschaft', 'SVLFG', 'Andere'
+      // --- Alle gesetzlichen Krankenkassen in Deutschland ---
+      // Quelle: GKV-Spitzenverband Krankenkassenliste, Stand 11.04.2026 (93 Kassen)
+      krankenkassenGesetzlich: [
+        'AOK - Die Gesundheitskasse fuer Niedersachsen',
+        'AOK - Die Gesundheitskasse in Hessen',
+        'AOK Baden-Wuerttemberg',
+        'AOK Bayern - Die Gesundheitskasse',
+        'AOK Bremen / Bremerhaven',
+        'AOK Nordost - Die Gesundheitskasse',
+        'AOK NordWest - Die Gesundheitskasse',
+        'AOK PLUS - Die Gesundheitskasse fuer Sachsen und Thueringen',
+        'AOK Rheinland/Hamburg - Die Gesundheitskasse',
+        'AOK Rheinland-Pfalz/Saarland - Die Gesundheitskasse',
+        'AOK Sachsen-Anhalt - Die Gesundheitskasse',
+        'Audi BKK',
+        'BAHN-BKK',
+        'BARMER',
+        'BERGISCHE KRANKENKASSE',
+        'Bertelsmann BKK',
+        'Betriebskrankenkasse der G.M. Pfaff AG',
+        'Betriebskrankenkasse EWE',
+        'Betriebskrankenkasse Miele',
+        'Betriebskrankenkasse Mobil',
+        'Betriebskrankenkasse PricewaterhouseCoopers',
+        'Betriebskrankenkasse Technoform',
+        'BIG direkt gesund',
+        'BKK Akzo Nobel Bayern',
+        'BKK B. Braun Aesculap',
+        'BKK Deutsche Bank AG',
+        'BKK Diakonie',
+        'BKK EUREGIO',
+        'BKK evm',
+        'BKK exklusiv',
+        'BKK Faber-Castell & Partner',
+        'BKK firmus',
+        'BKK Freudenberg',
+        'BKK GILDEMEISTER SEIDENSTICKER',
+        'BKK Groz-Beckert',
+        'BKK Herkules',
+        'BKK Linde',
+        'BKK MAHLE',
+        'bkk melitta hmr',
+        'BKK mkk - meine krankenkasse',
+        'BKK MTU',
+        'BKK Pfalz',
+        'BKK ProVita',
+        'BKK Public',
+        'BKK Rieker.RICOSTA.Weisser',
+        'BKK Salzgitter',
+        'BKK Scheufelen',
+        'BKK Schwarzwald-Baar-Heuberg',
+        'BKK VDN',
+        'BKK VerbundPlus',
+        'BKK WERRA-MEISSNER',
+        'BKK WIRTSCHAFT UND FINANZEN',
+        'BKK_DuerkoppAdler',
+        'BKK24',
+        'BKK-Wuerth',
+        'BMW BKK',
+        'Bosch BKK',
+        'Continentale Betriebskrankenkasse',
+        'DAK-Gesundheit',
+        'Debeka BKK',
+        'energie-Betriebskrankenkasse',
+        'EY Betriebskrankenkasse',
+        'Handelskrankenkasse (hkk)',
+        'Heimat Krankenkasse',
+        'HEK - Hanseatische Krankenkasse',
+        'IKK - Die Innovationskasse',
+        'IKK classic',
+        'IKK gesund plus',
+        'IKK Suedwest',
+        'INNUNGSKRANKENKASSE BRANDENBURG UND BERLIN',
+        'KARL MAYER BKK',
+        'Kaufmaennische Krankenkasse - KKH',
+        'KNAPPSCHAFT',
+        'Koenig & Bauer BKK',
+        'Krones Betriebskrankenkasse',
+        'Mercedes-Benz BKK',
+        'Merck BKK',
+        'mhplus Betriebskrankenkasse',
+        'novitas bkk',
+        'Pronova BKK',
+        'R+V Betriebskrankenkasse',
+        'Salus BKK',
+        'SECURVITA BKK',
+        'Siemens-Betriebskrankenkasse (SBK)',
+        'SKD BKK',
+        'Sozialversicherung fuer Landwirtschaft, Forsten und Gartenbau (SVLFG)',
+        'Suedzucker BKK',
+        'Techniker Krankenkasse (TK)',
+        'TUI BKK',
+        'VIACTIV Krankenkasse',
+        'vivida bkk',
+        'WMF BKK',
+        'ZF BKK',
+        'Andere'
+      ],
+
+      // --- Private Krankenversicherungen ---
+      // Quelle: PKV-Verband Mitgliedsunternehmen (Stand 2026)
+      // Enthaelt ordentliche + ausserordentliche Mitglieder + verbundene Einrichtungen
+      krankenkassenPrivat: [
+        'Allianz Private Krankenversicherung',
+        'ALTE OLDENBURGER',
+        'ARAG Krankenversicherung',
+        'AXA Krankenversicherung',
+        'Barmenia Krankenversicherung',
+        'Bayerische Beamtenkrankenkasse',
+        'CONCORDIA Krankenversicherung',
+        'Continentale Krankenversicherung',
+        'Debeka Krankenversicherung',
+        'DEVK Krankenversicherung',
+        'DKV Deutsche Krankenversicherung',
+        'ENVIVAS Krankenversicherung',
+        'ERGO Krankenversicherung',
+        'Generali Deutschland Krankenversicherung',
+        'Gothaer Krankenversicherung',
+        'HALLESCHE Krankenversicherung',
+        'HanseMerkur Krankenversicherung',
+        'HanseMerkur Speziale Krankenversicherung',
+        'HUK-COBURG Krankenversicherung',
+        'INTER Krankenversicherung',
+        'Landeskrankenhilfe (LKH)',
+        'LIGA Krankenversicherung',
+        'LVM Krankenversicherung',
+        'Mecklenburgische Krankenversicherung',
+        'Muenchener Verein Krankenversicherung',
+        'NUeRNBERGER Krankenversicherung',
+        'ottonova Krankenversicherung',
+        'Provinzial Krankenversicherung',
+        'R+V Krankenversicherung',
+        'SIGNAL IDUNA Krankenversicherung',
+        'SONO Krankenversicherung',
+        'SDK Sueddeutsche Krankenversicherung',
+        'UKV Union Krankenversicherung',
+        'uniVersa Krankenversicherung',
+        'Versicherer im Raum der Kirchen (VRK)',
+        'vigo Krankenversicherung',
+        'Wuerttembergische Krankenversicherung',
+        'Astra Versicherung AG',
+        'BA die Bayerische Allgemeine',
+        'DA direkt',
+        'DFV Deutsche Familienversicherung',
+        'Europ Assistance',
+        'EUROPA Krankenversicherung',
+        'IDEAL Krankenversicherung',
+        'Janitos Krankenversicherung',
+        'WGV Krankenversicherung',
+        'Wuerzburger Versicherung',
+        'KVB Krankenversorgung der Bundesbahnbeamten',
+        'PBeaKK Postbeamtenkrankenkasse',
+        'Andere'
       ],
     };
   </script>
@@ -319,9 +463,25 @@
     .form-group .field-error {
       font-size: 0.75rem; color: #e74c3c; margin-top: 0.25rem; display: none;
     }
+    .form-group .field-error.visible { display: block; }
+    .form-group input.warning,
+    .form-group select.warning {
+      border-color: #f39c12;
+      box-shadow: 0 0 0 3px rgba(243,156,18,0.1);
+    }
+    .form-group .field-warning {
+      font-size: 0.75rem; color: #c77400; margin-top: 0.25rem; display: none;
+    }
+    .form-group .field-warning.visible { display: block; }
     .form-group .field-hint {
       font-size: 0.75rem; color: #6b7d8a; margin-top: 0.25rem;
     }
+    .alert-box {
+      padding: 0.85rem 1rem; border-radius: 8px; margin: 0.75rem 0;
+      font-size: 0.88rem; line-height: 1.5;
+    }
+    .alert-error { background: #fef0f0; border-left: 3px solid #e74c3c; color: #8a1f1f; }
+    .alert-warning { background: #fff8e6; border-left: 3px solid #f39c12; color: #8a5a00; }
     .form-group textarea { resize: vertical; min-height: 80px; }
     .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7d8a' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
 
@@ -663,29 +823,29 @@
 
       <div class="form-grid">
         <div class="form-group full">
-          <label for="krankenkasse">Krankenkasse / Pflegekasse <span class="required">*</span></label>
-          <select id="krankenkasse" name="krankenkasse" required>
+          <label for="versicherungsart">Versicherungsart <span class="required">*</span></label>
+          <select id="versicherungsart" name="versicherungsart" required>
             <option value="">Bitte waehlen</option>
-            <!-- Dynamisch gefuellt -->
+            <option value="gesetzlich">Gesetzlich versichert</option>
+            <option value="privat">Privat versichert</option>
+            <option value="beihilfe">Beihilfeberechtigt (private Kasse)</option>
+          </select>
+          <div class="field-hint">Waehlen Sie zuerst die Versicherungsart, damit wir Ihnen die passenden Kassen anzeigen koennen.</div>
+        </div>
+        <div class="form-group full">
+          <label for="krankenkasse">Krankenkasse / Pflegekasse <span class="required">*</span></label>
+          <select id="krankenkasse" name="krankenkasse" required disabled>
+            <option value="">Bitte zuerst Versicherungsart waehlen</option>
           </select>
         </div>
         <div class="form-group full conditional" id="condAndereKasse">
           <label for="krankenkasseAndere">Name der Krankenkasse <span class="required">*</span></label>
           <input type="text" id="krankenkasseAndere" name="krankenkasse_andere" placeholder="Bitte Name der Krankenkasse eingeben">
         </div>
-        <div class="form-group">
+        <div class="form-group full">
           <label for="versichertennummer">Versichertennummer <span class="required">*</span></label>
           <input type="text" id="versichertennummer" name="versichertennummer" required placeholder="z.B. A123456789">
-          <div class="field-hint">Die Nummer finden Sie auf Ihrer Gesundheitskarte.</div>
-        </div>
-        <div class="form-group">
-          <label for="versicherungsart">Versicherungsart</label>
-          <select id="versicherungsart" name="versicherungsart">
-            <option value="">Bitte waehlen</option>
-            <option value="gesetzlich">Gesetzlich versichert</option>
-            <option value="privat">Privat versichert</option>
-            <option value="beihilfe">Beihilfeberechtigt</option>
-          </select>
+          <div class="field-hint">Die Nummer finden Sie auf Ihrer Gesundheitskarte (gesetzlich) bzw. Ihrem Versicherungsschein (privat).</div>
         </div>
       </div>
 
@@ -1294,14 +1454,37 @@
     // Page title
     document.title = `Pflegegrad beantragen | ${C.companyName}`;
 
-    // Krankenkassen dropdown
+    // Krankenkassen dropdown - gefiltert nach Versicherungsart
     const kkSelect = document.getElementById('krankenkasse');
-    C.krankenkassen.forEach(kk => {
-      const opt = document.createElement('option');
-      opt.value = kk;
-      opt.textContent = kk;
-      kkSelect.appendChild(opt);
-    });
+    const vaSelect = document.getElementById('versicherungsart');
+
+    function populateKrankenkassen() {
+      const va = vaSelect.value;
+      // Dropdown leeren
+      kkSelect.innerHTML = '';
+      if (!va) {
+        kkSelect.innerHTML = '<option value="">Bitte zuerst Versicherungsart waehlen</option>';
+        kkSelect.disabled = true;
+        return;
+      }
+      kkSelect.disabled = false;
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = 'Bitte waehlen';
+      kkSelect.appendChild(placeholder);
+      // Passende Liste auswaehlen
+      const list = va === 'gesetzlich' ? C.krankenkassenGesetzlich : C.krankenkassenPrivat;
+      list.forEach(kk => {
+        const opt = document.createElement('option');
+        opt.value = kk;
+        opt.textContent = kk;
+        kkSelect.appendChild(opt);
+      });
+    }
+
+    vaSelect.addEventListener('change', populateKrankenkassen);
+    populateKrankenkassen(); // Initialer Aufruf (leerer Zustand)
+
     kkSelect.addEventListener('change', function() {
       const condAndere = document.getElementById('condAndereKasse');
       if (this.value === 'Andere') {
@@ -1390,16 +1573,63 @@
   };
 
   // ===== VALIDATION =====
+  // ===== VALIDATION HELPERS =====
+  function markError(field, msg) {
+    field.classList.add('error');
+    field.classList.remove('warning');
+    let errEl = field.parentElement.querySelector('.field-error');
+    if (!errEl) {
+      errEl = document.createElement('div');
+      errEl.className = 'field-error';
+      field.parentElement.appendChild(errEl);
+    }
+    errEl.textContent = msg;
+    errEl.classList.add('visible');
+    errEl.style.display = 'block';
+  }
+  function markWarning(field, msg) {
+    field.classList.add('warning');
+    let warnEl = field.parentElement.querySelector('.field-warning');
+    if (!warnEl) {
+      warnEl = document.createElement('div');
+      warnEl.className = 'field-warning';
+      field.parentElement.appendChild(warnEl);
+    }
+    warnEl.textContent = msg;
+    warnEl.classList.add('visible');
+    warnEl.style.display = 'block';
+  }
+  function clearValidation(field) {
+    field.classList.remove('error', 'warning');
+    const errEl = field.parentElement.querySelector('.field-error');
+    if (errEl) { errEl.classList.remove('visible'); errEl.style.display = 'none'; }
+    const warnEl = field.parentElement.querySelector('.field-warning');
+    if (warnEl) { warnEl.classList.remove('visible'); warnEl.style.display = 'none'; }
+  }
+  function isValidEmail(email) {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+  }
+  function isValidPhone(phone) {
+    const cleaned = phone.replace(/[\s\-\/\(\)]/g, '');
+    return /^\+?[0-9]{6,}$/.test(cleaned);
+  }
+  function isValidPlz(plz) {
+    return /^[0-9]{5}$/.test(plz) && parseInt(plz) >= 1000 && parseInt(plz) <= 99999;
+  }
+  function isValidGkvVersNr(nr) {
+    return /^[A-Za-z][0-9]{9}$/.test(nr.replace(/\s/g, ''));
+  }
+
   function validateStep(step) {
     const stepEl = document.querySelector(`.step[data-step="${step}"]`);
     const requiredFields = stepEl.querySelectorAll('[required]');
     let valid = true;
 
-    requiredFields.forEach(field => {
-      field.classList.remove('error');
-      const errorEl = field.parentElement.querySelector('.field-error');
-      if (errorEl) errorEl.style.display = 'none';
+    // Clear previous validation state
+    stepEl.querySelectorAll('input, select, textarea').forEach(f => clearValidation(f));
 
+    // --- Pflichtfeld-Check (required) ---
+    requiredFields.forEach(field => {
       if (field.type === 'radio') {
         const radioGroup = stepEl.querySelectorAll(`input[name="${field.name}"]`);
         const checked = Array.from(radioGroup).some(r => r.checked);
@@ -1414,29 +1644,206 @@
       } else if (field.type === 'checkbox') {
         if (!field.checked) {
           valid = false;
-          field.style.outline = '2px solid #e74c3c';
-          setTimeout(() => { field.style.outline = ''; }, 3000);
+          markError(field, 'Bitte bestaetigen Sie diese Einwilligung.');
         }
       } else {
         if (!field.value.trim()) {
           valid = false;
-          field.classList.add('error');
-          setTimeout(() => { field.classList.remove('error'); }, 3000);
+          markError(field, 'Dieses Feld ist erforderlich.');
         }
       }
     });
 
-    // PLZ validation
+    // --- STEP 1: Hoeherstufung nur 1-4 ---
+    if (step === 1) {
+      const antragsart = stepEl.querySelector('input[name="antragsart"]:checked');
+      if (antragsart && antragsart.value === 'hoeherstufung') {
+        const pgSelect = document.getElementById('aktuellerPflegegrad');
+        if (pgSelect && pgSelect.value) {
+          const pg = parseInt(pgSelect.value);
+          if (pg < 1 || pg > 4) {
+            valid = false;
+            markError(pgSelect, 'Bei Pflegegrad 5 ist keine Hoeherstufung moeglich (hoechster Grad).');
+          }
+        } else if (pgSelect) {
+          valid = false;
+          markError(pgSelect, 'Bitte aktuellen Pflegegrad auswaehlen.');
+        }
+      }
+    }
+
+    // --- STEP 2: Geburtsdatum, PLZ, Email, Telefon ---
     if (step === 2) {
+      // Geburtsdatum
+      const geb = document.getElementById('geburtsdatum');
+      if (geb && geb.value) {
+        const gebDate = new Date(geb.value);
+        const heute = new Date();
+        const maxAlter = new Date();
+        maxAlter.setFullYear(maxAlter.getFullYear() - 120);
+        if (gebDate > heute) {
+          valid = false;
+          markError(geb, 'Das Geburtsdatum darf nicht in der Zukunft liegen.');
+        } else if (gebDate < maxAlter) {
+          valid = false;
+          markError(geb, 'Bitte ein realistisches Geburtsdatum angeben (max. 120 Jahre alt).');
+        }
+      }
+      // PLZ
       const plz = document.getElementById('plz');
-      if (plz.value && !/^[0-9]{5}$/.test(plz.value)) {
-        plz.classList.add('error');
+      if (plz && plz.value && !isValidPlz(plz.value)) {
         valid = false;
+        markError(plz, 'Bitte eine gueltige 5-stellige Postleitzahl eingeben.');
+      }
+      // Email (optional)
+      const email = document.getElementById('email');
+      if (email && email.value && !isValidEmail(email.value)) {
+        valid = false;
+        markError(email, 'Bitte eine gueltige E-Mail-Adresse eingeben.');
+      }
+      // Telefon
+      const tel = document.getElementById('telefon');
+      if (tel && tel.value && !isValidPhone(tel.value)) {
+        valid = false;
+        markError(tel, 'Bitte eine gueltige Telefonnummer eingeben (mind. 6 Ziffern).');
+      }
+    }
+
+    // --- STEP 3: Versichertennummer, Andere Krankenkasse ---
+    if (step === 3) {
+      const va = document.getElementById('versicherungsart');
+      const vnr = document.getElementById('versichertennummer');
+      if (vnr && vnr.value && va && va.value === 'gesetzlich') {
+        if (!isValidGkvVersNr(vnr.value)) {
+          valid = false;
+          markError(vnr, 'Ungueltiges Format. Beispiel: A123456789 (1 Buchstabe + 9 Ziffern).');
+        }
+      } else if (vnr && vnr.value && (va && (va.value === 'privat' || va.value === 'beihilfe'))) {
+        if (vnr.value.replace(/\s/g, '').length < 4) {
+          valid = false;
+          markError(vnr, 'Versichertennummer zu kurz (mindestens 4 Zeichen).');
+        }
+      }
+      // "Andere" Krankenkasse -> Name erforderlich
+      const kk = document.getElementById('krankenkasse');
+      if (kk && kk.value === 'Andere') {
+        const kkAndere = document.getElementById('krankenkasseAndere');
+        if (!kkAndere.value.trim()) {
+          valid = false;
+          markError(kkAndere, 'Bitte den Namen der Krankenkasse eingeben.');
+        }
+      }
+    }
+
+    // --- STEP 4: Antragsteller PLZ/Telefon/Email, Doppelte Person ---
+    if (step === 4) {
+      const antType = stepEl.querySelector('input[name="antragsteller_typ"]:checked');
+      if (antType && antType.value !== 'selbst') {
+        const astPlz = document.getElementById('ast_plz');
+        if (astPlz && astPlz.value && !isValidPlz(astPlz.value)) {
+          valid = false;
+          markError(astPlz, 'Bitte eine gueltige 5-stellige Postleitzahl eingeben.');
+        }
+        const astTel = document.getElementById('ast_telefon');
+        if (astTel && astTel.value && !isValidPhone(astTel.value)) {
+          valid = false;
+          markError(astTel, 'Bitte eine gueltige Telefonnummer eingeben.');
+        }
+        // Warnung bei identischen Namen
+        const astVn = document.getElementById('ast_vorname');
+        const astNn = document.getElementById('ast_nachname');
+        const vn = document.getElementById('vorname');
+        const nn = document.getElementById('nachname');
+        if (astVn && astNn && vn && nn &&
+            astVn.value.trim() && astNn.value.trim() &&
+            astVn.value.trim().toLowerCase() === vn.value.trim().toLowerCase() &&
+            astNn.value.trim().toLowerCase() === nn.value.trim().toLowerCase()) {
+          markWarning(astVn, 'Achtung: Antragsteller hat den gleichen Namen wie die pflegebeduerftige Person.');
+        }
+      }
+    }
+
+    // --- STEP 5: Wohnsituation ↔ Pflegeart Konsistenz (Warnung) ---
+    if (step === 5) {
+      const wohn = stepEl.querySelector('input[name="wohnsituation"]:checked');
+      if (wohn && wohn.value === 'pflegeheim') {
+        // Hinweis: im naechsten Step sollte stationaer gewaehlt werden
+        const infoWohn = document.getElementById('wohnsituationHinweis');
+        if (!infoWohn) {
+          const div = document.createElement('div');
+          div.id = 'wohnsituationHinweis';
+          div.className = 'alert-box alert-warning';
+          div.textContent = 'Hinweis: Da Sie im Pflegeheim leben, waehlen Sie im naechsten Schritt "Vollstationaere Pflege" als Pflegeart.';
+          stepEl.querySelector('.step-nav').insertAdjacentElement('beforebegin', div);
+        }
+      } else {
+        const infoWohn = document.getElementById('wohnsituationHinweis');
+        if (infoWohn) infoWohn.remove();
+      }
+      // Pflegeperson oder Pflegedienst wenn pflege_vorhanden=ja (Schritt 7-Check)
+    }
+
+    // --- STEP 6: Mindestens eine Leistung, Pflegegeld+Sachleistung-Check ---
+    if (step === 6) {
+      const leistCbs = stepEl.querySelectorAll('input[name="leistungen"]:checked');
+      if (leistCbs.length === 0) {
+        valid = false;
+        // Fehler als Alert-Box oben im Step
+        let errBox = document.getElementById('leistungenError');
+        if (!errBox) {
+          errBox = document.createElement('div');
+          errBox.id = 'leistungenError';
+          errBox.className = 'alert-box alert-error';
+          errBox.textContent = 'Bitte waehlen Sie mindestens eine Leistung aus.';
+          stepEl.querySelector('.step-nav').insertAdjacentElement('beforebegin', errBox);
+        }
+        setTimeout(() => { if (errBox) errBox.remove(); }, 5000);
+      }
+      // Pflegegeld + Sachleistung gleichzeitig -> Hinweis auf Kombinationsleistung
+      const hasPflegegeld = stepEl.querySelector('input[name="leistungen"][value="pflegegeld"]:checked');
+      const hasSachleistung = stepEl.querySelector('input[name="leistungen"][value="sachleistung"]:checked');
+      const hasKombi = stepEl.querySelector('input[name="leistungen"][value="kombinationsleistung"]:checked');
+      if (hasPflegegeld && hasSachleistung && !hasKombi) {
+        let warnBox = document.getElementById('leistungenKombiWarn');
+        if (!warnBox) {
+          warnBox = document.createElement('div');
+          warnBox.id = 'leistungenKombiWarn';
+          warnBox.className = 'alert-box alert-warning';
+          warnBox.innerHTML = '<strong>Hinweis:</strong> Pflegegeld und Pflegesachleistung koennen nicht gleichzeitig bezogen werden. Waehlen Sie stattdessen "Kombinationsleistung", wenn Sie beide kombinieren moechten.';
+          stepEl.querySelector('.step-nav').insertAdjacentElement('beforebegin', warnBox);
+        }
+      } else {
+        const w = document.getElementById('leistungenKombiWarn');
+        if (w) w.remove();
+      }
+    }
+
+    // --- STEP 7: Pflegeperson ODER Pflegedienst wenn pflege_vorhanden=ja ---
+    if (step === 7) {
+      const pflegeVorh = document.querySelector('input[name="pflege_vorhanden"]:checked');
+      if (pflegeVorh && pflegeVorh.value === 'ja') {
+        const ppVn = document.getElementById('pflegeperson_vorname');
+        const ppNn = document.getElementById('pflegeperson_nachname');
+        const pdName = document.getElementById('pflegedienst_name');
+        const hasPflegeperson = ppVn && ppNn && (ppVn.value.trim() || ppNn.value.trim());
+        const hasPflegedienst = pdName && pdName.value.trim();
+        if (!hasPflegeperson && !hasPflegedienst) {
+          valid = false;
+          let errBox = document.getElementById('pflegeQuelleError');
+          if (!errBox) {
+            errBox = document.createElement('div');
+            errBox.id = 'pflegeQuelleError';
+            errBox.className = 'alert-box alert-error';
+            errBox.textContent = 'Sie haben angegeben, dass bereits Pflege geleistet wird. Bitte tragen Sie eine Pflegeperson oder einen Pflegedienst ein.';
+            stepEl.querySelector('.step-nav').insertAdjacentElement('beforebegin', errBox);
+          }
+          setTimeout(() => { if (errBox) errBox.remove(); }, 5000);
+        }
       }
     }
 
     if (!valid) {
-      const firstError = stepEl.querySelector('.error, [style*="border-color: rgb(231, 76, 60)"]');
+      const firstError = stepEl.querySelector('.error, .alert-error, [style*="border-color: rgb(231, 76, 60)"]');
       if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
