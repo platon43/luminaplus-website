@@ -3143,16 +3143,33 @@
     lines.push('Ich bitte um zeitnahe Bearbeitung meines Antrags.');
     lines.push('');
     lines.push('Mit freundlichen Gruessen');
-    lines.push('');
-    lines.push('');
-    lines.push('_______________________________');
-    lines.push(`${absName}`);
 
     lines.forEach(line => {
       if (y > 270) { doc.addPage(); y = 20; }
       doc.text(line, 20, y);
       y += 5;
     });
+
+    // Digitale Unterschrift einfuegen (wenn vorhanden)
+    const sigData = document.getElementById('signatureData')?.value;
+    if (sigData && sigData.startsWith('data:image/png')) {
+      y += 3;
+      if (y > 240) { doc.addPage(); y = 20; }
+      try {
+        doc.addImage(sigData, 'PNG', 20, y, 60, 18);
+        y += 22;
+      } catch (e) {
+        console.warn('Signatur konnte nicht ins PDF eingefuegt werden:', e);
+        y += 5;
+        doc.text('_______________________________', 20, y);
+        y += 5;
+      }
+    } else {
+      y += 5;
+      doc.text('_______________________________', 20, y);
+      y += 5;
+    }
+    doc.text(`${absName}`, 20, y);
 
     // --- PAGE 2: Datenblatt ---
     doc.addPage();
