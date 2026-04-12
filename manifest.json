@@ -1,0 +1,21 @@
+{
+  "name": "LuminaPlus - Pflegegrad Antrag",
+  "short_name": "LuminaPlus",
+  "description": "Pflegegrad-Antrag digital und kostenlos ausfuellen",
+  "start_url": "/pflegegrad-antrag.html",
+  "display": "standalone",
+  "background_color": "#f7fafa",
+  "theme_color": "#08376B",
+  "lang": "de",
+  "dir": "ltr",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "brand/LOGO+Flyer/LOGO/Original auf Transparenz.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

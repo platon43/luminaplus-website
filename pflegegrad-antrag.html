@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/consent-banner.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#08376B">
 
   <script>
     // ============================================================
@@ -476,6 +479,138 @@
     .form-group .field-hint {
       font-size: 0.75rem; color: #6b7d8a; margin-top: 0.25rem;
     }
+
+    /* Mobile Optimierungen */
+    @media (max-width: 768px) {
+      body { font-size: 16px; } /* Prevents iOS auto-zoom */
+      .form-group input, .form-group select, .form-group textarea {
+        min-height: 48px; /* Touch-Target 44px+ */
+        font-size: 16px; /* Prevents zoom */
+      }
+      .btn, .btn-next, .btn-prev, .btn-submit {
+        min-height: 48px; padding: 0.85rem 1.5rem; font-size: 1rem;
+      }
+      .option-card {
+        min-height: 60px;
+      }
+      .step-nav {
+        flex-direction: column; gap: 0.6rem;
+      }
+      .step-nav .btn {
+        width: 100%;
+      }
+      .progress-container {
+        padding: 0.75rem 0.75rem;
+      }
+      .progress-card {
+        padding: 1rem;
+      }
+      .font-size-toggle {
+        justify-content: center;
+      }
+      .font-size-toggle button {
+        min-height: 36px; padding: 0.4rem 0.75rem;
+      }
+      .help-panel-popup {
+        width: calc(100vw - 2rem); right: 0; left: 0; margin: 0 auto;
+      }
+    }
+
+    /* Tooltips */
+    .tooltip-trigger {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #35C0ED; color: #fff; font-size: 0.7rem; font-weight: 700;
+      cursor: help; margin-left: 0.4rem; border: none;
+      transition: all 0.2s;
+    }
+    .tooltip-trigger:hover, .tooltip-trigger:focus {
+      background: #08376B; transform: scale(1.1); outline: none;
+    }
+    .tooltip-popup {
+      position: absolute; z-index: 500;
+      background: #08376B; color: #fff;
+      padding: 0.75rem 1rem; border-radius: 8px;
+      font-size: 0.85rem; line-height: 1.5; max-width: 280px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      pointer-events: auto;
+    }
+    .tooltip-popup::after {
+      content: ''; position: absolute; top: -6px; left: 20px;
+      border-left: 6px solid transparent; border-right: 6px solid transparent;
+      border-bottom: 6px solid #08376B;
+    }
+
+    /* Sticky Hilfe-Panel */
+    .help-panel {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 900;
+      display: flex; flex-direction: column; align-items: flex-end;
+    }
+    .help-panel .help-btn {
+      background: #08376B; color: #fff;
+      border: none; border-radius: 999px;
+      padding: 0.85rem 1.5rem; cursor: pointer;
+      font-family: inherit; font-weight: 600; font-size: 0.9rem;
+      box-shadow: 0 4px 16px rgba(8,55,107,0.3);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: all 0.3s;
+    }
+    .help-panel .help-btn:hover {
+      background: #35C0ED; transform: translateY(-2px);
+    }
+    .help-panel-popup {
+      position: absolute; bottom: 4rem; right: 0;
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(8,55,107,0.15);
+      padding: 1.5rem; width: 320px; max-width: calc(100vw - 3rem);
+      border: 1px solid #e8eef1;
+    }
+    .help-panel-popup h4 {
+      font-family: 'Tenor Sans', serif; color: #08376B;
+      margin: 0 0 0.75rem 0; font-size: 1.1rem;
+    }
+    .help-panel-popup p {
+      font-size: 0.85rem; color: #6b7d8a; margin: 0.5rem 0; line-height: 1.5;
+    }
+    .help-panel-popup a {
+      color: #35C0ED; text-decoration: none; font-weight: 600;
+    }
+    .help-panel-popup a:hover { text-decoration: underline; }
+    .help-panel-popup .help-close {
+      position: absolute; top: 0.5rem; right: 0.75rem;
+      background: none; border: none; font-size: 1.25rem; cursor: pointer;
+      color: #6b7d8a; padding: 0.25rem 0.5rem;
+    }
+    .help-panel-popup hr {
+      border: 0; height: 1px; background: #e8eef1; margin: 0.75rem 0;
+    }
+    @media (max-width: 480px) {
+      .help-panel { bottom: 1rem; right: 1rem; }
+      .help-panel .help-btn { padding: 0.75rem 1.1rem; font-size: 0.82rem; }
+    }
+
+    /* Font-Size-Toggle */
+    .font-size-toggle {
+      display: flex; gap: 0.35rem; align-items: center; justify-content: flex-end;
+      margin-bottom: 0.5rem; flex-wrap: wrap;
+    }
+    .font-size-toggle .label {
+      font-size: 0.75rem; color: #6b7d8a; margin-right: 0.35rem;
+    }
+    .font-size-toggle button {
+      background: #fff; border: 1px solid #e8eef1; color: #08376B;
+      padding: 0.25rem 0.6rem; border-radius: 6px; cursor: pointer;
+      font-weight: 600; font-family: inherit; transition: all 0.2s;
+    }
+    .font-size-toggle button.active {
+      background: #08376B; color: #fff; border-color: #08376B;
+    }
+    .font-size-toggle button:hover:not(.active) {
+      background: #f0f4f8; border-color: #35C0ED;
+    }
+    /* Font-Size-Modi (auf form-container angewendet) */
+    body.font-size-large { font-size: 115%; }
+    body.font-size-xlarge { font-size: 130%; }
     .alert-box {
       padding: 0.85rem 1rem; border-radius: 8px; margin: 0.75rem 0;
       font-size: 0.88rem; line-height: 1.5;
@@ -686,12 +821,19 @@
 <!-- ===== PROGRESS ===== -->
 <div class="progress-container">
   <div class="progress-card">
+    <div class="font-size-toggle" role="group" aria-label="Schriftgroesse anpassen">
+      <span class="label">Schriftgroesse:</span>
+      <button type="button" data-size="normal" class="active" aria-label="Normale Schriftgroesse">A</button>
+      <button type="button" data-size="large" aria-label="Grosse Schriftgroesse">A+</button>
+      <button type="button" data-size="xlarge" aria-label="Sehr grosse Schriftgroesse">A++</button>
+    </div>
     <div class="progress-header">
       <span class="progress-label" id="progressLabel">Schritt 1 von 8</span>
       <span class="progress-count" id="progressPercent">0%</span>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="progress-steps" id="progressDots"></div>
+    <div class="progress-time" id="progressTime" style="text-align: center; font-size: 0.75rem; color: #6b7d8a; margin-top: 0.5rem;"></div>
   </div>
 </div>
 
@@ -789,11 +931,11 @@
         </div>
         <div class="form-group">
           <label for="telefon">Telefon <span class="required">*</span></label>
-          <input type="tel" id="telefon" name="telefon" required placeholder="z.B. 040 123456">
+          <input type="tel" id="telefon" name="telefon" required placeholder="z.B. 040 123456" inputmode="tel" autocomplete="tel">
         </div>
         <div class="form-group full">
           <label for="email">E-Mail</label>
-          <input type="email" id="email" name="email" placeholder="z.B. maria@beispiel.de">
+          <input type="email" id="email" name="email" placeholder="z.B. maria@beispiel.de" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false">
         </div>
         <div class="form-group full">
           <label for="strasse">Strasse und Hausnummer <span class="required">*</span></label>
@@ -801,7 +943,7 @@
         </div>
         <div class="form-group">
           <label for="plz">PLZ <span class="required">*</span></label>
-          <input type="text" id="plz" name="plz" required placeholder="z.B. 22087" maxlength="5" pattern="[0-9]{5}">
+          <input type="text" id="plz" name="plz" required placeholder="z.B. 22087" maxlength="5" pattern="[0-9]{5}" inputmode="numeric" autocomplete="postal-code">
         </div>
         <div class="form-group">
           <label for="ort">Ort <span class="required">*</span></label>
@@ -844,7 +986,7 @@
         </div>
         <div class="form-group full">
           <label for="versichertennummer">Versichertennummer <span class="required">*</span></label>
-          <input type="text" id="versichertennummer" name="versichertennummer" required placeholder="z.B. A123456789">
+          <input type="text" id="versichertennummer" name="versichertennummer" required placeholder="z.B. A123456789" autocapitalize="characters" spellcheck="false" autocomplete="off">
           <div class="field-hint">Die Nummer finden Sie auf Ihrer Gesundheitskarte (gesetzlich) bzw. Ihrem Versicherungsschein (privat).</div>
         </div>
       </div>
@@ -922,7 +1064,7 @@
           </div>
           <div class="form-group">
             <label for="ast_telefon">Telefon <span class="required">*</span></label>
-            <input type="tel" id="ast_telefon" name="antragsteller_telefon">
+            <input type="tel" id="ast_telefon" name="antragsteller_telefon" inputmode="tel" autocomplete="tel">
           </div>
           <div class="form-group full">
             <label for="ast_strasse">Strasse und Hausnummer</label>
@@ -930,7 +1072,7 @@
           </div>
           <div class="form-group">
             <label for="ast_plz">PLZ</label>
-            <input type="text" id="ast_plz" name="antragsteller_plz" maxlength="5">
+            <input type="text" id="ast_plz" name="antragsteller_plz" maxlength="5" inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code">
           </div>
           <div class="form-group">
             <label for="ast_ort">Ort</label>
@@ -1190,7 +1332,7 @@
 
       <div class="form-group full" style="margin-top:0.5rem;">
         <label for="pflegedienst_name">Ambulanter Pflegedienst (falls vorhanden)</label>
-        <input type="text" id="pflegedienst_name" name="pflegedienst_name" placeholder="Name und Anschrift des Pflegedienstes">
+        <input type="text" id="pflegedienst_name" name="pflegedienst_name" placeholder="Name und Anschrift des Pflegedienstes" data-autofill="companyName">
       </div>
 
       <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e8eef1;">
@@ -1213,6 +1355,17 @@
 
       <div class="info-box" style="margin-top:1rem;">
         <strong>Warum Hausarzt?</strong> Der Medizinische Dienst (MD) benoetigt ggf. aerztliche Unterlagen fuer die Begutachtung. Ihr Hausarzt kann relevante Befunde bereitstellen.
+      </div>
+
+      <div class="form-group full" style="margin-top:1.5rem;">
+        <label>Unterlagen beifuegen (optional)</label>
+        <div id="fileUploadArea" style="border: 2px dashed #e8eef1; border-radius: 12px; padding: 1.5rem; text-align: center; background: #f7fafa; transition: all 0.2s; cursor: pointer;">
+          <div style="font-size: 2rem;" aria-hidden="true">&#x1F4CE;</div>
+          <p style="margin: 0.5rem 0; color: #08376B; font-weight: 600;">Dateien hier ablegen oder <label for="fileInput" style="color: #35C0ED; cursor: pointer; text-decoration: underline;">auswaehlen</label></p>
+          <p style="font-size: 0.78rem; color: #6b7d8a; margin: 0;">PDF, JPG, PNG · Max. 5 Dateien, je 5 MB · z.B. Arztbefunde, Krankenhausberichte, Pflegeprotokolle</p>
+          <input type="file" id="fileInput" name="uploads" accept=".pdf,.jpg,.jpeg,.png,.heic" multiple style="display:none;">
+        </div>
+        <div id="fileList" style="margin-top:0.75rem;"></div>
       </div>
 
       <div class="step-nav">
@@ -1344,17 +1497,49 @@
         <!-- Dynamisch gefuellt -->
       </div>
 
+      <div class="form-group full" style="margin-top:1.5rem;">
+        <label>Ihre Unterschrift (optional)</label>
+        <div style="background: #fff; border: 2px dashed #e8eef1; border-radius: 12px; padding: 1rem;">
+          <canvas id="signatureCanvas" width="600" height="180" style="width: 100%; max-width: 600px; height: 180px; background: #fafbfc; border-radius: 8px; cursor: crosshair; display: block; touch-action: none;" aria-label="Unterschriftsfeld"></canvas>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+            <small style="color: #6b7d8a;">Unterschreiben Sie mit Maus, Stift oder Finger</small>
+            <button type="button" id="signatureClearBtn" style="background: none; border: 1px solid #e74c3c; color: #e74c3c; padding: 0.35rem 0.85rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">Zuruecksetzen</button>
+          </div>
+          <input type="hidden" id="signatureData" name="signature_data">
+        </div>
+      </div>
+
       <div class="info-box success" style="margin-top:1.5rem;">
         <strong>Fast geschafft!</strong> Nach dem Absenden erhalten Sie ein PDF-Dokument, das Sie direkt an Ihre Pflegekasse senden koennen. Wir unterstuetzen Sie gerne bei den naechsten Schritten.
       </div>
 
       <div class="step-nav">
         <button type="button" class="btn btn-prev" onclick="prevStep()">&larr; Zurueck</button>
+        <button type="button" class="btn btn-outline" id="previewPdfBtn" onclick="previewPdf()" style="margin-right: 0.5rem;">PDF-Vorschau anzeigen</button>
         <button type="button" class="btn btn-submit" id="submitBtn" onclick="submitForm()">Antrag absenden &#10003;</button>
       </div>
     </div>
 
   </form>
+
+  <!-- PDF Preview Modal -->
+  <div id="pdfPreviewModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(8,55,107,0.85); z-index:1000; padding:2rem; backdrop-filter: blur(4px);">
+    <div style="max-width: 900px; height: 100%; margin: 0 auto; background: white; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+      <div style="padding: 1rem 1.5rem; border-bottom: 1px solid #e8eef1; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin:0; font-family: 'Tenor Sans', serif; color: #08376B;">PDF-Vorschau</h3>
+        <button type="button" onclick="closePdfPreview()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7d8a; padding: 0 0.5rem;" aria-label="Schliessen">&times;</button>
+      </div>
+      <div style="flex: 1; overflow: hidden;">
+        <iframe id="pdfPreviewFrame" style="width: 100%; height: 100%; border: none;"></iframe>
+      </div>
+      <div style="padding: 1rem 1.5rem; border-top: 1px solid #e8eef1; display: flex; justify-content: space-between; gap: 0.75rem; background: #f7fafa;">
+        <p style="margin:0; font-size: 0.85rem; color: #6b7d8a; align-self: center;">Pruefen Sie die Angaben sorgfaeltig vor dem Absenden.</p>
+        <div>
+          <button type="button" class="btn btn-outline" onclick="closePdfPreview()">Schliessen & korrigieren</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ===== SUCCESS SCREEN ===== -->
@@ -1378,6 +1563,32 @@
   </div>
 </div>
 
+<!-- ===== STICKY HELP PANEL ===== -->
+<div class="help-panel" id="helpPanel">
+  <div class="help-panel-popup" id="helpPanelPopup" style="display:none;" role="dialog" aria-label="Hilfe und Kontakt">
+    <button type="button" class="help-close" onclick="toggleHelpPanel()" aria-label="Schliessen">&times;</button>
+    <h4>Brauchen Sie Hilfe?</h4>
+    <p>Unser Team hilft Ihnen gerne beim Ausfuellen des Antrags.</p>
+    <hr>
+    <p>
+      <strong>Telefon:</strong><br>
+      <a href="tel:+494018035922" id="helpPhoneLink">+49 40 18035922</a><br>
+      <span style="color: #6b7d8a; font-size: 0.78rem;">Mo-Fr 8:00-18:00 Uhr</span>
+    </p>
+    <p>
+      <strong>E-Mail:</strong><br>
+      <a href="mailto:info@luminaplus.de">info@luminaplus.de</a>
+    </p>
+    <hr>
+    <p style="font-size: 0.78rem;">
+      <strong>Tipp:</strong> Sie koennen das Formular jederzeit schliessen -- Ihr Fortschritt wird automatisch gespeichert.
+    </p>
+  </div>
+  <button type="button" class="help-btn" onclick="toggleHelpPanel()" aria-label="Hilfe anzeigen">
+    <span aria-hidden="true">&#x1F4AC;</span> Hilfe
+  </button>
+</div>
+
 <!-- ===== FOOTER ===== -->
 <footer class="footer">
   <p id="footerText"></p>
@@ -1392,6 +1603,748 @@
   let currentStep = 1;
   let highestStep = 1;
   let generatedPdfBlob = null;
+
+  // ===== AUTO-SAVE (localStorage) =====
+  const DRAFT_KEY = 'luminaplus-pflegegrad-draft-v1';
+  const DRAFT_EXPIRY_DAYS = 30;
+
+  function saveDraft() {
+    try {
+      const form = document.getElementById('pflegegradForm');
+      if (!form) return;
+      const fd = new FormData(form);
+      const data = {};
+      for (const [key, value] of fd.entries()) {
+        if (data[key]) {
+          if (Array.isArray(data[key])) data[key].push(value);
+          else data[key] = [data[key], value];
+        } else {
+          data[key] = value;
+        }
+      }
+      // Einwilligungs-Checkboxen nicht persistieren (muessen jedes Mal neu bestaetigt werden)
+      delete data.agree_schweigepflicht;
+      delete data.agree_datenschutz;
+      delete data.agree_richtigkeit;
+      delete data.agree_email_versand;
+
+      const draft = {
+        version: 1,
+        savedAt: new Date().toISOString(),
+        currentStep: currentStep,
+        highestStep: highestStep,
+        data: data,
+      };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    } catch (e) {
+      console.warn('Draft save failed:', e);
+    }
+  }
+
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return null;
+      const draft = JSON.parse(raw);
+      // Abgelaufene Drafts loeschen
+      const age = (Date.now() - new Date(draft.savedAt).getTime()) / (1000 * 60 * 60 * 24);
+      if (age > DRAFT_EXPIRY_DAYS) {
+        localStorage.removeItem(DRAFT_KEY);
+        return null;
+      }
+      return draft;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function clearDraft() {
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+  }
+
+  function restoreDraft(draft) {
+    if (!draft || !draft.data) return;
+    const data = draft.data;
+    // Form-Felder setzen
+    Object.keys(data).forEach(key => {
+      const value = data[key];
+      const elements = document.querySelectorAll(`[name="${key}"]`);
+      if (elements.length === 0) return;
+      const el = elements[0];
+      if (el.type === 'radio') {
+        const r = document.querySelector(`[name="${key}"][value="${value}"]`);
+        if (r) {
+          r.checked = true;
+          const card = r.closest('.option-card');
+          if (card && window.selectOption) {
+            // Trigger selectOption fuer conditional Logic
+            try { window.selectOption(card, key, value); } catch (e) {}
+          }
+        }
+      } else if (el.type === 'checkbox') {
+        const values = Array.isArray(value) ? value : [value];
+        elements.forEach(cb => {
+          if (values.includes(cb.value)) {
+            cb.checked = true;
+            const card = cb.closest('.option-card');
+            if (card) card.classList.add('selected');
+          }
+        });
+      } else {
+        // Select oder Text-Input
+        elements.forEach(e => {
+          e.value = value;
+          e.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      }
+    });
+    // Hoechsten Schritt aktivieren
+    if (draft.highestStep && draft.highestStep > 1) {
+      highestStep = draft.highestStep;
+    }
+  }
+
+  // ===== ANALYTICS (DSGVO-konform, nur mit Consent) =====
+  function trackEvent(name, props) {
+    // Nur tracken wenn funktionaler Consent da ist
+    const consent = window.LuminaPlusConsent && window.LuminaPlusConsent.get();
+    if (!consent || !consent.functional) return;
+    // Placeholder: In Produktion an Plausible/Umami senden
+    // window.plausible && window.plausible(name, { props });
+    // Im Dev-Modus: Console-Log
+    if (location.protocol === 'file:' || location.hostname === 'localhost') {
+      console.info('[Analytics]', name, props || {});
+    }
+  }
+
+  // ===== PFLEGEGRAD-SCHAETZER =====
+  // Einfache Heuristik basierend auf Antworten im Formular
+  // Zur genauen Berechnung wird auf den Pflegegrad-Rechner verwiesen
+  function showPflegegradHint() {
+    const d = getFormData();
+    const container = document.querySelector('.step[data-step="9"] #summaryContent');
+    if (!container) return;
+    // Nur fuer Erstantrag
+    if (d.antragsart !== 'erstantrag') return;
+    // Schaetzung rein basierend auf Pflegesituation
+    let score = 2; // neutral
+    if (d.pflege_vorhanden === 'ja') score += 1;
+    if (d.wohnsituation === 'pflegeheim') score += 2;
+    if (d.pflegeart === 'stationaer') score += 1;
+    const estimated = Math.min(Math.max(score, 1), 5);
+
+    let hint = document.getElementById('pflegegradHint');
+    if (!hint) {
+      hint = document.createElement('div');
+      hint.id = 'pflegegradHint';
+      hint.className = 'alert-box';
+      hint.style.cssText = 'background: #e8f4fd; border-left: 3px solid #35C0ED; color: #08376B; margin-top: 1rem;';
+      container.appendChild(hint);
+    }
+    hint.innerHTML = `<strong>Erste Einschaetzung:</strong> Basierend auf Ihren Angaben koennte ein Pflegegrad <strong>${estimated}</strong> in Frage kommen.
+      <br><small style="color: #6b7d8a;">Dies ist nur eine grobe Schaetzung. Die tatsaechliche Einstufung erfolgt durch den Medizinischen Dienst (MD). <a href="pflegegrad-rechner.html" target="_blank" style="color: #35C0ED;">Zum detaillierten Pflegegrad-Rechner</a></small>`;
+  }
+
+  // ===== DIGITALE UNTERSCHRIFT =====
+  let signatureResize = null;
+  function initSignature() {
+    const canvas = document.getElementById('signatureCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const hidden = document.getElementById('signatureData');
+    let drawing = false;
+    let hasSignature = false;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width === 0) return; // Canvas noch nicht sichtbar
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#08376B';
+    }
+    signatureResize = resize;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const ev = e.touches ? e.touches[0] : e;
+      return { x: ev.clientX - rect.left, y: ev.clientY - rect.top };
+    }
+
+    function start(e) {
+      e.preventDefault();
+      drawing = true;
+      const p = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    }
+    function move(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const p = getPos(e);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      hasSignature = true;
+    }
+    function end(e) {
+      if (!drawing) return;
+      drawing = false;
+      if (hasSignature) {
+        hidden.value = canvas.toDataURL('image/png');
+      }
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    canvas.addEventListener('mouseup', end);
+    canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start);
+    canvas.addEventListener('touchmove', move);
+    canvas.addEventListener('touchend', end);
+
+    const clearBtn = document.getElementById('signatureClearBtn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        hasSignature = false;
+        hidden.value = '';
+      });
+    }
+  }
+
+  // ===== EXIT-INTENT HANDLER =====
+  function initExitIntent() {
+    window.addEventListener('beforeunload', (e) => {
+      // Nur warnen wenn Formular angefangen wurde
+      const draft = loadDraft();
+      if (highestStep > 1 || (draft && draft.data && Object.keys(draft.data).length > 0)) {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    });
+  }
+
+  // ===== ARIA LABELS & ACCESSIBILITY =====
+  function initAriaLabels() {
+    // Form als aria-labelledby
+    const form = document.getElementById('pflegegradForm');
+    if (form && !form.hasAttribute('aria-label')) {
+      form.setAttribute('aria-label', 'Pflegegrad Antragsformular');
+    }
+    // Progressbar
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+      progressBar.setAttribute('role', 'progressbar');
+      progressBar.setAttribute('aria-valuemin', '0');
+      progressBar.setAttribute('aria-valuemax', String(TOTAL_STEPS));
+      progressBar.setAttribute('aria-valuenow', String(currentStep));
+      progressBar.setAttribute('aria-label', 'Fortschritt des Formulars');
+    }
+    // Pflichtfelder markieren
+    document.querySelectorAll('[required]').forEach(field => {
+      field.setAttribute('aria-required', 'true');
+    });
+    // Fehler-Live-Region fuer Screen-Reader
+    if (!document.getElementById('a11yLive')) {
+      const live = document.createElement('div');
+      live.id = 'a11yLive';
+      live.setAttribute('aria-live', 'polite');
+      live.setAttribute('aria-atomic', 'true');
+      live.style.cssText = 'position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden;';
+      document.body.appendChild(live);
+    }
+  }
+  function announceToScreenReader(msg) {
+    const live = document.getElementById('a11yLive');
+    if (live) {
+      live.textContent = msg;
+      setTimeout(() => { live.textContent = ''; }, 1000);
+    }
+  }
+
+  // ===== FILE UPLOAD =====
+  let uploadedFiles = [];
+  const MAX_FILES = 5;
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+  const ALLOWED_TYPES = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/heic'];
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function renderFileList() {
+    const list = document.getElementById('fileList');
+    if (!list) return;
+    if (uploadedFiles.length === 0) {
+      list.innerHTML = '';
+      return;
+    }
+    list.innerHTML = uploadedFiles.map((f, i) =>
+      `<div style="display:flex; align-items:center; justify-content:space-between; padding: 0.6rem 0.9rem; background: #fff; border: 1px solid #e8eef1; border-radius: 8px; margin-bottom: 0.4rem;">
+        <div style="display:flex; align-items:center; gap:0.6rem; overflow: hidden;">
+          <span aria-hidden="true">&#x1F4C4;</span>
+          <span style="font-size: 0.85rem; color: #08376B; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${f.name}</span>
+          <span style="font-size: 0.75rem; color: #6b7d8a;">${formatBytes(f.size)}</span>
+        </div>
+        <button type="button" data-remove-file="${i}" aria-label="Datei entfernen" style="background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 1.1rem; padding: 0 0.5rem;">&times;</button>
+      </div>`
+    ).join('');
+    // Remove-Buttons binden
+    list.querySelectorAll('[data-remove-file]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.removeFile);
+        uploadedFiles.splice(idx, 1);
+        renderFileList();
+      });
+    });
+  }
+
+  function handleFiles(fileList) {
+    const newFiles = Array.from(fileList);
+    newFiles.forEach(file => {
+      if (uploadedFiles.length >= MAX_FILES) {
+        alert(`Maximal ${MAX_FILES} Dateien erlaubt.`);
+        return;
+      }
+      if (file.size > MAX_FILE_SIZE) {
+        alert(`Datei "${file.name}" ist zu gross (max. ${formatBytes(MAX_FILE_SIZE)}).`);
+        return;
+      }
+      if (!ALLOWED_TYPES.includes(file.type) && !file.name.match(/\.(pdf|jpg|jpeg|png|heic)$/i)) {
+        alert(`Datei-Typ "${file.type || file.name}" nicht erlaubt. Nur PDF, JPG, PNG, HEIC.`);
+        return;
+      }
+      uploadedFiles.push(file);
+    });
+    renderFileList();
+  }
+
+  function initFileUpload() {
+    const input = document.getElementById('fileInput');
+    const area = document.getElementById('fileUploadArea');
+    if (!input || !area) return;
+    input.addEventListener('change', e => handleFiles(e.target.files));
+    area.addEventListener('click', e => {
+      if (e.target.tagName !== 'LABEL' && e.target.id !== 'fileInput') {
+        input.click();
+      }
+    });
+    area.addEventListener('dragover', e => {
+      e.preventDefault();
+      area.style.borderColor = '#35C0ED';
+      area.style.background = '#e8f4fd';
+    });
+    area.addEventListener('dragleave', () => {
+      area.style.borderColor = '#e8eef1';
+      area.style.background = '#f7fafa';
+    });
+    area.addEventListener('drop', e => {
+      e.preventDefault();
+      area.style.borderColor = '#e8eef1';
+      area.style.background = '#f7fafa';
+      handleFiles(e.dataTransfer.files);
+    });
+  }
+
+  // ===== TOOLTIPS =====
+  const TOOLTIPS = {
+    'pflegegeld': 'Pflegegeld ist eine monatliche Geldleistung, die pflegebeduerftige Personen erhalten, wenn sie zuhause von Angehoerigen oder Bekannten gepflegt werden. Die Hoehe haengt vom Pflegegrad ab.',
+    'sachleistung': 'Pflegesachleistungen sind Leistungen, die ein anerkannter Pflegedienst direkt mit der Pflegekasse abrechnet. Damit werden z.B. Grundpflege, Mobilitaet und hauswirtschaftliche Versorgung abgedeckt.',
+    'kombinationsleistung': 'Wenn Sie Pflegegeld und Pflegesachleistung mischen moechten (z.B. teils Angehoerige, teils Pflegedienst), waehlen Sie Kombinationsleistung. Die Pflegekasse rechnet anteilig ab.',
+    'verhinderungspflege': 'Wenn die pflegende Person kurzzeitig verhindert ist (Urlaub, Krankheit), uebernimmt die Pflegekasse die Kosten fuer eine Ersatzpflege. Bis zu 1.685 EUR jaehrlich, fuer max. 6 Wochen.',
+    'kurzzeitpflege': 'Kurzzeitpflege bezeichnet die voruebergehende vollstationaere Pflege in einem Pflegeheim, z.B. nach einem Krankenhausaufenthalt. Bis zu 1.854 EUR jaehrlich fuer max. 8 Wochen.',
+    'entlastungsbetrag': 'Der Entlastungsbetrag betraegt 131 EUR monatlich (seit 2025) und wird fuer Alltagshilfe, Haushaltshilfe oder Betreuung im Alltag verwendet. Er gilt fuer alle Pflegegrade 1-5.',
+    'pflegehilfsmittel': 'Zum Verbrauch bestimmte Pflegehilfsmittel wie Einmalhandschuhe, Desinfektionsmittel, Bettschutzeinlagen. Bis zu 40 EUR monatlich.',
+    'wohnumfeld': 'Zuschuesse fuer Umbauten wie Rampen, barrierefreies Bad, Treppenlift. Bis zu 4.180 EUR pro Massnahme.',
+    'tages_nachtpflege': 'Teilstationaere Pflege tagsueber oder nachts in einer Pflegeeinrichtung. Ergaenzt die haeusliche Pflege.',
+  };
+
+  let activeTooltip = null;
+  function showTooltip(trigger, text) {
+    if (activeTooltip) hideTooltip();
+    const popup = document.createElement('div');
+    popup.className = 'tooltip-popup';
+    popup.textContent = text;
+    popup.setAttribute('role', 'tooltip');
+    document.body.appendChild(popup);
+    const rect = trigger.getBoundingClientRect();
+    popup.style.top = (window.scrollY + rect.bottom + 8) + 'px';
+    popup.style.left = (window.scrollX + rect.left - 10) + 'px';
+    activeTooltip = popup;
+  }
+  function hideTooltip() {
+    if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+  }
+
+  function initTooltips() {
+    // Bei den Leistungen-Checkboxen Tooltips hinzufuegen
+    Object.keys(TOOLTIPS).forEach(key => {
+      const cb = document.querySelector(`input[name="leistungen"][value="${key}"]`);
+      if (!cb) return;
+      const label = cb.closest('label');
+      const titleEl = label && label.querySelector('.option-title');
+      if (!titleEl || titleEl.querySelector('.tooltip-trigger')) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'tooltip-trigger';
+      btn.textContent = '?';
+      btn.setAttribute('aria-label', 'Erklaerung anzeigen');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (activeTooltip) hideTooltip();
+        else showTooltip(btn, TOOLTIPS[key]);
+      });
+      titleEl.appendChild(btn);
+    });
+    // Klick ausserhalb schliesst Tooltip
+    document.addEventListener('click', (e) => {
+      if (activeTooltip && !e.target.closest('.tooltip-popup, .tooltip-trigger')) {
+        hideTooltip();
+      }
+    });
+  }
+
+  // ===== HILFE-PANEL =====
+  window.toggleHelpPanel = function() {
+    const popup = document.getElementById('helpPanelPopup');
+    if (popup) {
+      const visible = popup.style.display === 'block';
+      popup.style.display = visible ? 'none' : 'block';
+    }
+  };
+
+  function initHelpPanel() {
+    // Telefonnummer dynamisch setzen
+    const phoneLink = document.getElementById('helpPhoneLink');
+    if (phoneLink) {
+      phoneLink.href = 'tel:' + C.companyPhone.replace(/[\s\/]/g, '');
+      phoneLink.textContent = C.companyPhone;
+    }
+  }
+
+  // ===== GLOSSAR / FAQ =====
+  const GLOSSAR_FAQ = [
+    {
+      q: 'Wer kann einen Pflegegrad beantragen?',
+      a: 'Alle gesetzlich oder privat Versicherten mit einem Pflegebedarf koennen einen Pflegegrad beantragen. Der Antrag wird bei der Pflegekasse Ihrer Krankenkasse gestellt.'
+    },
+    {
+      q: 'Wie lange dauert die Bearbeitung?',
+      a: 'Nach Antragstellung hat die Pflegekasse 25 Arbeitstage Zeit, eine Entscheidung zu treffen. Bei Krankenhausaufenthalt oder Hospiz kann es schneller gehen (1-2 Wochen).'
+    },
+    {
+      q: 'Ab wann gilt der Pflegegrad?',
+      a: 'Der Pflegegrad gilt rueckwirkend ab dem Monat der Antragstellung. Wichtig: den Antrag so frueh wie moeglich stellen.'
+    },
+    {
+      q: 'Was ist der Unterschied zwischen Pflegegeld und Pflegesachleistung?',
+      a: 'Pflegegeld bekommen Sie, wenn Angehoerige pflegen. Pflegesachleistung rechnet ein Pflegedienst direkt mit der Kasse ab. Kombinationsleistung mischt beides.'
+    },
+    {
+      q: 'Was sind die Pflegegrade?',
+      a: 'Es gibt 5 Pflegegrade. PG 1 = geringe Beeintraechtigung. PG 5 = schwerste Beeintraechtigung mit besonderen Anforderungen. Je hoeher, desto hoehere Leistungen.'
+    },
+    {
+      q: 'Kann ich Widerspruch einlegen?',
+      a: 'Ja. Wenn Sie mit dem Bescheid nicht einverstanden sind, koennen Sie innerhalb von 4 Wochen Widerspruch einlegen. LuminaPlus unterstuetzt Sie dabei.'
+    },
+    {
+      q: 'Muss ich beim Begutachtungstermin anwesend sein?',
+      a: 'Ja. Der Medizinische Dienst (MD) kommt zu Ihnen nach Hause. Angehoerige koennen dabei sein. Bereiten Sie sich gut vor - das erhoeht Ihre Chancen.'
+    },
+    {
+      q: 'Was bedeutet Entlastungsbetrag?',
+      a: 'Alle Pflegegrade (1-5) haben Anspruch auf 131 EUR monatlich zur Entlastung. Das Geld ist z.B. fuer Alltagshelfer, Haushaltshilfe oder Betreuung gedacht.'
+    },
+  ];
+
+  function initGlossarFaq() {
+    // Zum Hilfe-Panel-Popup einen FAQ-Link hinzufuegen
+    const popup = document.getElementById('helpPanelPopup');
+    if (!popup) return;
+    const faqSection = document.createElement('div');
+    faqSection.innerHTML = `
+      <hr>
+      <p><strong>Haeufige Fragen:</strong></p>
+      <div id="faqList" style="max-height: 300px; overflow-y: auto;">
+        ${GLOSSAR_FAQ.map((item, i) => `
+          <details style="margin-bottom: 0.5rem; border: 1px solid #e8eef1; border-radius: 6px; padding: 0.5rem 0.75rem;">
+            <summary style="cursor: pointer; font-size: 0.82rem; color: #08376B; font-weight: 600;">${item.q}</summary>
+            <p style="margin: 0.5rem 0 0; font-size: 0.78rem; color: #6b7d8a;">${item.a}</p>
+          </details>
+        `).join('')}
+      </div>
+    `;
+    popup.appendChild(faqSection);
+  }
+
+  // ===== FONT-SIZE-TOGGLE =====
+  const FONT_SIZE_KEY = 'luminaplus-font-size';
+  function applyFontSize(size) {
+    document.body.classList.remove('font-size-large', 'font-size-xlarge');
+    if (size === 'large') document.body.classList.add('font-size-large');
+    if (size === 'xlarge') document.body.classList.add('font-size-xlarge');
+    document.querySelectorAll('.font-size-toggle button').forEach(b => {
+      b.classList.toggle('active', b.dataset.size === size);
+    });
+    try { localStorage.setItem(FONT_SIZE_KEY, size); } catch (e) {}
+  }
+  function initFontSize() {
+    document.querySelectorAll('.font-size-toggle button').forEach(b => {
+      b.addEventListener('click', () => applyFontSize(b.dataset.size));
+    });
+    const saved = localStorage.getItem(FONT_SIZE_KEY) || 'normal';
+    applyFontSize(saved);
+  }
+
+  // ===== PROGRESS-ZEIT (geschaetzte Restzeit) =====
+  // Durchschnittliche Minuten pro Schritt
+  const STEP_TIMES = { 1: 1, 2: 2, 3: 1, 4: 1, 5: 1, 6: 2, 7: 2, 8: 1, 9: 0 };
+  function updateProgressTime() {
+    const el = document.getElementById('progressTime');
+    if (!el) return;
+    let remaining = 0;
+    for (let s = currentStep; s <= TOTAL_STEPS; s++) {
+      remaining += STEP_TIMES[s] || 0;
+    }
+    if (remaining > 0) {
+      el.textContent = `ca. ${remaining} Min. verbleibend`;
+    } else {
+      el.textContent = 'Letzter Schritt!';
+    }
+  }
+
+  // ===== PLZ → ORT AUTOFILL =====
+  // Lokale Mini-Datenbank fuer haeufige deutsche Staedte (Sofort-Antwort)
+  // Bei unbekannten PLZ: Fallback auf openplzapi.org
+  const PLZ_LOCAL = {
+    // Hamburg
+    '20095':'Hamburg','20097':'Hamburg','20099':'Hamburg','20144':'Hamburg','20146':'Hamburg',
+    '20148':'Hamburg','20149':'Hamburg','20249':'Hamburg','20251':'Hamburg','20253':'Hamburg',
+    '20255':'Hamburg','20257':'Hamburg','20259':'Hamburg','20354':'Hamburg','20357':'Hamburg',
+    '20359':'Hamburg','20457':'Hamburg','20459':'Hamburg','20535':'Hamburg','20537':'Hamburg',
+    '20539':'Hamburg','21029':'Hamburg','21031':'Hamburg','21033':'Hamburg','21035':'Hamburg',
+    '21037':'Hamburg','21039':'Hamburg','21073':'Hamburg','21075':'Hamburg','21077':'Hamburg',
+    '21079':'Hamburg','21107':'Hamburg','21109':'Hamburg','21129':'Hamburg','21147':'Hamburg',
+    '21149':'Hamburg','22041':'Hamburg','22043':'Hamburg','22045':'Hamburg','22047':'Hamburg',
+    '22049':'Hamburg','22081':'Hamburg','22083':'Hamburg','22085':'Hamburg','22087':'Hamburg',
+    '22089':'Hamburg','22111':'Hamburg','22113':'Hamburg','22115':'Hamburg','22117':'Hamburg',
+    '22119':'Hamburg','22143':'Hamburg','22145':'Hamburg','22147':'Hamburg','22149':'Hamburg',
+    '22159':'Hamburg','22175':'Hamburg','22177':'Hamburg','22179':'Hamburg','22297':'Hamburg',
+    '22299':'Hamburg','22301':'Hamburg','22303':'Hamburg','22305':'Hamburg','22307':'Hamburg',
+    '22309':'Hamburg','22335':'Hamburg','22337':'Hamburg','22339':'Hamburg','22359':'Hamburg',
+    '22391':'Hamburg','22393':'Hamburg','22395':'Hamburg','22397':'Hamburg','22399':'Hamburg',
+    '22415':'Hamburg','22417':'Hamburg','22419':'Hamburg','22453':'Hamburg','22455':'Hamburg',
+    '22457':'Hamburg','22459':'Hamburg','22523':'Hamburg','22525':'Hamburg','22527':'Hamburg',
+    '22529':'Hamburg','22547':'Hamburg','22549':'Hamburg','22559':'Hamburg','22587':'Hamburg',
+    '22589':'Hamburg','22605':'Hamburg','22607':'Hamburg','22609':'Hamburg','22761':'Hamburg',
+    '22763':'Hamburg','22765':'Hamburg','22767':'Hamburg','22769':'Hamburg',
+    // Berlin
+    '10115':'Berlin','10117':'Berlin','10119':'Berlin','10178':'Berlin','10179':'Berlin',
+    '10243':'Berlin','10245':'Berlin','10247':'Berlin','10249':'Berlin','10315':'Berlin',
+    '10317':'Berlin','10318':'Berlin','10319':'Berlin','10365':'Berlin','10367':'Berlin',
+    '10369':'Berlin','10405':'Berlin','10407':'Berlin','10409':'Berlin','10435':'Berlin',
+    '10437':'Berlin','10439':'Berlin','10551':'Berlin','10553':'Berlin','10555':'Berlin',
+    '10557':'Berlin','10559':'Berlin','10585':'Berlin','10587':'Berlin','10589':'Berlin',
+    // Muenchen
+    '80331':'Muenchen','80333':'Muenchen','80335':'Muenchen','80336':'Muenchen','80337':'Muenchen',
+    '80339':'Muenchen','80469':'Muenchen','80538':'Muenchen','80539':'Muenchen','80636':'Muenchen',
+    '80637':'Muenchen','80638':'Muenchen','80639':'Muenchen','80686':'Muenchen','80687':'Muenchen',
+    // Koeln
+    '50667':'Koeln','50668':'Koeln','50670':'Koeln','50672':'Koeln','50674':'Koeln',
+    '50676':'Koeln','50677':'Koeln','50678':'Koeln','50679':'Koeln','50733':'Koeln',
+    '50735':'Koeln','50737':'Koeln','50739':'Koeln','50765':'Koeln','50767':'Koeln',
+    // Frankfurt
+    '60306':'Frankfurt am Main','60308':'Frankfurt am Main','60310':'Frankfurt am Main',
+    '60311':'Frankfurt am Main','60313':'Frankfurt am Main','60314':'Frankfurt am Main',
+    '60316':'Frankfurt am Main','60318':'Frankfurt am Main','60320':'Frankfurt am Main',
+    // Stuttgart
+    '70173':'Stuttgart','70174':'Stuttgart','70176':'Stuttgart','70178':'Stuttgart',
+    '70180':'Stuttgart','70182':'Stuttgart','70184':'Stuttgart','70186':'Stuttgart',
+    '70188':'Stuttgart','70190':'Stuttgart','70191':'Stuttgart','70192':'Stuttgart',
+    // Duesseldorf
+    '40210':'Duesseldorf','40211':'Duesseldorf','40212':'Duesseldorf','40213':'Duesseldorf',
+    '40215':'Duesseldorf','40217':'Duesseldorf','40219':'Duesseldorf','40221':'Duesseldorf',
+    // Hannover, Bremen, Essen, Leipzig, Dortmund, Nuernberg
+    '30159':'Hannover','30161':'Hannover','30163':'Hannover','30165':'Hannover',
+    '28195':'Bremen','28199':'Bremen','28203':'Bremen','28205':'Bremen',
+    '45127':'Essen','45128':'Essen','45130':'Essen','45131':'Essen',
+    '04103':'Leipzig','04105':'Leipzig','04107':'Leipzig','04109':'Leipzig',
+    '44135':'Dortmund','44137':'Dortmund','44139':'Dortmund','44141':'Dortmund',
+    '90402':'Nuernberg','90403':'Nuernberg','90408':'Nuernberg','90409':'Nuernberg',
+    // Norderstedt (Nachbargemeinde Hamburg)
+    '22844':'Norderstedt','22846':'Norderstedt','22848':'Norderstedt','22850':'Norderstedt',
+    '22851':'Norderstedt','22844':'Norderstedt',
+    // Elmshorn, Pinneberg
+    '25335':'Elmshorn','25336':'Elmshorn','25337':'Elmshorn',
+    '25421':'Pinneberg','25451':'Quickborn',
+    // Luebeck
+    '23552':'Luebeck','23554':'Luebeck','23556':'Luebeck','23558':'Luebeck',
+    // Kiel
+    '24103':'Kiel','24105':'Kiel','24106':'Kiel','24107':'Kiel','24109':'Kiel',
+  };
+
+  async function lookupPlz(plz) {
+    // 1. Local lookup
+    if (PLZ_LOCAL[plz]) return PLZ_LOCAL[plz];
+    // 2. API fallback (only if user wants it - fire-and-forget)
+    try {
+      const resp = await fetch(`https://openplzapi.org/de/Localities?postalCode=${plz}`, {
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!resp.ok) return null;
+      const data = await resp.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return data[0].name || null;
+      }
+    } catch (e) {
+      // Offline oder API-Fehler - keine Action
+    }
+    return null;
+  }
+
+  function initPlzAutofill() {
+    const pairs = [
+      { plz: 'plz', ort: 'ort' },
+      { plz: 'ast_plz', ort: 'ast_ort' },
+    ];
+    pairs.forEach(pair => {
+      const plzField = document.getElementById(pair.plz);
+      const ortField = document.getElementById(pair.ort);
+      if (!plzField || !ortField) return;
+      plzField.addEventListener('input', async () => {
+        const val = plzField.value.trim();
+        if (!/^[0-9]{5}$/.test(val)) return;
+        // Nur uebernehmen wenn Ort-Feld leer ist (User nicht stoeren)
+        if (ortField.value.trim()) return;
+        const ort = await lookupPlz(val);
+        if (ort && !ortField.value.trim()) {
+          ortField.value = ort;
+          ortField.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+  }
+
+  // ===== INLINE VALIDATION (beim Blur) =====
+  function validateField(field) {
+    const id = field.id;
+    const value = field.value.trim();
+    clearValidation(field);
+
+    // Leere Felder: keine Fehler beim Blur (nur beim Weiter-Klick)
+    if (!value) return true;
+
+    // E-Mail
+    if (field.type === 'email' || id === 'email') {
+      if (!isValidEmail(value)) {
+        markError(field, 'Bitte eine gueltige E-Mail-Adresse eingeben.');
+        return false;
+      }
+      return true;
+    }
+    // Telefon
+    if (field.type === 'tel' || id === 'telefon' || id === 'ast_telefon') {
+      if (!isValidPhone(value)) {
+        markError(field, 'Bitte eine gueltige Telefonnummer eingeben (mind. 6 Ziffern).');
+        return false;
+      }
+      return true;
+    }
+    // PLZ
+    if (id === 'plz' || id === 'ast_plz') {
+      if (!isValidPlz(value)) {
+        markError(field, 'Bitte eine gueltige 5-stellige Postleitzahl eingeben.');
+        return false;
+      }
+      return true;
+    }
+    // Geburtsdatum
+    if (id === 'geburtsdatum') {
+      const d = new Date(value);
+      const heute = new Date();
+      const max = new Date(); max.setFullYear(max.getFullYear() - 120);
+      if (d > heute) { markError(field, 'Das Geburtsdatum darf nicht in der Zukunft liegen.'); return false; }
+      if (d < max) { markError(field, 'Bitte ein realistisches Geburtsdatum angeben.'); return false; }
+      return true;
+    }
+    // Versichertennummer
+    if (id === 'versichertennummer') {
+      const va = document.getElementById('versicherungsart');
+      if (va && va.value === 'gesetzlich') {
+        if (!isValidGkvVersNr(value)) {
+          markError(field, 'Ungueltiges Format. Beispiel: A123456789 (1 Buchstabe + 9 Ziffern).');
+          return false;
+        }
+      } else if (va && (va.value === 'privat' || va.value === 'beihilfe')) {
+        if (value.replace(/\s/g, '').length < 4) {
+          markError(field, 'Versichertennummer zu kurz (mindestens 4 Zeichen).');
+          return false;
+        }
+      }
+      return true;
+    }
+    return true;
+  }
+
+  function initInlineValidation() {
+    // Event-Delegation: alle Text/Email/Tel/Date-Inputs im Formular
+    document.querySelectorAll('#pflegegradForm input[type=text], #pflegegradForm input[type=email], #pflegegradForm input[type=tel], #pflegegradForm input[type=date]').forEach(input => {
+      input.addEventListener('blur', () => validateField(input));
+    });
+  }
+
+  function initAutoSave() {
+    // Auto-Save bei jeder Aenderung im Formular
+    const form = document.getElementById('pflegegradForm');
+    if (!form) return;
+    let saveTimer = null;
+    form.addEventListener('input', () => {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveDraft, 500);
+    });
+    form.addEventListener('change', () => {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveDraft, 200);
+    });
+  }
+
+  function showDraftBanner(draft) {
+    const savedDate = new Date(draft.savedAt).toLocaleString('de-DE', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+    const banner = document.createElement('div');
+    banner.id = 'draftBanner';
+    banner.style.cssText = 'background: #e8f4fd; border-left: 4px solid #35C0ED; padding: 1rem 1.25rem; margin: 0 0 1.5rem 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;';
+    banner.innerHTML = `
+      <div style="flex: 1; min-width: 250px;">
+        <strong style="color: #08376B;">Zwischenstand wiederhergestellt</strong><br>
+        <span style="font-size: 0.85rem; color: #6b7d8a;">Gespeichert am ${savedDate}. Sie koennen dort weitermachen, wo Sie aufgehoert haben.</span>
+      </div>
+      <button type="button" id="draftResetBtn" style="background: #fff; border: 1px solid #d93f0b; color: #d93f0b; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Neu starten</button>
+    `;
+    const container = document.querySelector('.form-container') || document.querySelector('form');
+    if (container) {
+      container.insertBefore(banner, container.firstChild);
+      document.getElementById('draftResetBtn').addEventListener('click', () => {
+        if (confirm('Moechten Sie wirklich von vorne beginnen? Alle gespeicherten Daten werden geloescht.')) {
+          clearDraft();
+          location.reload();
+        }
+      });
+    }
+  }
 
   // Pflegekassen E-Mail-Zuordnung (Frontend-Mapping fuer UI-Hinweise)
   const PFLEGEKASSEN_EMAILS = {
@@ -1528,6 +2481,34 @@
     }
 
     updateProgress();
+
+    // ===== Smart-Defaults: Pflegedienst-Name vorausfuellen =====
+    document.querySelectorAll('[data-autofill="companyName"]').forEach(el => {
+      if (!el.value) el.value = C.companyName;
+    });
+
+    // ===== Auto-Save: Draft laden und Event-Listener einrichten =====
+    const existingDraft = loadDraft();
+    if (existingDraft) {
+      restoreDraft(existingDraft);
+      showDraftBanner(existingDraft);
+      // Zum letzten Schritt springen (aber max. highestStep)
+      const targetStep = Math.min(existingDraft.currentStep || 1, existingDraft.highestStep || 1);
+      if (targetStep > 1) {
+        setTimeout(() => showStep(targetStep), 100);
+      }
+    }
+    initAutoSave();
+    initInlineValidation();
+    initPlzAutofill();
+    initFontSize();
+    initTooltips();
+    initHelpPanel();
+    initFileUpload();
+    initGlossarFaq();
+    initAriaLabels();
+    initSignature();
+    initExitIntent();
   }
 
   // ===== STEP NAVIGATION =====
@@ -1542,6 +2523,12 @@
       if (i === currentStep - 1) dot.classList.add('active');
       else if (i < highestStep) dot.classList.add('completed');
     });
+
+    updateProgressTime();
+
+    // ARIA progressbar
+    const pb = document.querySelector('.progress-bar');
+    if (pb) pb.setAttribute('aria-valuenow', String(currentStep));
   }
 
   function showStep(step) {
@@ -1551,8 +2538,13 @@
       target.classList.add('active');
       window.scrollTo({ top: document.querySelector('.progress-container').offsetTop - 80, behavior: 'smooth' });
     }
+    const previousStep = currentStep;
     currentStep = step;
-    if (step > highestStep) highestStep = step;
+    if (step > highestStep) {
+      highestStep = step;
+      // Analytics: Schritt erreicht (nur neue Schritte)
+      if (typeof trackEvent === 'function') trackEvent('step_reached', { step: step });
+    }
     updateProgress();
 
     if (step === 8) {
@@ -1560,6 +2552,8 @@
     }
     if (step === TOTAL_STEPS) {
       buildSummary();
+      // Canvas resize beim Schritt 9, da es vorher unsichtbar war
+      if (signatureResize) setTimeout(signatureResize, 100);
     }
   }
 
@@ -1931,6 +2925,13 @@
       infoKein.style.display = 'none';
       document.getElementById('agree_email_versand').disabled = false;
     }
+
+    // Pre-fuellen der Kopie-E-Mail aus Schritt 2
+    const formEmail = document.getElementById('email');
+    const kopieEmail = document.getElementById('antragsteller_email_versand');
+    if (formEmail && formEmail.value && kopieEmail && !kopieEmail.value) {
+      kopieEmail.value = formEmail.value;
+    }
   }
 
   // ===== SUMMARY =====
@@ -2026,6 +3027,7 @@
       </div>
     `;
     document.getElementById('summaryContent').innerHTML = html;
+    showPflegegradHint();
   }
 
   function formatDate(dateStr) {
@@ -2413,6 +3415,9 @@
       const successScreen = document.getElementById('successScreen');
       successScreen.classList.add('visible');
 
+      // Draft loeschen nach erfolgreicher Absendung
+      clearDraft();
+
       // Update success message based on email result
       if (emailResult && emailResult.success && emailResult.results && emailResult.results.pflegekasse === 'gesendet') {
         document.getElementById('successEmailInfo').innerHTML = `
@@ -2451,6 +3456,38 @@
     a.click();
     URL.revokeObjectURL(url);
   };
+
+  // ===== PDF PREVIEW =====
+  let previewPdfUrl = null;
+  window.previewPdf = function() {
+    try {
+      // Generate fresh PDF for preview
+      const pdfDoc = generatePDF();
+      const blob = pdfDoc.output('blob');
+      if (previewPdfUrl) URL.revokeObjectURL(previewPdfUrl);
+      previewPdfUrl = URL.createObjectURL(blob);
+      const iframe = document.getElementById('pdfPreviewFrame');
+      iframe.src = previewPdfUrl;
+      document.getElementById('pdfPreviewModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    } catch (e) {
+      console.error('PDF preview failed:', e);
+      alert('PDF-Vorschau konnte nicht erstellt werden. Bitte versuchen Sie es erneut.');
+    }
+  };
+
+  window.closePdfPreview = function() {
+    document.getElementById('pdfPreviewModal').style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  // ESC schliesst Preview
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('pdfPreviewModal');
+      if (modal && modal.style.display === 'block') closePdfPreview();
+    }
+  });
 
   // ===== MOBILE MENU =====
   const hamburger = document.getElementById('hamburger');

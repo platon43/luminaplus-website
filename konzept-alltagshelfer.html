@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LuminaPlus Care Platform — Geschaeftskonzept</title>
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #08376B;
+    --light-blue: #35C0ED;
+    --dark-blue: #2F90B0;
+    --green: #9AEBA6;
+    --green-soft: #d4f5db;
+    --white: #ffffff;
+    --off-white: #f7fafa;
+    --gray: #6b7d8a;
+    --light-gray: #e8eef1;
+    --font-heading: 'Tenor Sans', serif;
+    --font-body: 'Montserrat', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: #1a2a3a;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0.8rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: var(--font-heading);
+    font-size: 1.3rem; color: var(--navy);
+    text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .nav-brand img { height: 36px; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-body); font-weight: 600; font-size: 0.82rem;
+    color: var(--navy); text-decoration: none; letter-spacing: 0.03em;
+    position: relative; transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px; background: var(--light-blue); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--light-blue); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  .hero {
+    min-height: 80vh;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 8rem 2rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -40%; right: -20%;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(53,192,237,0.08) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -40%; left: -10%;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(154,235,166,0.06) 0%, transparent 70%);
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 850px; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(154,235,166,0.2); color: var(--green);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 0.4rem 1.2rem;
+    border-radius: 20px; border: 1px solid rgba(154,235,166,0.3);
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.8s ease-out;
+  }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    color: var(--white); line-height: 1.15;
+    margin-bottom: 1.2rem;
+    animation: fadeInUp 0.8s ease-out 0.1s both;
+  }
+  .hero h1 span { color: var(--light-blue); }
+  .hero p {
+    font-size: 1.1rem; color: rgba(255,255,255,0.7);
+    max-width: 640px; margin: 0 auto 3rem; line-height: 1.8;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap;
+    padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.1);
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+  }
+  .hero-stat h3 {
+    font-family: var(--font-heading); font-size: 2.2rem; color: var(--light-blue);
+  }
+  .hero-stat p {
+    font-size: 0.75rem; color: rgba(255,255,255,0.45);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .alt-bg { background: var(--off-white); }
+
+  .section-label {
+    display: inline-block; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--dark-blue); background: rgba(47,144,176,0.08);
+    padding: 0.35rem 0.9rem; border-radius: 4px; margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    color: var(--navy); margin-bottom: 0.8rem; line-height: 1.2;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--gray);
+    max-width: 600px; line-height: 1.8; margin-bottom: 3rem;
+  }
+
+  /* CARDS */
+  .card-grid { display: grid; gap: 1.5rem; }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  .card {
+    background: var(--white); border-radius: 12px; padding: 2rem;
+    border: 1px solid var(--light-gray);
+    transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    position: relative; overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(8,55,107,0.08);
+    border-color: transparent;
+  }
+  .card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--dark-blue), var(--light-blue));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .card:hover::after { transform: scaleX(1); }
+
+  .card-icon {
+    width: 48px; height: 48px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.2rem;
+  }
+  .card-icon.green { background: rgba(154,235,166,0.15); color: #4a9a5a; }
+  .card-icon.blue { background: rgba(53,192,237,0.12); color: var(--dark-blue); }
+  .card-icon.navy { background: rgba(8,55,107,0.08); color: var(--navy); }
+
+  .card h3 {
+    font-family: var(--font-heading); font-size: 1.1rem;
+    color: var(--navy); margin-bottom: 0.5rem;
+  }
+  .card p { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+
+  /* HIGHLIGHT CARD */
+  .highlight-card {
+    background: var(--navy); color: var(--white); border: none;
+  }
+  .highlight-card h3 { color: var(--light-blue); }
+  .highlight-card p { color: rgba(255,255,255,0.7); }
+  .highlight-card::after { display: none; }
+
+  /* PILLARS */
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .pillar {
+    border-radius: 12px; padding: 2.5rem 2rem; text-align: center;
+    border: 1px solid var(--light-gray); background: var(--white);
+    position: relative; overflow: hidden;
+    transition: all 0.4s;
+  }
+  .pillar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(8,55,107,0.08);
+    border-color: transparent;
+  }
+  .pillar::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--green), var(--light-blue));
+  }
+  .pillar-icon {
+    width: 64px; height: 64px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; margin: 0 auto 1rem;
+    background: rgba(47,144,176,0.08);
+  }
+  .pillar h3 {
+    font-family: var(--font-heading); font-size: 1.1rem;
+    color: var(--navy); margin-bottom: 0.5rem;
+  }
+  .pillar p { font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
+
+  /* TABLE */
+  .table-wrap {
+    overflow-x: auto; border-radius: 12px;
+    border: 1px solid var(--light-gray); background: var(--white);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th {
+    text-align: left; padding: 1rem 1.25rem;
+    background: var(--navy); color: var(--white);
+    font-weight: 600; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  td { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--light-gray); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(47,144,176,0.03); }
+
+  /* PROCESS FLOW */
+  .process-flow { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: stretch; }
+  .process-step {
+    flex: 1; min-width: 150px; text-align: center;
+    background: var(--white); border: 1px solid var(--light-gray);
+    border-radius: 12px; padding: 1.5rem 1rem;
+    transition: all 0.3s;
+  }
+  .process-step:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(8,55,107,0.06);
+  }
+  .process-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--light-blue); color: var(--white);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem;
+  }
+  .process-step h4 {
+    font-family: var(--font-heading); font-size: 0.9rem;
+    color: var(--navy); margin-bottom: 0.3rem;
+  }
+  .process-step p { font-size: 0.75rem; color: var(--gray); }
+  .process-arrow {
+    display: flex; align-items: center; color: var(--light-blue);
+    font-size: 1.3rem; font-weight: 300;
+  }
+
+  /* TAGS */
+  .tag {
+    display: inline-block; padding: 0.3rem 0.8rem; border-radius: 6px;
+    font-size: 0.78rem; font-weight: 600; margin: 0.2rem;
+  }
+  .tag-blue { background: rgba(53,192,237,0.1); color: var(--dark-blue); }
+  .tag-green { background: rgba(154,235,166,0.15); color: #3a8a4a; }
+  .tag-navy { background: rgba(8,55,107,0.06); color: var(--navy); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 3rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 13px; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--light-blue), var(--green));
+    border-radius: 2px;
+  }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-dot {
+    position: absolute; left: -3rem; top: 0.25rem;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--white); border: 3px solid var(--light-blue);
+    box-shadow: 0 0 0 4px rgba(53,192,237,0.12);
+  }
+  .timeline-item.active .timeline-dot {
+    background: var(--light-blue);
+    box-shadow: 0 0 0 4px rgba(53,192,237,0.2);
+  }
+  .timeline-phase {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--dark-blue); margin-bottom: 0.2rem;
+  }
+  .timeline-title {
+    font-family: var(--font-heading); font-size: 1.15rem;
+    color: var(--navy); margin-bottom: 0.4rem;
+  }
+  .timeline-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+
+  /* WIREFRAMES */
+  .wireframe-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .wireframe {
+    background: var(--navy); border-radius: 12px; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(8,55,107,0.2);
+  }
+  .wireframe-bar {
+    background: rgba(0,0,0,0.2); padding: 0.5rem 1rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .wf-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .wf-dot-r { background: #ff5f57; }
+  .wf-dot-y { background: #ffbd2e; }
+  .wf-dot-g { background: #28ca41; }
+  .wireframe-body {
+    padding: 1.25rem; color: rgba(255,255,255,0.8);
+    font-size: 0.82rem;
+  }
+  .wireframe-body h4 {
+    color: var(--light-blue); font-family: var(--font-heading);
+    font-size: 0.95rem; margin-bottom: 0.75rem;
+  }
+  .wf-row { display: flex; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .wf-label { color: rgba(255,255,255,0.45); min-width: 60px; }
+  .wf-value { color: rgba(255,255,255,0.9); }
+  .wf-btn {
+    display: inline-block; background: var(--light-blue); color: var(--white);
+    padding: 0.4rem 1.2rem; border-radius: 6px; font-size: 0.78rem;
+    font-weight: 600; margin-top: 0.75rem;
+  }
+  .wf-divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 0.75rem 0; }
+  .wf-timer {
+    font-family: var(--font-heading); font-size: 1.8rem;
+    color: var(--light-blue); text-align: center; margin: 1rem 0;
+  }
+  .wf-sig {
+    border: 2px dashed rgba(255,255,255,0.2); border-radius: 8px;
+    height: 60px; display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.3); font-style: italic; margin: 0.75rem 0;
+  }
+  .wf-kpi-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.75rem;
+  }
+  .wf-kpi {
+    background: rgba(0,0,0,0.2); border-radius: 6px; padding: 0.5rem; text-align: center;
+  }
+  .wf-kpi-val { color: var(--light-blue); font-weight: 700; font-size: 1.1rem; }
+  .wf-kpi-lbl { color: rgba(255,255,255,0.4); font-size: 0.7rem; }
+
+  /* KPI BAR */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
+  .kpi {
+    background: var(--white); border: 1px solid var(--light-gray);
+    border-radius: 12px; padding: 1.5rem; text-align: center;
+    transition: all 0.3s;
+  }
+  .kpi:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(8,55,107,0.06); }
+  .kpi-value {
+    font-family: var(--font-heading); font-size: 1.5rem; color: var(--navy);
+  }
+  .kpi-label { font-size: 0.75rem; color: var(--gray); margin-top: 0.2rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.5);
+    padding: 2.5rem 2rem 1.5rem; text-align: center;
+  }
+  footer strong { color: var(--white); }
+  footer p { font-size: 0.8rem; }
+  .footer-divider {
+    width: 60px; height: 2px; margin: 1rem auto;
+    background: linear-gradient(90deg, var(--light-blue), var(--green));
+    border-radius: 1px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .pillar-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    .process-arrow { display: none; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; min-height: auto; }
+  }
+</style>
+  <script src="js/consent-banner.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('afterbegin','<span style=color:var(--navy);font-weight:800>LuminaPlus eG</span>')">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#problem">Ausgangslage</a></li>
+      <li><a href="#modell">Geschaeftsmodell</a></li>
+      <li><a href="#plattform">Plattform</a></li>
+      <li><a href="#screens">UI/UX</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Geschaeftskonzept &amp; Projektdokument</div>
+    <h1>LuminaPlus <span>Care Platform</span></h1>
+    <p>Die fuehrende Plattform fuer ambulante Alltagshilfe &amp; Pflege-Services &mdash; digital, skalierbar und mit echtem gesellschaftlichen Impact.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <h3>12 Mrd &euro;</h3>
+        <p>Ungenutztes Marktvolumen</p>
+      </div>
+      <div class="hero-stat">
+        <h3>131 &euro;</h3>
+        <p>Entlastungsbetrag / Monat</p>
+      </div>
+      <div class="hero-stat">
+        <h3>~1 Mio &euro;</h3>
+        <p>Monatsumsatz-Ziel</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMSTELLUNG -->
+<section id="problem">
+  <div class="container">
+    <div class="section-label">Ausgangslage</div>
+    <h2 class="section-title">Das Problem &mdash; und die Chance</h2>
+    <p class="section-sub">Millionen Pflegebeduerftige haben Anspruch auf Alltagshilfe, die sie nicht nutzen. LuminaPlus schliesst diese Luecke.</p>
+    <div class="card-grid grid-3">
+      <div class="card">
+        <div class="card-icon blue">&#x1F3E5;</div>
+        <h3>Ungenutzte Leistungen</h3>
+        <p>Milliarden Euro an Pflegeleistungen (&sect;45b SGB XI) verfallen jaehrlich, weil Betroffene sie nicht kennen oder kein Anbieter verfuegbar ist.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon navy">&#x2699;&#xFE0F;</div>
+        <h3>Komplizierte Abrechnung</h3>
+        <p>Die Buerokratie rund um Pflegekassen schreckt sowohl Anbieter als auch Pflegebeduerftige ab &mdash; das System ist veraltet und nicht digitalisiert.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon green">&#x1F4C8;</div>
+        <h3>Riesiger Markt</h3>
+        <p>Millionen Pflegebeduerftige mit Pflegegrad 1&ndash;5, deren Angehoerige, und ein wachsender Bedarf an flexiblen Alltagshelfern bilden einen Milliardenmarkt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 SAEULEN -->
+<section class="alt-bg" id="modell">
+  <div class="container">
+    <div class="section-label">Geschaeftsmodell</div>
+    <h2 class="section-title">Drei Saeulen &mdash; ein Oekosystem</h2>
+    <p class="section-sub">LuminaPlus vereint Alltagshilfe, Pflege und ein genossenschaftliches Mitglieder-Modell zu einer skalierbaren Plattform.</p>
+    <div class="pillar-grid">
+      <div class="pillar">
+        <div class="pillar-icon">&#x1F91D;</div>
+        <h3>Alltagshilfe</h3>
+        <p>Putzen, Einkaufen, Begleitung, Gesellschaft &mdash; durch Studenten, Schueler und Minijobber. Skalierbar und sofort umsetzbar.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">&#x1F48A;</div>
+        <h3>Pflegeleistungen</h3>
+        <p>Grund- und Behandlungspflege durch Fachkraefte &mdash; bereits bestehend bei LuminaPlus, mit Zulassung und Erfahrung.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">&#x1F3DB;&#xFE0F;</div>
+        <h3>Mitglieder-Modell (eG)</h3>
+        <p>Exklusiver Hebel: Mitglieder bringen Patienten, uebernehmen Verantwortung und setzen Helfer ein &mdash; Plattform trifft Genossenschaft.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EINNAHMEMODELL -->
+<section>
+  <div class="container">
+    <div class="section-label">Finanzen</div>
+    <h2 class="section-title">Einnahmemodell &amp; Skalierung</h2>
+    <p class="section-sub">Pflegekasse zahlt, Helfer verdienen fair, LuminaPlus waechst &mdash; ein Win-Win-Win-Modell.</p>
+    <div class="card-grid grid-2">
+      <div class="card">
+        <h3>Margenstruktur pro Stunde</h3>
+        <p style="margin-bottom:1.2rem">Der Abrechnungssatz bei der Pflegekasse liegt bei 30&ndash;35&nbsp;&euro;/h, die Helfer erhalten 14&ndash;18&nbsp;&euro;/h. Die Differenz deckt Marge und Fixkosten.</p>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <span class="tag tag-blue">Abrechnung: ~32 &euro;/h</span>
+          <span class="tag tag-green">Helfer: ~16 &euro;/h</span>
+          <span class="tag tag-navy">Marge: ~16 &euro;/h</span>
+        </div>
+      </div>
+      <div class="highlight-card card">
+        <h3>Skalierungspotenzial</h3>
+        <div style="margin-top:0.75rem;">
+          <table style="color:rgba(255,255,255,0.85);">
+            <thead><tr>
+              <th style="background:rgba(0,0,0,0.25);">Kunden</th>
+              <th style="background:rgba(0,0,0,0.25);">Umsatz/Monat</th>
+              <th style="background:rgba(0,0,0,0.25);">Marge/Monat</th>
+            </tr></thead>
+            <tbody style="color:rgba(255,255,255,0.8);">
+              <tr><td>100</td><td>~13.000 &euro;</td><td>~6.000 &euro;</td></tr>
+              <tr><td>1.000</td><td>~130.000 &euro;</td><td>~60.000 &euro;</td></tr>
+              <tr style="font-weight:700;color:var(--light-blue);"><td>10.000</td><td>~1,3 Mio &euro;</td><td>~600.000 &euro;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROZESS -->
+<section class="alt-bg" id="plattform">
+  <div class="container">
+    <div class="section-label">Prozess</div>
+    <h2 class="section-title">End-to-End Ablauf</h2>
+    <p class="section-sub">Vom ersten Kontakt bis zur Abrechnung &mdash; alles aus einer Hand.</p>
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="process-num">1</div>
+        <h4>Kundenakquise</h4>
+        <p>Marketing, Empfehlung, Flyer, Aerzte</p>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-num">2</div>
+        <h4>Onboarding</h4>
+        <p>Pflegegrad pruefen, Budget erklaeren, Vertrag</p>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-num">3</div>
+        <h4>Matching</h4>
+        <p>Helfer zuweisen nach Naehe, Skills, Sprache</p>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-num">4</div>
+        <h4>Einsatz</h4>
+        <p>Helfer fuehrt durch, Kunde unterschreibt digital</p>
+      </div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">
+        <div class="process-num">5</div>
+        <h4>Abrechnung</h4>
+        <p>Leistungsnachweis &rarr; Pflegekasse / OptaData</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATTFORM MVP -->
+<section>
+  <div class="container">
+    <div class="section-label">Projekt-Dokument</div>
+    <h2 class="section-title">Plattform &mdash; Funktionsumfang (MVP)</h2>
+    <p class="section-sub">Drei Systeme, eine Plattform: Helfer-App, Admin-Portal und ein schlanker Kunden-Flow.</p>
+    <div class="card-grid grid-3">
+      <div class="card">
+        <div class="card-icon blue">&#x1F4F1;</div>
+        <h3>Helfer-App (Mobile)</h3>
+        <p>Login, Einsatzuebersicht, Start/Stop-Timer, digitale Kundenunterschrift, Verfuegbarkeiten pflegen. Alles in 1&ndash;2 Klicks.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon navy">&#x1F5A5;&#xFE0F;</div>
+        <h3>Admin-Portal (Web)</h3>
+        <p>Kunden- &amp; Helferverwaltung, Einsatzplanung, Matching (manuell &rarr; Algorithmus), Leistungsnachweise, Abrechnung &amp; Export.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon green">&#x1F310;</div>
+        <h3>Kunden-Flow (Web)</h3>
+        <p>Bewusst simpel: Landing Page mit Leistungsuebersicht, kurzes Anmeldeformular, Rueckruf durch Team. Keine App noetig.</p>
+      </div>
+    </div>
+
+    <!-- TECH STACK -->
+    <div style="margin-top:2rem;">
+      <div class="card" style="border-left:4px solid var(--light-blue);">
+        <h3 style="margin-bottom:0.75rem;">Empfohlener Tech-Stack</h3>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <span class="tag tag-blue">React / Next.js</span>
+          <span class="tag tag-blue">React Native</span>
+          <span class="tag tag-blue">Node.js</span>
+          <span class="tag tag-blue">Supabase</span>
+          <span class="tag tag-blue">PostgreSQL</span>
+          <span class="tag tag-blue">REST API</span>
+        </div>
+        <p style="margin-top:0.75rem;">Integrationen: Curasoft (bestehend), OptaData (Abrechnung), ggf. Microsoft 365</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WIREFRAMES -->
+<section class="alt-bg" id="screens">
+  <div class="container">
+    <div class="section-label">UI / UX</div>
+    <h2 class="section-title">App-Screens (Wireframes)</h2>
+    <p class="section-sub">Mobile First fuer Helfer, volle Kontrolle fuer Admins, null Aufwand fuer Kunden.</p>
+    <div class="wireframe-grid">
+      <!-- Helfer Dashboard -->
+      <div class="wireframe">
+        <div class="wireframe-bar"><span class="wf-dot wf-dot-r"></span><span class="wf-dot wf-dot-y"></span><span class="wf-dot wf-dot-g"></span></div>
+        <div class="wireframe-body">
+          <h4>Helfer &mdash; Dashboard</h4>
+          <div style="color:rgba(255,255,255,0.5);margin-bottom:0.75rem;">Hallo, Ahmed &#x1F44B;</div>
+          <div style="color:#fff;font-weight:600;margin-bottom:0.5rem;">Heute: 2 Einsaetze</div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:0.75rem;margin-bottom:0.5rem;">
+            <div class="wf-row"><span class="wf-value">10:00 &mdash; Frau Mueller</span></div>
+            <div class="wf-row"><span class="wf-label">&#x1F4CD; 2.1 km</span></div>
+            <span class="wf-btn">Starten</span>
+          </div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:0.75rem;">
+            <div class="wf-row"><span class="wf-value">14:00 &mdash; Herr Schneider</span></div>
+            <div class="wf-row"><span class="wf-label">&#x1F4CD; 1.3 km</span></div>
+            <span class="wf-btn">Starten</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Einsatz laeuft -->
+      <div class="wireframe">
+        <div class="wireframe-bar"><span class="wf-dot wf-dot-r"></span><span class="wf-dot wf-dot-y"></span><span class="wf-dot wf-dot-g"></span></div>
+        <div class="wireframe-body">
+          <h4>Helfer &mdash; Einsatz laeuft</h4>
+          <div class="wf-row"><span class="wf-label">Kunde:</span><span class="wf-value">Frau Mueller</span></div>
+          <div class="wf-row"><span class="wf-label">Start:</span><span class="wf-value">10:02 Uhr</span></div>
+          <div class="wf-timer">00:35:12</div>
+          <div style="text-align:center;"><span class="wf-btn" style="background:#e74c3c;">Einsatz beenden</span></div>
+        </div>
+      </div>
+
+      <!-- Unterschrift -->
+      <div class="wireframe">
+        <div class="wireframe-bar"><span class="wf-dot wf-dot-r"></span><span class="wf-dot wf-dot-y"></span><span class="wf-dot wf-dot-g"></span></div>
+        <div class="wireframe-body">
+          <h4>Helfer &mdash; Unterschrift</h4>
+          <div class="wf-row"><span class="wf-label">Kunde:</span><span class="wf-value">Frau Mueller</span></div>
+          <div class="wf-row"><span class="wf-label">Dauer:</span><span class="wf-value">1h 05min</span></div>
+          <hr class="wf-divider">
+          <div style="color:rgba(255,255,255,0.45);font-size:0.75rem;margin-bottom:0.35rem;">Bitte unterschreiben:</div>
+          <div class="wf-sig">Signaturfeld</div>
+          <div style="text-align:center;"><span class="wf-btn">Bestaetigen</span></div>
+        </div>
+      </div>
+
+      <!-- Admin Dashboard -->
+      <div class="wireframe">
+        <div class="wireframe-bar"><span class="wf-dot wf-dot-r"></span><span class="wf-dot wf-dot-y"></span><span class="wf-dot wf-dot-g"></span></div>
+        <div class="wireframe-body">
+          <h4>Admin &mdash; Dashboard</h4>
+          <div class="wf-kpi-grid">
+            <div class="wf-kpi"><div class="wf-kpi-val">124</div><div class="wf-kpi-lbl">Kunden</div></div>
+            <div class="wf-kpi"><div class="wf-kpi-val">38</div><div class="wf-kpi-lbl">Helfer</div></div>
+            <div class="wf-kpi"><div class="wf-kpi-val">52</div><div class="wf-kpi-lbl">Einsaetze heute</div></div>
+            <div class="wf-kpi"><div class="wf-kpi-val">42.3k &euro;</div><div class="wf-kpi-lbl">Umsatz (Monat)</div></div>
+          </div>
+          <div style="color:#ff6b6b;font-size:0.78rem;">&#x26A0; 5 offene Einsaetze ohne Helfer</div>
+        </div>
+      </div>
+
+      <!-- Admin Matching -->
+      <div class="wireframe">
+        <div class="wireframe-bar"><span class="wf-dot wf-dot-r"></span><span class="wf-dot wf-dot-y"></span><span class="wf-dot wf-dot-g"></span></div>
+        <div class="wireframe-body">
+          <h4>Admin &mdash; Matching</h4>
+          <div class="wf-row"><span class="wf-label">Kunde:</span><span class="wf-value">Frau Mueller</span></div>
+          <div class="wf-row"><span class="wf-label">Bedarf:</span><span class="wf-value">Mo 10:00</span></div>
+          <hr class="wf-divider">
+          <div style="color:rgba(255,255,255,0.45);font-size:0.75rem;margin-bottom:0.5rem;">Vorschlaege:</div>
+          <div style="background:rgba(53,192,237,0.15);border-radius:6px;padding:0.5rem;margin-bottom:0.35rem;border:1px solid rgba(53,192,237,0.3);">Ahmed &mdash; 2 km, verfuegbar &#x2B50;&#x2B50;&#x2B50;&#x2B50;&#x2B50;</div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:0.5rem;margin-bottom:0.35rem;">Lisa &mdash; 4 km</div>
+          <div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:0.5rem;opacity:0.5;">John &mdash; nicht verfuegbar</div>
+          <div style="text-align:center;margin-top:0.75rem;"><span class="wf-btn">Zuweisen</span></div>
+        </div>
+      </div>
+
+      <!-- Kunden Landing -->
+      <div class="wireframe">
+        <div class="wireframe-bar"><span class="wf-dot wf-dot-r"></span><span class="wf-dot wf-dot-y"></span><span class="wf-dot wf-dot-g"></span></div>
+        <div class="wireframe-body">
+          <h4>Kunde &mdash; Landing Page</h4>
+          <div style="text-align:center;margin:1rem 0;">
+            <div style="font-size:1.1rem;color:#fff;font-weight:700;margin-bottom:0.75rem;">Hilfe im Alltag &mdash; kostenlos</div>
+            <div style="color:rgba(255,255,255,0.6);font-size:0.85rem;line-height:1.8;">&#x2714; Putzen<br>&#x2714; Einkaufen<br>&#x2714; Begleitung<br>&#x2714; Gesellschaft</div>
+            <div style="color:var(--light-blue);font-size:0.82rem;margin-top:0.75rem;">Ueber Pflegekasse bezahlt</div>
+            <span class="wf-btn" style="margin-top:1rem;">Jetzt anmelden</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLLEN -->
+<section>
+  <div class="container">
+    <div class="section-label">System</div>
+    <h2 class="section-title">Rollen &amp; Berechtigungen</h2>
+    <p class="section-sub">Klare Trennung der Zugriffsrechte fuer jede Nutzergruppe.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Rolle</th><th>Zugriff</th><th>Beschreibung</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Admin</strong></td><td>Vollzugriff</td><td>Alle Funktionen: Kunden, Helfer, Finanzen, Einstellungen</td></tr>
+          <tr><td><strong>Disponent</strong></td><td>Planung</td><td>Einsatzplanung, Matching, Kundenkommunikation</td></tr>
+          <tr><td><strong>Helfer</strong></td><td>Einsaetze</td><td>Eigene Einsaetze sehen, starten, beenden, Unterschriften</td></tr>
+          <tr><td><strong>Kunde</strong></td><td>Passiv</td><td>Kein System-Zugang noetig &mdash; alles ueber Helfer &amp; Team</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- KPIs -->
+<section class="alt-bg">
+  <div class="container">
+    <div class="section-label">Steuerung</div>
+    <h2 class="section-title">KPIs &amp; Erfolgsmessung</h2>
+    <p class="section-sub">Die wichtigsten Kennzahlen fuer nachhaltiges Wachstum.</p>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-value">Kunden</div><div class="kpi-label">Aktive Pflegebeduerftige</div></div>
+      <div class="kpi"><div class="kpi-value">Helfer</div><div class="kpi-label">Aktive Minijobber</div></div>
+      <div class="kpi"><div class="kpi-value">Einsaetze</div><div class="kpi-label">pro Monat</div></div>
+      <div class="kpi"><div class="kpi-value">Umsatz</div><div class="kpi-label">pro Kunde / Monat</div></div>
+      <div class="kpi"><div class="kpi-value">~7 Tage</div><div class="kpi-label">Matching-Zeit (Ziel)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETING -->
+<section>
+  <div class="container">
+    <div class="section-label">Wachstum</div>
+    <h2 class="section-title">Marketing &amp; Akquise</h2>
+    <p class="section-sub">Dreistufiger Ansatz: Offline starten, digital skalieren, Stadt fuer Stadt wachsen.</p>
+    <div class="card-grid grid-3">
+      <div class="card">
+        <div class="card-icon green">&#x1F4C4;</div>
+        <h3>Phase 1 &mdash; Low Budget</h3>
+        <p>Flyer bei Aerzten, Apotheken, Moscheen, Kirchen und Sozialdiensten. Offline funktioniert im Pflegebereich am besten.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon blue">&#x1F4BB;</div>
+        <h3>Phase 2 &mdash; Digital</h3>
+        <p>Google Ads (&bdquo;Pflege Hilfe kostenlos&ldquo;), Facebook Ads fuer Angehoerige, Website SEO-Optimierung fuer organische Reichweite.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon navy">&#x1F680;</div>
+        <h3>Phase 3 &mdash; Skalierung</h3>
+        <p>Stadt fuer Stadt mit standardisierten Prozessen. Dynamische Budgets je nach Bedarf fuer Kunden- oder Helferakquise.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="alt-bg" id="roadmap">
+  <div class="container">
+    <div class="section-label">Zeitplan</div>
+    <h2 class="section-title">Roadmap</h2>
+    <p class="section-sub">Von der ersten Kundenakquise bis zur deutschlandweiten Plattform.</p>
+    <div class="timeline">
+      <div class="timeline-item active">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 1 &mdash; 0&ndash;3 Monate</div>
+        <div class="timeline-title">MVP &amp; erste Kunden</div>
+        <div class="timeline-desc">20&ndash;50 Kunden, 10&ndash;20 Helfer, manuelle Prozesse (WhatsApp, Excel, Curasoft). Admin-System Basic, Helfer-App Grundversion. Proof of Concept.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 2 &mdash; 3&ndash;12 Monate</div>
+        <div class="timeline-title">Optimierung &amp; Wachstum</div>
+        <div class="timeline-desc">100&ndash;300 Kunden, erste Software-Version, automatisiertes Matching, bessere UX, stabile Ablaeufe. Digitale Abrechnung integriert.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 3 &mdash; 1&ndash;2 Jahre</div>
+        <div class="timeline-title">Plattform &amp; Multi-City</div>
+        <div class="timeline-desc">Mehrere Staedte, eigene vollstaendige Plattform, voll automatisierte Prozesse. Ziel: 1 Mio &euro; Monatsumsatz.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-phase">Phase 4 &mdash; 3&ndash;5 Jahre</div>
+        <div class="timeline-title">Deutschlandweite Skalierung</div>
+        <div class="timeline-desc">Mehrere tausend Helfer, skalierbares System, Marktfuehrerschaft im Bereich Alltagshilfe. Nachhaltige Profitabilitaet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VORTEIL -->
+<section>
+  <div class="container">
+    <div class="section-label">Wettbewerbsvorteil</div>
+    <h2 class="section-title">Warum LuminaPlus schneller skaliert</h2>
+    <p class="section-sub">Bestehende Infrastruktur + Genossenschaftsmodell = einzigartiger Vorsprung.</p>
+    <div class="card-grid grid-2">
+      <div class="highlight-card card">
+        <h3>Was LuminaPlus bereits hat</h3>
+        <p>Zugelassener Pflegedienst, bestehende Abrechnungs-Infrastruktur (Curasoft), Erfahrung mit Pflegekassen, Fachkraefte im Team und eine Genossenschaftsstruktur als organisatorischen Hebel.</p>
+      </div>
+      <div class="card">
+        <h3>Kritische Erfolgsfaktoren</h3>
+        <p>Saubere Abrechnung, klare Trennung Helfer (Minijob) vs. Mitglieder (Vertrag), keine Scheinselbststaendigkeit, Gewinne reinvestieren statt frueh entnehmen, und langfristiges Denken ueber 3&ndash;5 Jahre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RISIKEN -->
+<section class="alt-bg">
+  <div class="container">
+    <div class="section-label">Risikomanagement</div>
+    <h2 class="section-title">Risiken &amp; Anforderungen</h2>
+    <p class="section-sub">Transparente Einschaetzung der Herausforderungen.</p>
+    <div class="card-grid grid-2">
+      <div class="card">
+        <h3>Risiken</h3>
+        <ul style="list-style:none;margin-top:0.5rem;">
+          <li style="padding:0.4rem 0;font-size:0.88rem;color:var(--gray);border-bottom:1px solid var(--light-gray);">&#x26A0;&#xFE0F; Fehlerhafte Abrechnung mit finanziellen Folgen</li>
+          <li style="padding:0.4rem 0;font-size:0.88rem;color:var(--gray);border-bottom:1px solid var(--light-gray);">&#x26A0;&#xFE0F; Rechtliche Themen (Pflegerecht, Arbeitsrecht, Scheinselbststaendigkeit)</li>
+          <li style="padding:0.4rem 0;font-size:0.88rem;color:var(--gray);border-bottom:1px solid var(--light-gray);">&#x26A0;&#xFE0F; Variable Helferqualitaet</li>
+          <li style="padding:0.4rem 0;font-size:0.88rem;color:var(--gray);">&#x26A0;&#xFE0F; Software-Entwicklung parallel zum laufenden Betrieb</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Nicht-funktionale Anforderungen</h3>
+        <ul style="list-style:none;margin-top:0.5rem;">
+          <li style="padding:0.4rem 0;font-size:0.88rem;color:var(--gray);border-bottom:1px solid var(--light-gray);">&#x2705; Vollstaendige DSGVO-Konformitaet</li>
+          <li style="padding:0.4rem 0;font-size:0.88rem;color:var(--gray);border-bottom:1px solid var(--light-gray);">&#x2705; Hohe Systemverfuegbarkeit</li>
+          <li style="padding:0.4rem 0;font-size:0.88rem;color:var(--gray);border-bottom:1px solid var(--light-gray);">&#x2705; Skalierbar auf mehrere Staedte</li>
+          <li style="padding:0.4rem 0;font-size:0.88rem;color:var(--gray);">&#x2705; Sichere Speicherung digitaler Unterschriften &amp; Leistungsnachweise</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>LuminaPlus eG</strong> &mdash; Geschaeftskonzept &amp; Projektdokument</p>
+  <div class="footer-divider"></div>
+  <p>Erstellt April 2026 &middot; Vertraulich</p>
+</footer>
+
+<!-- SMOOTH NAV SHADOW -->
+<script>
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow =
+      window.scrollY > 10 ? '0 4px 16px rgba(8,55,107,0.08)' : 'none';
+  });
+</script>
+
+</body>
+</html>
