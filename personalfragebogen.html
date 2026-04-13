@@ -318,6 +318,71 @@
     }
     .add-btn:hover { background: rgba(53,192,237,0.05); }
 
+    /* Qualification checkboxes */
+    .quali-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .quali-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.8rem;
+      border: 1.5px solid var(--light-gray);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.82rem;
+      color: #444;
+    }
+    .quali-item:hover { border-color: var(--light-blue); background: rgba(53,192,237,0.03); }
+    .quali-item.checked { border-color: var(--light-blue); background: rgba(53,192,237,0.06); color: var(--navy); font-weight: 500; }
+    .quali-item input[type="checkbox"] {
+      accent-color: var(--light-blue);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .quali-upload {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.8rem;
+      background: rgba(53,192,237,0.03);
+      border-radius: 8px;
+      border: 1px solid var(--light-gray);
+    }
+    .quali-upload.visible { display: block; }
+    .custom-quali-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      align-items: start;
+      margin-bottom: 0.8rem;
+      padding: 0.8rem;
+      background: rgba(53,192,237,0.03);
+      border-radius: 8px;
+      border: 1px solid var(--light-gray);
+    }
+    .custom-quali-row .form-group { margin-bottom: 0; }
+    .remove-quali-btn {
+      background: none;
+      border: none;
+      color: var(--red);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.3rem;
+      line-height: 1;
+      align-self: start;
+      margin-top: 1.6rem;
+    }
+    .remove-quali-btn:hover { opacity: 0.7; }
+    @media (max-width: 600px) {
+      .quali-grid { grid-template-columns: 1fr; }
+      .custom-quali-row { grid-template-columns: 1fr; }
+    }
+
     /* File upload */
     .upload-area {
       border: 2px dashed var(--light-gray);
@@ -830,54 +895,154 @@
       <button type="button" class="add-btn" id="addEmployment2" onclick="document.getElementById('employment2').style.display='block';this.style.display='none';">+ Weitere Besch&auml;ftigung hinzuf&uuml;gen</button>
     </div>
 
-    <!-- DOCUMENT UPLOADS -->
+    <!-- DOKUMENTE & QUALIFIKATIONSNACHWEISE -->
     <div class="form-section">
-      <h2>Dokumente hochladen</h2>
+      <h2>Dokumente &amp; Qualifikationsnachweise</h2>
       <div class="info-box">
-        Bitte laden Sie die folgenden Dokumente als Foto oder Scan hoch (PDF, JPG oder PNG, max. 10 MB pro Datei). Ihre Dokumente werden verschl&uuml;sselt &uuml;bertragen und sicher gespeichert.
+        Bitte laden Sie Ihre Dokumente als Foto oder Scan hoch (PDF, JPG oder PNG, max. 10 MB pro Datei). Der Personalausweis ist Pflicht. W&auml;hlen Sie weitere Nachweise aus, die Sie hochladen m&ouml;chten.
       </div>
-      <div class="upload-grid">
-        <div>
-          <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Personalausweis / Reisepass <span class="required">*</span></label>
-          <div class="upload-area" id="uploadArea_ausweis">
-            <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'ausweis')">
-            <div class="upload-icon">&#x1F4C4;</div>
-            <p class="upload-label">Klicken oder Datei hierher ziehen</p>
-            <p class="upload-hint">Vorder- und R&uuml;ckseite als ein Dokument</p>
-          </div>
-          <div id="preview_ausweis"></div>
+
+      <!-- Personalausweis — Pflichtfeld, immer sichtbar -->
+      <div style="margin-bottom:1.2rem;">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Personalausweis / Reisepass <span class="required">*</span></label>
+        <div class="upload-area" id="uploadArea_ausweis">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'ausweis')">
+          <div class="upload-icon">&#x1F4C4;</div>
+          <p class="upload-label">Klicken oder Datei hierher ziehen</p>
+          <p class="upload-hint">Vorder- und R&uuml;ckseite als ein Dokument</p>
         </div>
-        <div>
-          <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Sozialversicherungsausweis</label>
-          <div class="upload-area" id="uploadArea_svausweis">
-            <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'svausweis')">
-            <div class="upload-icon">&#x1F4C4;</div>
-            <p class="upload-label">Klicken oder Datei hierher ziehen</p>
-            <p class="upload-hint">Falls vorhanden</p>
-          </div>
-          <div id="preview_svausweis"></div>
-        </div>
-        <div>
-          <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Mitgliedsbescheinigung Krankenkasse</label>
-          <div class="upload-area" id="uploadArea_krankenkasse">
-            <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'krankenkasse')">
-            <div class="upload-icon">&#x1F4C4;</div>
-            <p class="upload-label">Klicken oder Datei hierher ziehen</p>
-            <p class="upload-hint">Aktuelle Bescheinigung</p>
-          </div>
-          <div id="preview_krankenkasse"></div>
-        </div>
-        <div>
-          <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Sonstiges Dokument</label>
-          <div class="upload-area" id="uploadArea_sonstiges">
-            <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'sonstiges')">
-            <div class="upload-icon">&#x1F4C4;</div>
-            <p class="upload-label">Klicken oder Datei hierher ziehen</p>
-            <p class="upload-hint">z.B. Arbeitserlaubnis, Aufenthaltstitel</p>
-          </div>
-          <div id="preview_sonstiges"></div>
-        </div>
+        <div id="preview_ausweis"></div>
       </div>
+
+      <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.6rem;">Weitere Dokumente &amp; Qualifikationen (optional)</label>
+      <div class="quali-grid">
+        <label class="quali-item" id="qualiLabel_svausweis">
+          <input type="checkbox" onchange="toggleQualiUpload('svausweis', this.checked)">
+          Sozialversicherungsausweis
+        </label>
+        <label class="quali-item" id="qualiLabel_krankenkasse">
+          <input type="checkbox" onchange="toggleQualiUpload('krankenkasse', this.checked)">
+          Mitgliedsbescheinigung Krankenkasse
+        </label>
+        <label class="quali-item" id="qualiLabel_erstehilfe">
+          <input type="checkbox" onchange="toggleQualiUpload('erstehilfe', this.checked)">
+          Erste-Hilfe-Kurs
+        </label>
+        <label class="quali-item" id="qualiLabel_fuehrungszeugnis">
+          <input type="checkbox" onchange="toggleQualiUpload('fuehrungszeugnis', this.checked)">
+          F&uuml;hrungszeugnis
+        </label>
+        <label class="quali-item" id="qualiLabel_examen">
+          <input type="checkbox" onchange="toggleQualiUpload('examen', this.checked)">
+          Examen / Berufsabschluss
+        </label>
+        <label class="quali-item" id="qualiLabel_pflegebasis">
+          <input type="checkbox" onchange="toggleQualiUpload('pflegebasis', this.checked)">
+          Pflegebasiskurs
+        </label>
+        <label class="quali-item" id="qualiLabel_fuehrerschein">
+          <input type="checkbox" onchange="toggleQualiUpload('fuehrerschein', this.checked)">
+          F&uuml;hrerschein
+        </label>
+        <label class="quali-item" id="qualiLabel_aufenthaltstitel">
+          <input type="checkbox" onchange="toggleQualiUpload('aufenthaltstitel', this.checked)">
+          Aufenthaltstitel
+        </label>
+      </div>
+
+      <!-- Upload areas for SV-Ausweis and Krankenkasse -->
+      <div class="quali-upload" id="qualiUpload_svausweis">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Sozialversicherungsausweis</label>
+        <div class="upload-area" id="uploadArea_svausweis">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'svausweis')">
+          <div class="upload-icon">&#x1F4C4;</div>
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+          <p class="upload-hint">Falls vorhanden</p>
+        </div>
+        <div id="preview_svausweis"></div>
+      </div>
+
+      <div class="quali-upload" id="qualiUpload_krankenkasse">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Mitgliedsbescheinigung Krankenkasse</label>
+        <div class="upload-area" id="uploadArea_krankenkasse">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'krankenkasse')">
+          <div class="upload-icon">&#x1F4C4;</div>
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+          <p class="upload-hint">Aktuelle Bescheinigung</p>
+        </div>
+        <div id="preview_krankenkasse"></div>
+      </div>
+
+      <!-- Upload areas for each qualification (hidden by default) -->
+      <div class="quali-upload" id="qualiUpload_erstehilfe">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Erste-Hilfe-Kurs Nachweis</label>
+        <div class="upload-area" id="uploadArea_quali_erstehilfe">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'quali_erstehilfe')">
+          <div class="upload-icon">&#x1F6D1;</div>
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+          <p class="upload-hint">Zertifikat / Teilnahmebescheinigung</p>
+        </div>
+        <div id="preview_quali_erstehilfe"></div>
+      </div>
+
+      <div class="quali-upload" id="qualiUpload_fuehrungszeugnis">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">F&uuml;hrungszeugnis</label>
+        <div class="upload-area" id="uploadArea_quali_fuehrungszeugnis">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'quali_fuehrungszeugnis')">
+          <div class="upload-icon">&#x1F4CB;</div>
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+          <p class="upload-hint">Erweitertes F&uuml;hrungszeugnis (nicht &auml;lter als 3 Monate)</p>
+        </div>
+        <div id="preview_quali_fuehrungszeugnis"></div>
+      </div>
+
+      <div class="quali-upload" id="qualiUpload_examen">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Examen / Berufsabschluss-Zeugnis</label>
+        <div class="upload-area" id="uploadArea_quali_examen">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'quali_examen')">
+          <div class="upload-icon">&#x1F393;</div>
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+          <p class="upload-hint">Examensurkunde / Berufsabschluss</p>
+        </div>
+        <div id="preview_quali_examen"></div>
+      </div>
+
+      <div class="quali-upload" id="qualiUpload_pflegebasis">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Pflegebasiskurs-Zertifikat</label>
+        <div class="upload-area" id="uploadArea_quali_pflegebasis">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'quali_pflegebasis')">
+          <div class="upload-icon">&#x1F4D6;</div>
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+          <p class="upload-hint">200-Stunden-Basiskurs o.&auml;.</p>
+        </div>
+        <div id="preview_quali_pflegebasis"></div>
+      </div>
+
+      <div class="quali-upload" id="qualiUpload_fuehrerschein">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">F&uuml;hrerschein</label>
+        <div class="upload-area" id="uploadArea_quali_fuehrerschein">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'quali_fuehrerschein')">
+          <div class="upload-icon">&#x1F697;</div>
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+          <p class="upload-hint">Vorder- und R&uuml;ckseite</p>
+        </div>
+        <div id="preview_quali_fuehrerschein"></div>
+      </div>
+
+      <div class="quali-upload" id="qualiUpload_aufenthaltstitel">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Aufenthaltstitel / Arbeitserlaubnis</label>
+        <div class="upload-area" id="uploadArea_quali_aufenthaltstitel">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'quali_aufenthaltstitel')">
+          <div class="upload-icon">&#x1F4C3;</div>
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+          <p class="upload-hint">Mit Arbeitserlaubnis</p>
+        </div>
+        <div id="preview_quali_aufenthaltstitel"></div>
+      </div>
+
+      <!-- Custom qualifications -->
+      <div id="customQualiContainer"></div>
+      <button type="button" class="add-btn" id="addCustomQuali" onclick="addCustomQualification()">+ Weitere Qualifikation hinzuf&uuml;gen</button>
     </div>
 
     <!-- CONFIRMATION & SUBMIT -->
@@ -958,7 +1123,72 @@
   }
 
   let currentCode = null;
-  const uploadedFiles = { ausweis: null, svausweis: null, krankenkasse: null, sonstiges: null };
+  const uploadedFiles = { ausweis: null, svausweis: null, krankenkasse: null };
+  let customQualiCount = 0;
+
+  // ===== QUALIFICATION UPLOAD HANDLING =====
+  // These categories use their own key (no quali_ prefix)
+  const directUploadKeys = ['svausweis', 'krankenkasse'];
+
+  function toggleQualiUpload(qualiId, checked) {
+    const uploadDiv = document.getElementById(`qualiUpload_${qualiId}`);
+    const label = document.getElementById(`qualiLabel_${qualiId}`);
+    const fileKey = directUploadKeys.includes(qualiId) ? qualiId : `quali_${qualiId}`;
+    if (checked) {
+      uploadDiv.classList.add('visible');
+      label.classList.add('checked');
+    } else {
+      uploadDiv.classList.remove('visible');
+      label.classList.remove('checked');
+      removeFile(fileKey);
+    }
+  }
+
+  function addCustomQualification() {
+    customQualiCount++;
+    const id = `custom_${customQualiCount}`;
+    const container = document.getElementById('customQualiContainer');
+    const row = document.createElement('div');
+    row.className = 'custom-quali-row';
+    row.id = `customQualiRow_${id}`;
+    row.innerHTML = `
+      <div class="form-group">
+        <label>Bezeichnung der Qualifikation</label>
+        <input type="text" id="customQualiName_${id}" placeholder="z.B. Behandlungspflege LG1/LG2" style="padding:0.7rem 0.9rem;border:1.5px solid var(--light-gray);border-radius:8px;font-family:var(--font-body);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;color:var(--navy);display:block;margin-bottom:0.4rem;">Nachweis hochladen</label>
+        <div class="upload-area" id="uploadArea_quali_${id}" style="padding:1rem;">
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this, 'quali_${id}')">
+          <p class="upload-label">Datei ausw&auml;hlen</p>
+        </div>
+        <div id="preview_quali_${id}"></div>
+      </div>
+      <button type="button" class="remove-quali-btn" onclick="removeCustomQualification('${id}')" title="Entfernen">&times;</button>
+    `;
+    container.appendChild(row);
+    initDragDrop(row.querySelector('.upload-area'));
+  }
+
+  function removeCustomQualification(id) {
+    delete uploadedFiles[`quali_${id}`];
+    const row = document.getElementById(`customQualiRow_${id}`);
+    if (row) row.remove();
+  }
+
+  function initDragDrop(area) {
+    area.addEventListener('dragover', (e) => { e.preventDefault(); area.classList.add('dragover'); });
+    area.addEventListener('dragleave', () => { area.classList.remove('dragover'); });
+    area.addEventListener('drop', (e) => {
+      e.preventDefault();
+      area.classList.remove('dragover');
+      const input = area.querySelector('input[type="file"]');
+      if (e.dataTransfer.files.length > 0) {
+        input.files = e.dataTransfer.files;
+        input.dispatchEvent(new Event('change'));
+      }
+    });
+  }
 
   // ===== FILE UPLOAD HANDLING =====
   function handleFileSelect(input, category) {
@@ -1008,20 +1238,8 @@
     if (input) input.value = '';
   }
 
-  // Drag & drop support
-  document.querySelectorAll('.upload-area').forEach(area => {
-    area.addEventListener('dragover', (e) => { e.preventDefault(); area.classList.add('dragover'); });
-    area.addEventListener('dragleave', () => { area.classList.remove('dragover'); });
-    area.addEventListener('drop', (e) => {
-      e.preventDefault();
-      area.classList.remove('dragover');
-      const input = area.querySelector('input[type="file"]');
-      if (e.dataTransfer.files.length > 0) {
-        input.files = e.dataTransfer.files;
-        input.dispatchEvent(new Event('change'));
-      }
-    });
-  });
+  // Drag & drop support (for all upload areas including qualification uploads)
+  document.querySelectorAll('.upload-area').forEach(area => initDragDrop(area));
 
   // Upload files to Supabase Storage
   async function uploadFilesToStorage(submissionId) {
@@ -1030,14 +1248,30 @@
       ausweis: 'Personalausweis',
       svausweis: 'SV-Ausweis',
       krankenkasse: 'Krankenkasse',
-      sonstiges: 'Sonstiges'
+      quali_erstehilfe: 'Quali-Erste-Hilfe-Kurs',
+      quali_fuehrungszeugnis: 'Quali-Fuehrungszeugnis',
+      quali_examen: 'Quali-Examen-Berufsabschluss',
+      quali_pflegebasis: 'Quali-Pflegebasiskurs',
+      quali_fuehrerschein: 'Quali-Fuehrerschein',
+      quali_aufenthaltstitel: 'Quali-Aufenthaltstitel',
     };
+
+    // Add custom qualification labels
+    for (const key of Object.keys(uploadedFiles)) {
+      if (key.startsWith('quali_custom_') && uploadedFiles[key]) {
+        const id = key.replace('quali_', '');
+        const nameInput = document.getElementById(`customQualiName_${id}`);
+        const customName = nameInput && nameInput.value.trim() ? nameInput.value.trim() : `Qualifikation-${id}`;
+        fileLabels[key] = `Quali-${customName.replace(/[^a-zA-Z0-9äöüÄÖÜß\-_ ]/g, '')}`;
+      }
+    }
 
     for (const [category, file] of Object.entries(uploadedFiles)) {
       if (!file) continue;
 
+      const label = fileLabels[category] || category;
       const ext = file.name.split('.').pop();
-      const fileName = `${fileLabels[category]}.${ext}`;
+      const fileName = `${label}.${ext}`;
       const path = `submissions/${submissionId}/${fileName}`;
 
       const res = await fetch(`${SUPABASE_URL}/storage/v1/object/documents/${path}`, {
@@ -1111,6 +1345,31 @@
         ['Art / Verdienst 2', (data.weitere_beschaeftigung_2_art || '-') + ' / ' + (data.weitere_beschaeftigung_2_verdienst || '-') + ' EUR'],
       ]},
     ];
+
+    // Add uploaded qualifications to PDF
+    const qualiNames = {
+      quali_erstehilfe: 'Erste-Hilfe-Kurs',
+      quali_fuehrungszeugnis: 'Fuehrungszeugnis',
+      quali_examen: 'Examen / Berufsabschluss',
+      quali_pflegebasis: 'Pflegebasiskurs',
+      quali_fuehrerschein: 'Fuehrerschein',
+      quali_aufenthaltstitel: 'Aufenthaltstitel',
+    };
+    const qualiFields = [];
+    for (const [key, file] of Object.entries(uploadedFiles)) {
+      if (!file || !key.startsWith('quali_')) continue;
+      if (qualiNames[key]) {
+        qualiFields.push([qualiNames[key], file.name]);
+      } else if (key.startsWith('quali_custom_')) {
+        const id = key.replace('quali_', '');
+        const nameInput = document.getElementById(`customQualiName_${id}`);
+        const label = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Sonstige Qualifikation';
+        qualiFields.push([label, file.name]);
+      }
+    }
+    if (qualiFields.length > 0) {
+      sections.push({ title: 'Qualifikationsnachweise', fields: qualiFields });
+    }
 
     sections.forEach(sec => {
       if (y > 260) { doc.addPage(); y = 20; }
@@ -1278,6 +1537,14 @@
   // ===== FORM SUBMISSION =====
   async function submitForm(event) {
     event.preventDefault();
+
+    // Validate Personalausweis (required)
+    if (!uploadedFiles.ausweis) {
+      alert('Bitte laden Sie Ihren Personalausweis / Reisepass hoch. Dieses Dokument ist Pflicht.');
+      document.getElementById('uploadArea_ausweis').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.textContent = 'Wird gesendet...';
