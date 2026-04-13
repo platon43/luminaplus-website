@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Pflegegeld-Rechner &amp; Kombinationsleistung | LuminaPlus eG Hamburg</title>
+  <meta name="description" content="Berechnen Sie Ihr Pflegegeld und Ihre Kombinationsleistung fuer 2025/2026. Pflegegrad 2-5: Sachleistung, Pflegegeld, Entlastungsbetrag. Kostenlose Beratung von LuminaPlus eG Hamburg.">
+  <meta name="keywords" content="Pflegegeld Rechner, Kombinationsleistung, Sachleistung, Pflegegrad, Pflegegeld 2025, ambulante Pflege Hamburg, LuminaPlus">
+  <meta property="og:title" content="Pflegegeld-Rechner: Was steht Ihnen zu? | LuminaPlus eG">
+  <meta property="og:description" content="Berechnen Sie Ihre Kombinationsleistung aus Pflegegeld und Sachleistung. Aktuell fuer 2025/2026.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.luminaplus.de/pflegegeld-rechner">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --green-soft: #d4f5db;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: #333;
+      line-height: 1.7;
+      background: var(--white);
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+      transition: box-shadow 0.3s;
+    }
+    .navbar.scrolled { box-shadow: 0 2px 20px rgba(8,55,107,0.08); }
+    .navbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-img { height: 44px; }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      z-index: 200;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      margin: 5px 0;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8,55,107,0.5);
+      z-index: 90;
+    }
+    .mobile-overlay.active { display: block; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; margin: 0 1.5rem; }
+    .mobile-only { display: none; }
+    @media (max-width: 768px) { .mobile-only { display: block; } }
+    .nav-links a {
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--navy);
+      letter-spacing: 0.03em;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--light-blue);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--dark-blue); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--light-blue);
+      color: white !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--dark-blue); transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+
+    /* ===== HERO ===== */
+    .hero-rechner {
+      background: var(--navy);
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-rechner::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(53,192,237,0.15) 0%, transparent 70%);
+      animation: float 8s ease-in-out infinite;
+    }
+    .hero-rechner::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      left: -5%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(154,235,166,0.1) 0%, transparent 70%);
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+    .hero-rechner-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(154,235,166,0.2);
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(154,235,166,0.3);
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease-out;
+    }
+    .hero-rechner h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      animation: fadeInUp 0.8s ease-out 0.1s both;
+    }
+    .hero-rechner h1 span { color: var(--light-blue); }
+    .hero-rechner p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SECTIONS COMMON ===== */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dark-blue);
+      background: rgba(47,144,176,0.08);
+      padding: 0.35rem 0.9rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--navy);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray);
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--light-blue);
+      color: white;
+      box-shadow: 0 4px 15px rgba(53,192,237,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--dark-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(47,144,176,0.4);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--light-gray);
+    }
+    .btn-outline:hover {
+      border-color: var(--light-blue);
+      background: rgba(53,192,237,0.05);
+    }
+
+    /* ===== CALCULATOR ===== */
+    .calc-section {
+      padding: 4rem 2rem 6rem;
+      background: var(--off-white);
+    }
+    .calc-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .calc-step {
+      margin-bottom: 2.5rem;
+    }
+    .calc-step-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .calc-step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--light-blue);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .calc-step-header h2 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--navy);
+    }
+
+    /* Pflegegrad Cards */
+    .pg-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .pg-card {
+      background: white;
+      border: 2px solid var(--light-gray);
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .pg-card:hover {
+      border-color: var(--light-blue);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(53,192,237,0.12);
+    }
+    .pg-card.active {
+      border-color: var(--light-blue);
+      background: rgba(53,192,237,0.04);
+      box-shadow: 0 8px 30px rgba(53,192,237,0.15);
+    }
+    .pg-card.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--light-blue));
+    }
+    .pg-card-grade {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+    .pg-card-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8rem;
+    }
+    .pg-card-amounts {
+      font-size: 0.8rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .pg-card-amounts strong {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    /* Slider */
+    .slider-section {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid var(--light-gray);
+      box-shadow: 0 4px 20px rgba(8,55,107,0.04);
+    }
+    .slider-section.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+    .slider-labels span:last-child { font-weight: 600; color: var(--navy); }
+    .slider-value-display {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .slider-value-display .amount {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      color: var(--light-blue);
+    }
+    .slider-value-display .label {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-top: 0.2rem;
+    }
+    .slider-wrapper {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--light-gray);
+      outline: none;
+      transition: background 0.3s;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--light-blue);
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(53,192,237,0.4);
+      border: 3px solid white;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 4px 15px rgba(53,192,237,0.5);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--light-blue);
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(53,192,237,0.4);
+      border: 3px solid white;
+    }
+    .slider-percent {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+    .slider-percent strong {
+      color: var(--dark-blue);
+      font-weight: 700;
+    }
+    .manual-input-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+    .manual-input-row label {
+      font-size: 0.85rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    .manual-input {
+      width: 120px;
+      padding: 0.5rem 0.75rem;
+      border: 2px solid var(--light-gray);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .manual-input:focus {
+      outline: none;
+      border-color: var(--light-blue);
+    }
+
+    /* Results */
+    .results-panel {
+      background: white;
+      border-radius: 16px;
+      padding: 2.5rem;
+      border: 1px solid var(--light-gray);
+      box-shadow: 0 8px 40px rgba(8,55,107,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .results-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green), var(--dark-blue), var(--light-blue));
+    }
+    .results-panel.hidden { display: none; }
+    .results-chart {
+      margin-bottom: 2rem;
+    }
+    .chart-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .bar-label {
+      width: 140px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray);
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 32px;
+      background: var(--off-white);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: flex;
+      align-items: center;
+      padding-left: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: white;
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .bar-fill.sachleistung { background: linear-gradient(90deg, var(--dark-blue), var(--light-blue)); }
+    .bar-fill.pflegegeld { background: linear-gradient(90deg, #4a9a5a, var(--green)); }
+    .bar-amount {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      width: 80px;
+      text-align: left;
+      flex-shrink: 0;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .result-card {
+      background: var(--off-white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .result-card:hover { transform: translateY(-2px); }
+    .result-card .value {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+    .result-card .value.highlight { color: var(--light-blue); }
+    .result-card .desc {
+      font-size: 0.8rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+    .result-card.full-width {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(53,192,237,0.06) 0%, rgba(154,235,166,0.06) 100%);
+      border: 1px solid rgba(53,192,237,0.15);
+    }
+    .result-card.full-width .value {
+      font-size: 2.2rem;
+      color: var(--light-blue);
+    }
+    .result-cta {
+      background: linear-gradient(135deg, var(--navy) 0%, #0d4a8a 100%);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+    .result-cta p {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .result-cta .cta-amount {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+    .result-cta .btn-primary {
+      background: var(--light-blue);
+    }
+
+    /* ===== INFO SECTION ===== */
+    .info-section {
+      background: white;
+      padding: 6rem 2rem;
+    }
+    .info-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .info-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .info-step {
+      background: var(--off-white);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+    .info-step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--light-blue);
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .info-step h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .info-step p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    .info-example {
+      margin-top: 2.5rem;
+      background: linear-gradient(135deg, rgba(53,192,237,0.04) 0%, rgba(154,235,166,0.04) 100%);
+      border: 1px solid rgba(53,192,237,0.12);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .info-example h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    .info-example p {
+      font-size: 0.9rem;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+    .info-example .formula {
+      background: white;
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: var(--navy);
+      border-left: 3px solid var(--light-blue);
+    }
+
+    /* ===== COMPARISON TABLE ===== */
+    .table-section {
+      background: var(--off-white);
+      padding: 6rem 2rem;
+    }
+    .table-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .comparison-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 2.5rem;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(8,55,107,0.06);
+    }
+    .comparison-table thead th {
+      background: var(--navy);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 400;
+      padding: 1rem 1.2rem;
+      text-align: left;
+    }
+    .comparison-table thead th:first-child {
+      border-radius: 0;
+    }
+    .comparison-table tbody td {
+      padding: 1rem 1.2rem;
+      font-size: 0.9rem;
+      color: #444;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .comparison-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .comparison-table tbody tr:hover {
+      background: rgba(53,192,237,0.03);
+    }
+    .comparison-table tbody td:first-child {
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .comparison-table .amount {
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .comparison-table .no-claim {
+      color: var(--gray);
+      font-style: italic;
+    }
+    .table-note {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* Additional benefits cards */
+    .additional-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .additional-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid var(--light-gray);
+      text-align: center;
+    }
+    .additional-card .add-amount {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--light-blue);
+      margin-bottom: 0.3rem;
+    }
+    .additional-card .add-period {
+      font-size: 0.75rem;
+      color: var(--gray);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .additional-card h4 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+    .additional-card p {
+      font-size: 0.8rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    }
+    .cta-banner h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: white;
+      margin-bottom: 0.8rem;
+      position: relative;
+    }
+    .cta-banner p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      position: relative;
+    }
+    .cta-banner .btn-primary {
+      background: white;
+      color: var(--navy);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    .cta-banner .btn-primary:hover {
+      background: var(--navy);
+      color: white;
+    }
+    .cta-contact-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+      position: relative;
+    }
+    .cta-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.9rem;
+    }
+    .cta-contact-item a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .cta-contact-item a:hover { text-decoration: underline; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      padding: 3rem 2rem 1.5rem;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .footer-logo {
+      height: 32px;
+      opacity: 0.8;
+    }
+    .footer p { font-size: 0.8rem; }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--light-blue); }
+    .footer-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 1.5rem 0 1rem;
+    }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    /* ===== SCROLL ANIMATION ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-cta { display: none; }
+      .logo-img { height: 36px; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 280px;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        padding: 5rem 2rem 2rem;
+        gap: 0;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+        z-index: 100;
+      }
+      .nav-links.active { display: flex; }
+      .nav-links li { border-bottom: 1px solid var(--light-gray); }
+      .nav-links a {
+        display: block;
+        padding: 1rem 0;
+        font-size: 1rem;
+      }
+      .nav-links a::after { display: none; }
+      .nav-links .mobile-cta {
+        display: block;
+        margin-top: 1rem;
+        background: var(--light-blue);
+        color: white;
+        text-align: center;
+        padding: 0.8rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .pg-cards { grid-template-columns: repeat(2, 1fr); }
+      .results-grid { grid-template-columns: 1fr; }
+      .bar-label { width: 100px; font-size: 0.7rem; }
+      .bar-amount { width: 70px; font-size: 0.75rem; }
+      .additional-grid { grid-template-columns: 1fr; }
+      .section { padding: 4rem 1.5rem; }
+      .info-section { padding: 4rem 1.5rem; }
+      .table-section { padding: 4rem 1.5rem; }
+      .comparison-table { font-size: 0.75rem; display: block; overflow-x: auto; }
+      .comparison-table thead th { padding: 0.6rem 0.4rem; font-size: 0.7rem; white-space: nowrap; }
+      .comparison-table tbody td { padding: 0.6rem 0.4rem; font-size: 0.75rem; }
+      .table-inner { overflow-x: auto; }
+      .hero-stats { flex-direction: column; gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .pg-cards { grid-template-columns: 1fr 1fr; }
+      .bar-row { flex-wrap: wrap; }
+      .bar-label { width: 100%; text-align: left; }
+      .bar-amount { width: auto; }
+      .result-card .value { font-size: 1.4rem; }
+      .result-card.full-width .value { font-size: 1.6rem; }
+      .cta-contact-row { flex-direction: column; align-items: center; }
+    }
+  </style>
+  <script src="js/consent-banner.js"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a href="./"><img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="logo-img"></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./#about">Wer wir sind</a></li>
+      <li><a href="./#services">Leistungen</a></li>
+      <li><a href="./#contact">Kontakt</a></li>
+      <li><a href="./karriere-luminaplus">Karriere</a></li>
+      <li class="mobile-only"><a href="tel:+494018035922" class="mobile-cta">Jetzt anrufen</a></li>
+    </ul>
+    <a href="tel:+494018035922" class="nav-cta">+49 40 18035922</a>
+    <button class="hamburger" id="hamburger" aria-label="Men&uuml; &ouml;ffnen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<!-- HERO -->
+<section class="hero-rechner">
+  <div class="hero-rechner-inner">
+    <div class="hero-badge">Kostenloser Online-Rechner</div>
+    <h1>Pflegegeld-Rechner: Was steht <span>Ihnen zu?</span></h1>
+    <p>Berechnen Sie in wenigen Schritten Ihre Kombinationsleistung aus Sachleistung und Pflegegeld. Aktuell f&uuml;r 2025/2026.</p>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-section" id="rechner">
+  <div class="calc-inner">
+
+    <!-- Step 1: Pflegegrad -->
+    <div class="calc-step reveal">
+      <div class="calc-step-header">
+        <div class="calc-step-number">1</div>
+        <h2>W&auml;hlen Sie Ihren Pflegegrad</h2>
+      </div>
+      <div class="pg-cards" id="pgCards">
+        <div class="pg-card" data-grade="2" tabindex="0" role="button" aria-pressed="false">
+          <div class="pg-card-grade">2</div>
+          <div class="pg-card-label">Pflegegrad</div>
+          <div class="pg-card-amounts">
+            Pflegegeld: <strong>332 &euro;</strong><br>
+            Sachleistung: <strong>761 &euro;</strong>
+          </div>
+        </div>
+        <div class="pg-card" data-grade="3" tabindex="0" role="button" aria-pressed="false">
+          <div class="pg-card-grade">3</div>
+          <div class="pg-card-label">Pflegegrad</div>
+          <div class="pg-card-amounts">
+            Pflegegeld: <strong>573 &euro;</strong><br>
+            Sachleistung: <strong>1.432 &euro;</strong>
+          </div>
+        </div>
+        <div class="pg-card" data-grade="4" tabindex="0" role="button" aria-pressed="false">
+          <div class="pg-card-grade">4</div>
+          <div class="pg-card-label">Pflegegrad</div>
+          <div class="pg-card-amounts">
+            Pflegegeld: <strong>765 &euro;</strong><br>
+            Sachleistung: <strong>1.778 &euro;</strong>
+          </div>
+        </div>
+        <div class="pg-card" data-grade="5" tabindex="0" role="button" aria-pressed="false">
+          <div class="pg-card-grade">5</div>
+          <div class="pg-card-label">Pflegegrad</div>
+          <div class="pg-card-amounts">
+            Pflegegeld: <strong>947 &euro;</strong><br>
+            Sachleistung: <strong>2.200 &euro;</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Sachleistung Slider -->
+    <div class="calc-step reveal">
+      <div class="calc-step-header">
+        <div class="calc-step-number">2</div>
+        <h2>Wie viel Sachleistung nutzen Sie monatlich?</h2>
+      </div>
+      <div class="slider-section disabled" id="sliderSection">
+        <div class="slider-value-display">
+          <div class="amount" id="sliderAmount">0 &euro;</div>
+          <div class="label">Sachleistung pro Monat bei einem Pflegedienst</div>
+        </div>
+        <div class="slider-wrapper">
+          <input type="range" id="sachleistungSlider" min="0" max="761" value="0" step="1" aria-label="Sachleistung in Euro">
+        </div>
+        <div class="slider-labels">
+          <span>0 &euro;</span>
+          <span id="sliderMax">761 &euro;</span>
+        </div>
+        <div class="slider-percent" id="sliderPercent">
+          <strong>0 %</strong> der Sachleistung ausgesch&ouml;pft
+        </div>
+        <div class="manual-input-row">
+          <label for="manualInput">Oder Betrag eingeben:</label>
+          <input type="number" id="manualInput" class="manual-input" min="0" max="761" value="0" step="1" aria-label="Sachleistung manuell eingeben"> &euro;
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Results -->
+    <div class="calc-step reveal">
+      <div class="calc-step-header">
+        <div class="calc-step-number">3</div>
+        <h2>Ihr Ergebnis</h2>
+      </div>
+      <div class="results-panel hidden" id="resultsPanel">
+        <!-- Chart -->
+        <div class="results-chart">
+          <h3 class="chart-title">Ihre monatliche Aufteilung</h3>
+          <div class="bar-chart">
+            <div class="bar-row">
+              <div class="bar-label">Sachleistung</div>
+              <div class="bar-track">
+                <div class="bar-fill sachleistung" id="barSachleistung" style="width: 0%"></div>
+              </div>
+              <div class="bar-amount" id="barSachleistungAmt">0 &euro;</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Pflegegeld</div>
+              <div class="bar-track">
+                <div class="bar-fill pflegegeld" id="barPflegegeld" style="width: 0%"></div>
+              </div>
+              <div class="bar-amount" id="barPflegegeldAmt">0 &euro;</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Numbers -->
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="value" id="resSachleistung">0 &euro;</div>
+            <div class="desc">Sachleistung (Pflegedienst)</div>
+          </div>
+          <div class="result-card">
+            <div class="value" id="resPflegegeld">0 &euro;</div>
+            <div class="desc">Verbleibendes Pflegegeld</div>
+          </div>
+          <div class="result-card full-width">
+            <div class="value highlight" id="resMonthlyTotal">0 &euro;</div>
+            <div class="desc">Gesamtleistung pro Monat (Sachleistung + Pflegegeld)</div>
+          </div>
+          <div class="result-card">
+            <div class="value" id="resYearlyTotal">0 &euro;</div>
+            <div class="desc">Hochgerechnet pro Jahr</div>
+          </div>
+          <div class="result-card">
+            <div class="value" id="resEntlastung">131 &euro;</div>
+            <div class="desc">+ Entlastungsbetrag pro Monat (zus&auml;tzlich)</div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="result-cta" id="resultCta">
+          <p>Mit LuminaPlus k&ouml;nnen Sie monatlich bis zu</p>
+          <div class="cta-amount" id="resCtaAmount">0 &euro;</div>
+          <p style="margin-bottom: 1.5rem;">an Leistungen erhalten (inkl. Entlastungsbetrag)</p>
+          <a href="tel:+494018035922" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Kostenlose Beratung: +49 40 18035922
+          </a>
+        </div>
+      </div>
+
+      <!-- Placeholder when no grade selected -->
+      <div class="slider-section" id="resultsPlaceholder" style="text-align: center; padding: 3rem 2rem;">
+        <p style="color: var(--gray); font-size: 1rem;">
+          W&auml;hlen Sie oben einen Pflegegrad, um Ihre Kombinationsleistung zu berechnen.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- INFO: So funktioniert die Kombinationsleistung -->
+<section class="info-section" id="info">
+  <div class="info-inner">
+    <div class="reveal">
+      <span class="section-label">Gut zu wissen</span>
+      <h2 class="section-title">So funktioniert die Kombinationsleistung</h2>
+      <p class="section-subtitle">Wenn Sie sowohl einen Pflegedienst nutzen als auch Pflegegeld beziehen m&ouml;chten, wird beides anteilig berechnet &mdash; das nennt man Kombinationsleistung.</p>
+    </div>
+    <div class="info-steps reveal">
+      <div class="info-step">
+        <div class="info-step-num">1</div>
+        <h3>Sachleistung nutzen</h3>
+        <p>Ihr Pflegedienst rechnet seine Leistungen als Sachleistung direkt mit der Pflegekasse ab.</p>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">2</div>
+        <h3>Anteil berechnen</h3>
+        <p>Die Pflegekasse ermittelt, wie viel Prozent der maximalen Sachleistung Sie genutzt haben.</p>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">3</div>
+        <h3>Pflegegeld erhalten</h3>
+        <p>Den nicht verbrauchten Prozentanteil erhalten Sie als anteiliges Pflegegeld ausgezahlt.</p>
+      </div>
+    </div>
+    <div class="info-example reveal">
+      <h3>Beispiel: Pflegegrad 3</h3>
+      <p>Maximale Sachleistung: <strong>1.432 &euro;</strong> | Maximales Pflegegeld: <strong>573 &euro;</strong></p>
+      <p>Sie nutzen einen Pflegedienst im Wert von <strong>716 &euro;</strong> pro Monat.</p>
+      <div class="formula">
+        Verbrauchte Sachleistung: 716 &euro; &divide; 1.432 &euro; = <strong>50 %</strong><br>
+        Verbleibendes Pflegegeld: 573 &euro; &times; (100 % &minus; 50 %) = <strong>286,50 &euro;</strong><br>
+        Gesamt pro Monat: 716 &euro; + 286,50 &euro; = <strong>1.002,50 &euro;</strong>
+      </div>
+      <p>Zus&auml;tzlich steht Ihnen der <strong>Entlastungsbetrag von 131 &euro;/Monat</strong> zu, unabh&auml;ngig von der Kombinationsleistung.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="table-section" id="tabelle">
+  <div class="table-inner">
+    <div class="reveal">
+      <span class="section-label">&Uuml;bersicht 2025/2026</span>
+      <h2 class="section-title">Alle Pflegegrade im Vergleich</h2>
+      <p class="section-subtitle">Die aktuellen Leistungsbetr&auml;ge seit der Erh&ouml;hung zum 1. Januar 2025.</p>
+    </div>
+    <table class="comparison-table reveal">
+      <thead>
+        <tr>
+          <th>Pflegegrad</th>
+          <th>Pflegegeld / Monat</th>
+          <th>Sachleistung / Monat</th>
+          <th>Entlastungsbetrag</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pflegegrad 1</td>
+          <td class="no-claim">&mdash; kein Anspruch</td>
+          <td class="no-claim">&mdash; kein Anspruch</td>
+          <td class="amount">131 &euro;</td>
+        </tr>
+        <tr>
+          <td>Pflegegrad 2</td>
+          <td class="amount">332 &euro;</td>
+          <td class="amount">761 &euro;</td>
+          <td class="amount">131 &euro;</td>
+        </tr>
+        <tr>
+          <td>Pflegegrad 3</td>
+          <td class="amount">573 &euro;</td>
+          <td class="amount">1.432 &euro;</td>
+          <td class="amount">131 &euro;</td>
+        </tr>
+        <tr>
+          <td>Pflegegrad 4</td>
+          <td class="amount">765 &euro;</td>
+          <td class="amount">1.778 &euro;</td>
+          <td class="amount">131 &euro;</td>
+        </tr>
+        <tr>
+          <td>Pflegegrad 5</td>
+          <td class="amount">947 &euro;</td>
+          <td class="amount">2.200 &euro;</td>
+          <td class="amount">131 &euro;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="additional-grid reveal">
+      <div class="additional-card">
+        <div class="add-amount">131 &euro;</div>
+        <div class="add-period">pro Monat</div>
+        <h4>Entlastungsbetrag</h4>
+        <p>F&uuml;r alle Pflegegrade 1&ndash;5. F&uuml;r anerkannte Angebote zur Unterst&uuml;tzung im Alltag.</p>
+      </div>
+      <div class="additional-card">
+        <div class="add-amount">1.685 &euro;</div>
+        <div class="add-period">pro Jahr</div>
+        <h4>Verhinderungspflege</h4>
+        <p>Pflegegrad 2&ndash;5. Wenn Ihre Pflegeperson im Urlaub oder krank ist.</p>
+      </div>
+      <div class="additional-card">
+        <div class="add-amount">1.854 &euro;</div>
+        <div class="add-period">pro Jahr</div>
+        <h4>Kurzzeitpflege</h4>
+        <p>Pflegegrad 2&ndash;5. Station&auml;re Pflege f&uuml;r bis zu 8 Wochen im Jahr.</p>
+      </div>
+    </div>
+
+    <p class="table-note reveal">
+      <strong>Hinweis:</strong> Die Betr&auml;ge gelten seit dem 1. Januar 2025. Der Entlastungsbetrag ist zweckgebunden und kann nicht frei verwendet werden. Nicht verbrauchte Betr&auml;ge der Verhinderungspflege k&ouml;nnen teilweise auf die Kurzzeitpflege &uuml;bertragen werden und umgekehrt. Lassen Sie sich individuell beraten.
+    </p>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Lassen Sie sich kostenlos beraten</h2>
+  <p>Wir helfen Ihnen, alle Leistungen optimal zu nutzen &mdash; unverbindlich und pers&ouml;nlich.</p>
+  <a href="tel:+494018035922" class="btn btn-primary">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Jetzt anrufen: +49 40 18035922
+  </a>
+  <div class="cta-contact-row">
+    <div class="cta-contact-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+      <a href="mailto:info@luminaplus.de">info@luminaplus.de</a>
+    </div>
+    <div class="cta-contact-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Angerstra&szlig;e 42, 22087 Hamburg
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="footer-logo" style="filter: brightness(0) invert(1); opacity: 0.8;">
+      <p>Gemeinsam f&uuml;r Ihre Lebensqualit&auml;t</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="./impressum-luminaplus">Impressum</a></li>
+      <li><a href="./datenschutz-luminaplus">Datenschutz</a></li>
+    </ul>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">
+    <p>&copy; 2024&ndash;2026 LuminaPlus eG. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // ===== DATA =====
+  var DATA = {
+    2: { pflegegeld: 332, sachleistung: 761 },
+    3: { pflegegeld: 573, sachleistung: 1432 },
+    4: { pflegegeld: 765, sachleistung: 1778 },
+    5: { pflegegeld: 947, sachleistung: 2200 }
+  };
+  var ENTLASTUNG = 131;
+
+  // ===== STATE =====
+  var selectedGrade = null;
+  var sachleistungUsed = 0;
+
+  // ===== DOM =====
+  var pgCards = document.querySelectorAll('.pg-card');
+  var sliderSection = document.getElementById('sliderSection');
+  var slider = document.getElementById('sachleistungSlider');
+  var sliderAmount = document.getElementById('sliderAmount');
+  var sliderMax = document.getElementById('sliderMax');
+  var sliderPercent = document.getElementById('sliderPercent');
+  var manualInput = document.getElementById('manualInput');
+  var resultsPanel = document.getElementById('resultsPanel');
+  var resultsPlaceholder = document.getElementById('resultsPlaceholder');
+
+  // Results
+  var barSachleistung = document.getElementById('barSachleistung');
+  var barPflegegeld = document.getElementById('barPflegegeld');
+  var barSachleistungAmt = document.getElementById('barSachleistungAmt');
+  var barPflegegeldAmt = document.getElementById('barPflegegeldAmt');
+  var resSachleistung = document.getElementById('resSachleistung');
+  var resPflegegeld = document.getElementById('resPflegegeld');
+  var resMonthlyTotal = document.getElementById('resMonthlyTotal');
+  var resYearlyTotal = document.getElementById('resYearlyTotal');
+  var resEntlastung = document.getElementById('resEntlastung');
+  var resCtaAmount = document.getElementById('resCtaAmount');
+
+  // ===== HELPERS =====
+  function formatEUR(val) {
+    // German format: 1.432,50 EUR
+    return val.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' \u20AC';
+  }
+
+  function formatEURShort(val) {
+    if (val === Math.floor(val)) {
+      return val.toLocaleString('de-DE') + ' \u20AC';
+    }
+    return val.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' \u20AC';
+  }
+
+  // ===== GRADE SELECTION =====
+  function selectGrade(grade) {
+    selectedGrade = grade;
+    var d = DATA[grade];
+
+    // Update card styles
+    pgCards.forEach(function(card) {
+      var g = parseInt(card.getAttribute('data-grade'));
+      if (g === grade) {
+        card.classList.add('active');
+        card.setAttribute('aria-pressed', 'true');
+      } else {
+        card.classList.remove('active');
+        card.setAttribute('aria-pressed', 'false');
+      }
+    });
+
+    // Enable slider
+    sliderSection.classList.remove('disabled');
+    slider.max = d.sachleistung;
+    slider.value = 0;
+    manualInput.max = d.sachleistung;
+    manualInput.value = 0;
+    sachleistungUsed = 0;
+
+    sliderMax.textContent = formatEURShort(d.sachleistung);
+
+    // Show results
+    resultsPlaceholder.style.display = 'none';
+    resultsPanel.classList.remove('hidden');
+
+    updateCalculation();
+  }
+
+  pgCards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      selectGrade(parseInt(this.getAttribute('data-grade')));
+    });
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectGrade(parseInt(this.getAttribute('data-grade')));
+      }
+    });
+  });
+
+  // ===== SLIDER =====
+  function updateSliderTrack() {
+    if (!selectedGrade) return;
+    var max = DATA[selectedGrade].sachleistung;
+    var pct = max > 0 ? (sachleistungUsed / max * 100) : 0;
+    // Color the left portion of the slider track
+    slider.style.background = 'linear-gradient(to right, #35C0ED 0%, #35C0ED ' + pct + '%, #e8eef1 ' + pct + '%, #e8eef1 100%)';
+  }
+
+  slider.addEventListener('input', function() {
+    sachleistungUsed = parseInt(this.value);
+    manualInput.value = sachleistungUsed;
+    updateCalculation();
+  });
+
+  manualInput.addEventListener('input', function() {
+    var val = parseInt(this.value) || 0;
+    if (selectedGrade) {
+      var max = DATA[selectedGrade].sachleistung;
+      if (val > max) val = max;
+      if (val < 0) val = 0;
+    }
+    sachleistungUsed = val;
+    slider.value = val;
+    updateCalculation();
+  });
+
+  manualInput.addEventListener('blur', function() {
+    this.value = sachleistungUsed;
+  });
+
+  // ===== CALCULATION =====
+  function updateCalculation() {
+    if (!selectedGrade) return;
+    var d = DATA[selectedGrade];
+
+    var maxSach = d.sachleistung;
+    var maxPG = d.pflegegeld;
+
+    // Clamp
+    if (sachleistungUsed > maxSach) sachleistungUsed = maxSach;
+    if (sachleistungUsed < 0) sachleistungUsed = 0;
+
+    // Formula
+    var sachPct = maxSach > 0 ? (sachleistungUsed / maxSach * 100) : 0;
+    var remainingPG = maxPG * (1 - sachPct / 100);
+    var monthlyTotal = sachleistungUsed + remainingPG;
+    var yearlyTotal = monthlyTotal * 12;
+    var totalWithEntlastung = monthlyTotal + ENTLASTUNG;
+
+    // Update display: slider value
+    sliderAmount.textContent = formatEURShort(sachleistungUsed);
+    sliderPercent.innerHTML = '<strong>' + sachPct.toFixed(1).replace('.', ',') + ' %</strong> der Sachleistung ausgesch\u00F6pft';
+
+    updateSliderTrack();
+
+    // Bar chart - scale both bars relative to the maximum possible total (maxSach + maxPG)
+    var maxTotal = maxSach + maxPG;
+    var sachBarPct = maxTotal > 0 ? (sachleistungUsed / maxTotal * 100) : 0;
+    var pgBarPct = maxTotal > 0 ? (remainingPG / maxTotal * 100) : 0;
+
+    barSachleistung.style.width = sachBarPct + '%';
+    barPflegegeld.style.width = pgBarPct + '%';
+
+    // Bar text (only show inside bar if wide enough)
+    barSachleistung.textContent = sachBarPct > 12 ? formatEURShort(sachleistungUsed) : '';
+    barPflegegeld.textContent = pgBarPct > 12 ? formatEURShort(remainingPG) : '';
+
+    barSachleistungAmt.textContent = formatEURShort(sachleistungUsed);
+    barPflegegeldAmt.textContent = formatEURShort(remainingPG);
+
+    // Result cards
+    resSachleistung.textContent = formatEUR(sachleistungUsed);
+    resPflegegeld.textContent = formatEUR(remainingPG);
+    resMonthlyTotal.textContent = formatEUR(monthlyTotal);
+    resYearlyTotal.textContent = formatEUR(yearlyTotal);
+    resEntlastung.textContent = formatEURShort(ENTLASTUNG);
+
+    // CTA
+    resCtaAmount.textContent = formatEUR(totalWithEntlastung);
+  }
+
+  // ===== NAVBAR =====
+  window.addEventListener('scroll', function() {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Mobile menu
+  var hamburger = document.getElementById('hamburger');
+  var navLinks = document.getElementById('navLinks');
+  var overlay = document.getElementById('mobileOverlay');
+
+  function toggleMenu() {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    overlay.classList.toggle('active');
+  }
+  hamburger.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', toggleMenu);
+  navLinks.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (navLinks.classList.contains('active')) toggleMenu();
+    });
+  });
+
+  // ===== SCROLL REVEAL =====
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+
+})();
+</script>
+
+</body>
+</html>
