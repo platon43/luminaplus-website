@@ -518,7 +518,7 @@
     }
     .budget-grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1.5fr 1fr;
       gap: 3rem;
       margin-top: 3rem;
       align-items: start;
@@ -526,12 +526,14 @@
     .budget-table-wrapper {
       background: white;
       border-radius: 12px;
-      overflow: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border: 1px solid var(--light-gray);
       box-shadow: 0 4px 20px rgba(8,55,107,0.04);
     }
     .budget-table {
       width: 100%;
+      min-width: 560px;
       border-collapse: collapse;
       font-size: 0.9rem;
     }
@@ -925,6 +927,33 @@
       .info-inner { grid-template-columns: 1fr; gap: 2rem; }
       .services-grid { grid-template-columns: 1fr; }
       .budget-grid { grid-template-columns: 1fr; }
+      .budget-table { min-width: 0; }
+      .budget-table thead { display: none; }
+      .budget-table tbody tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        padding: 1rem;
+        border-bottom: 1px solid var(--light-gray);
+      }
+      .budget-table tbody tr:last-child { border-bottom: none; }
+      .budget-table td {
+        padding: 0.3rem 0;
+        font-size: 0.85rem;
+      }
+      .budget-table td:first-child {
+        grid-column: 1 / -1;
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid var(--light-gray);
+      }
+      .budget-table td:not(:first-child)::before {
+        content: attr(data-label) ": ";
+        font-size: 0.75rem;
+        color: var(--gray);
+        display: block;
+      }
       .process-grid { grid-template-columns: 1fr 1fr; }
       .section { padding: 4rem 1.5rem; }
     }
@@ -942,22 +971,27 @@
 <nav class="navbar" id="navbar">
   <div class="navbar-inner">
     <a href="./"><img src="brand/LOGO+Flyer/LOGO/Original auf Transparenz.png" alt="LuminaPlus" class="logo-img"></a>
-    <ul class="nav-links" id="navLinks">
+        <ul class="nav-links" id="navLinks">
       <li><a href="./#about">Wer wir sind</a></li>
-      <li><a href="./#values">Unsere Werte</a></li>
       <li class="nav-dropdown">
-        <a href="./#services">Leistungen <span class="dd-arrow">&#9660;</span></a>
-        <div class="nav-dropdown-menu"><div class="nav-dropdown-menu-inner">
-          <a href="./#services">Ambulante Pflege</a>
+        <a href="./#services">Leistungen &#9662;</a>
+        <div class="nav-dropdown-menu">
           <a href="./verhinderungspflege">Verhinderungspflege</a>
+          <a href="./entlastungsbetrag">Entlastungsbetrag (131 &euro;/Mo)</a>
+          <a href="./pflegehilfsmittel">Pflegehilfsmittel</a>
+          <a href="./#services">Alle Leistungen</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="#">Online-Tools &#9662;</a>
+        <div class="nav-dropdown-menu">
           <a href="./pflegegrad-antrag">Pflegegrad beantragen</a>
           <a href="./pflegegrad-rechner">Pflegegrad-Rechner</a>
-          <a href="./pflegehilfsmittel">Pflegehilfsmittel</a>
-          <a href="./ratgeber">Ratgeber</a>
-        </div></div>
+          <a href="./pflegegeld-rechner">Pflegegeld-Rechner</a>
+          <a href="./faq">H&auml;ufige Fragen (FAQ)</a>
+          <a href="./ratgeber">Pflege-Ratgeber</a>
+        </div>
       </li>
-      <li><a href="./#team">Unser Team</a></li>
-      <li><a href="./#area">Einsatzgebiet</a></li>
       <li><a href="./#contact">Kontakt</a></li>
       <li><a href="./karriere-luminaplus">Karriere</a></li>
       <li class="mobile-only"><a href="tel:+494018035922" class="mobile-cta">Jetzt anrufen</a></li>
@@ -1106,45 +1140,45 @@
           <tbody>
             <tr>
               <td>Pflegegeld / Monat</td>
-              <td>332&nbsp;&euro;</td>
-              <td>573&nbsp;&euro;</td>
-              <td>765&nbsp;&euro;</td>
-              <td>947&nbsp;&euro;</td>
+              <td data-label="PG 2">332&nbsp;&euro;</td>
+              <td data-label="PG 3">573&nbsp;&euro;</td>
+              <td data-label="PG 4">765&nbsp;&euro;</td>
+              <td data-label="PG 5">947&nbsp;&euro;</td>
             </tr>
             <tr class="highlight-row">
               <td>Verhinderungspflege / Jahr</td>
-              <td>1.685&nbsp;&euro;</td>
-              <td>1.685&nbsp;&euro;</td>
-              <td>1.685&nbsp;&euro;</td>
-              <td>1.685&nbsp;&euro;</td>
+              <td data-label="PG 2">1.685&nbsp;&euro;</td>
+              <td data-label="PG 3">1.685&nbsp;&euro;</td>
+              <td data-label="PG 4">1.685&nbsp;&euro;</td>
+              <td data-label="PG 5">1.685&nbsp;&euro;</td>
             </tr>
             <tr>
               <td>Kurzzeitpflege / Jahr</td>
-              <td>1.854&nbsp;&euro;</td>
-              <td>1.854&nbsp;&euro;</td>
-              <td>1.854&nbsp;&euro;</td>
-              <td>1.854&nbsp;&euro;</td>
+              <td data-label="PG 2">1.854&nbsp;&euro;</td>
+              <td data-label="PG 3">1.854&nbsp;&euro;</td>
+              <td data-label="PG 4">1.854&nbsp;&euro;</td>
+              <td data-label="PG 5">1.854&nbsp;&euro;</td>
             </tr>
             <tr>
               <td>Umwidmung Kurzzeitpflege (50&nbsp;%)</td>
-              <td>+ 843&nbsp;&euro;</td>
-              <td>+ 843&nbsp;&euro;</td>
-              <td>+ 843&nbsp;&euro;</td>
-              <td>+ 843&nbsp;&euro;</td>
+              <td data-label="PG 2">+ 843&nbsp;&euro;</td>
+              <td data-label="PG 3">+ 843&nbsp;&euro;</td>
+              <td data-label="PG 4">+ 843&nbsp;&euro;</td>
+              <td data-label="PG 5">+ 843&nbsp;&euro;</td>
             </tr>
             <tr class="highlight-row">
               <td>Max. Verhinderungspflege gesamt</td>
-              <td><strong>2.528&nbsp;&euro;</strong></td>
-              <td><strong>2.528&nbsp;&euro;</strong></td>
-              <td><strong>2.528&nbsp;&euro;</strong></td>
-              <td><strong>2.528&nbsp;&euro;</strong></td>
+              <td data-label="PG 2"><strong>2.528&nbsp;&euro;</strong></td>
+              <td data-label="PG 3"><strong>2.528&nbsp;&euro;</strong></td>
+              <td data-label="PG 4"><strong>2.528&nbsp;&euro;</strong></td>
+              <td data-label="PG 5"><strong>2.528&nbsp;&euro;</strong></td>
             </tr>
             <tr>
               <td>Verh.pflege durch nahe Angeh&ouml;rige*</td>
-              <td>498&nbsp;&euro;</td>
-              <td>859,50&nbsp;&euro;</td>
-              <td>1.147,50&nbsp;&euro;</td>
-              <td>1.420,50&nbsp;&euro;</td>
+              <td data-label="PG 2">498&nbsp;&euro;</td>
+              <td data-label="PG 3">859,50&nbsp;&euro;</td>
+              <td data-label="PG 4">1.147,50&nbsp;&euro;</td>
+              <td data-label="PG 5">1.420,50&nbsp;&euro;</td>
             </tr>
           </tbody>
         </table>
