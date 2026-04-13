@@ -1627,6 +1627,8 @@
       delete data.agree_datenschutz;
       delete data.agree_richtigkeit;
       delete data.agree_email_versand;
+      // File-Uploads nicht persistieren (Dateinamen koennen nicht programmatisch gesetzt werden)
+      delete data.uploads;
 
       const draft = {
         version: 1,
@@ -1691,8 +1693,9 @@
           }
         });
       } else {
-        // Select oder Text-Input
+        // Select oder Text-Input (File-Inputs ueberspringen - Browser erlaubt kein programmatisches Setzen)
         elements.forEach(e => {
+          if (e.type === 'file') return;
           e.value = value;
           e.dispatchEvent(new Event('change', { bubbles: true }));
         });
@@ -2556,6 +2559,11 @@
       if (signatureResize) setTimeout(signatureResize, 100);
     }
   }
+
+  // Expose fuer Tests
+  window.validateStep = validateStep;
+  window.validateField = validateField;
+  window.showStep = showStep;
 
   window.nextStep = function() {
     if (!validateStep(currentStep)) return;
