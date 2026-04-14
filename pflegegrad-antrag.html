@@ -338,17 +338,20 @@
       border-radius: 50%; background: rgba(154,235,166,0.06);
     }
     .page-header h1 {
-      font-family: 'Tenor Sans', serif; font-size: 2.2rem; color: white;
-      margin-bottom: 0.5rem; position: relative; z-index: 1;
+      font-family: 'Tenor Sans', serif; font-size: clamp(2rem, 4.5vw, 3.2rem); color: white;
+      line-height: 1.2; margin-bottom: 1rem; position: relative; z-index: 1;
     }
+    .page-header h1 span { color: #35C0ED; }
     .page-header p {
-      color: rgba(255,255,255,0.7); font-size: 1rem; max-width: 600px;
-      margin: 0 auto; position: relative; z-index: 1;
+      color: rgba(255,255,255,0.7); font-size: 1.1rem; max-width: 600px;
+      margin: 0 auto; position: relative; z-index: 1; line-height: 1.7;
     }
     .header-badge {
-      display: inline-block; background: rgba(255,255,255,0.15); color: white;
-      padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
-      margin-bottom: 1rem; position: relative; z-index: 1; backdrop-filter: blur(4px);
+      display: inline-block; background: rgba(154,235,166,0.2); color: #9AEBA6;
+      padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      border: 1px solid rgba(154,235,166,0.3);
+      margin-bottom: 1.5rem; position: relative; z-index: 1;
     }
 
     /* ===== PROGRESS BAR ===== */
@@ -813,8 +816,8 @@
 
 <!-- ===== HEADER ===== -->
 <header class="page-header">
-  <div class="header-badge">Kostenlos & unverbindlich</div>
-  <h1>Pflegegrad beantragen</h1>
+  <div class="header-badge">Kostenlos &amp; unverbindlich</div>
+  <h1>Pflegegrad <span>beantragen</span></h1>
   <p>In wenigen Schritten erstellen wir Ihren Antrag auf Leistungen der Pflegeversicherung &ndash; einfach, sicher und DSGVO-konform.</p>
 </header>
 
