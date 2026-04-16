@@ -763,6 +763,246 @@
       color: white;
     }
 
+    /* ===== ANFRAGE-FORMULAR ===== */
+    .anfrage-section {
+      background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
+      padding: 5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .anfrage-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .anfrage-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+    }
+    .anfrage-text h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .anfrage-text p {
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .anfrage-promises {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+    }
+    .anfrage-promises li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: white;
+      font-size: 0.95rem;
+      padding: 0.5rem 0;
+    }
+    .anfrage-promises li::before {
+      content: '\2713';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: var(--green);
+      color: var(--navy);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    .anfrage-phone {
+      color: rgba(255,255,255,0.9);
+      font-size: 0.95rem;
+    }
+    .anfrage-phone a {
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+    }
+    .anfrage-phone a:hover { border-bottom-color: white; }
+
+    .anfrage-form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(8,55,107,0.25);
+    }
+    .anfrage-form-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+    .anfrage-form-card .form-sub {
+      color: #64748b;
+      font-size: 0.85rem;
+      margin-bottom: 1.3rem;
+    }
+    .anfrage-form .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .anfrage-form .field {
+      margin-bottom: 0.75rem;
+    }
+    .anfrage-form label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+    .anfrage-form label .req { color: var(--light-blue); }
+    .anfrage-form input,
+    .anfrage-form textarea,
+    .anfrage-form select {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid #e8eef1;
+      border-radius: 10px;
+      background: #fafbfc;
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      color: #1e293b;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .anfrage-form input:focus,
+    .anfrage-form textarea:focus,
+    .anfrage-form select:focus {
+      outline: none;
+      border-color: var(--light-blue);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(53,192,237,0.1);
+    }
+    .anfrage-form textarea { resize: vertical; min-height: 70px; }
+    .anfrage-form .chips {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+    }
+    .anfrage-form .chip {
+      padding: 0.55rem 0.4rem;
+      border: 1.5px solid #e8eef1;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: #64748b;
+      font-weight: 500;
+      text-align: center;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .anfrage-form .chip:hover { border-color: var(--light-blue); }
+    .anfrage-form .chip.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+    .anfrage-form .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.5;
+      cursor: pointer;
+      margin: 0.9rem 0;
+    }
+    .anfrage-form .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      flex-shrink: 0;
+      accent-color: var(--light-blue);
+    }
+    .anfrage-form .checkbox-row a {
+      color: var(--navy);
+      text-decoration: underline;
+    }
+    .anfrage-form .submit-btn {
+      width: 100%;
+      padding: 0.95rem;
+      background: var(--light-blue);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(53,192,237,0.3);
+      transition: all 0.2s;
+    }
+    .anfrage-form .submit-btn:hover:not(:disabled) {
+      background: var(--dark-blue);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(53,192,237,0.4);
+    }
+    .anfrage-form .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .anfrage-form .form-hint {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 0.7rem;
+    }
+    .anfrage-form .error-box {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      padding: 0.7rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      margin-bottom: 0.8rem;
+      display: none;
+    }
+    .anfrage-form .success-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      display: none;
+    }
+    .anfrage-form .success-box h4 {
+      font-family: var(--font-heading);
+      color: var(--navy);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .anfrage-section { padding: 3rem 1.2rem; }
+      .anfrage-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .anfrage-form-card { padding: 1.5rem; }
+      .anfrage-form .chips { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* ===== FOOTER ===== */
     .footer {
       background: var(--navy);
@@ -927,11 +1167,13 @@
         Jeder Pflegebed&uuml;rftige mit Pflegegrad 1&ndash;5 hat Anspruch auf den Entlastungsbetrag. Wir von LuminaPlus &uuml;bernehmen Alltagsbegleitung, Haushaltshilfe und Betreuung &mdash; und rechnen direkt mit Ihrer Pflegekasse ab.
       </p>
       <div class="hero-actions">
-        <a href="tel:+494018035922" class="btn btn-primary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <a href="#anfrage" class="btn btn-primary">
           Kostenlos beraten lassen
         </a>
-        <a href="#was-ist" class="btn btn-outline">Mehr erfahren</a>
+        <a href="tel:+494018035922" class="btn btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Oder anrufen
+        </a>
       </div>
       <div class="hero-stats">
         <div class="stat-item">
@@ -1183,14 +1425,97 @@
   </div>
 </section>
 
-<!-- CTA BANNER -->
-<section class="cta-banner">
-  <h2>Entlastungsbetrag nutzen &mdash; jetzt anrufen</h2>
-  <p>Lassen Sie sich kostenlos beraten. Wir helfen Ihnen, Ihren Anspruch voll auszusch&ouml;pfen.</p>
-  <a href="tel:+494018035922" class="btn btn-primary">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-    Jetzt anrufen: +49 40 18035922
-  </a>
+<!-- ANFRAGE-SEKTION -->
+<section class="anfrage-section" id="anfrage">
+  <div class="anfrage-inner">
+    <!-- LINKS: Text -->
+    <div class="anfrage-text">
+      <h2>Anspruch pr&uuml;fen &mdash; in unter 2 Minuten.</h2>
+      <p>Nutzen Sie das Formular oder rufen Sie direkt an. Wir melden uns innerhalb von 24 Stunden mit einer kostenlosen Erstberatung &mdash; pers&ouml;nlich, ohne Verpflichtung.</p>
+      <ul class="anfrage-promises">
+        <li>Zu 100 % von der Pflegekasse &uuml;bernommen</li>
+        <li>Keine Zuzahlung, keine B&uuml;rokratie f&uuml;r Sie</li>
+        <li>Start in 1&ndash;2 Wochen m&ouml;glich</li>
+      </ul>
+      <p class="anfrage-phone">Sie telefonieren lieber? <a href="tel:+494018035922">+49 40 18035922</a></p>
+    </div>
+
+    <!-- RECHTS: Formular -->
+    <div class="anfrage-form-card">
+      <h3>Kostenlose Erstberatung anfordern</h3>
+      <p class="form-sub">Wir rufen Sie innerhalb von 24 Stunden zur&uuml;ck.</p>
+
+      <div class="success-box" id="anfrage-success">
+        <h4>Danke &mdash; wir melden uns bei Ihnen.</h4>
+        <p>Ihre Anfrage ist angekommen. Ein Mitglied unseres Teams ruft Sie innerhalb von 24 Stunden zur&uuml;ck. Werktags auch schneller.</p>
+      </div>
+
+      <form class="anfrage-form" id="anfrage-form" novalidate>
+        <div class="error-box" id="anfrage-error"></div>
+
+        <div class="row">
+          <div class="field">
+            <label>Vorname <span class="req">*</span></label>
+            <input type="text" name="vorname" required autocomplete="given-name" placeholder="Anna">
+          </div>
+          <div class="field">
+            <label>Nachname <span class="req">*</span></label>
+            <input type="text" name="nachname" required autocomplete="family-name" placeholder="Schmidt">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Telefon <span class="req">*</span></label>
+            <input type="tel" name="telefon" required autocomplete="tel" placeholder="040 123 456 78">
+          </div>
+          <div class="field">
+            <label>Postleitzahl <span class="req">*</span></label>
+            <input type="text" name="plz" required inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="20095">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>E-Mail (optional)</label>
+          <input type="email" name="email" autocomplete="email" placeholder="anna.schmidt@email.de">
+        </div>
+
+        <div class="field">
+          <label>F&uuml;r wen suchen Sie Unterst&uuml;tzung? <span class="req">*</span></label>
+          <div class="chips" data-chip-group="fuer_wen">
+            <div class="chip" data-value="mich_selbst">Mich selbst</div>
+            <div class="chip active" data-value="angehoerigen">Angeh&ouml;rigen</div>
+            <div class="chip" data-value="anderen">Jemand anderen</div>
+          </div>
+          <input type="hidden" name="fuer_wen" value="angehoerigen" required>
+        </div>
+
+        <div class="field">
+          <label>Pflegegrad (falls bekannt)</label>
+          <div class="chips" data-chip-group="pflegegrad" style="grid-template-columns:repeat(4,1fr);">
+            <div class="chip active" data-value="unbekannt">Unbekannt</div>
+            <div class="chip" data-value="1">PG 1</div>
+            <div class="chip" data-value="2">PG 2</div>
+            <div class="chip" data-value="3">PG 3</div>
+          </div>
+          <input type="hidden" name="pflegegrad" value="unbekannt">
+        </div>
+
+        <div class="field">
+          <label>Was brauchen Sie? (optional)</label>
+          <textarea name="nachricht" placeholder="z.B. Hilfe beim Einkaufen, Begleitung zum Arzt, Gesellschaft am Nachmittag ..."></textarea>
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" name="datenschutz" required>
+          <span>Ich habe die <a href="./datenschutz-luminaplus" target="_blank">Datenschutzerkl&auml;rung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Kontaktaufnahme einverstanden.</span>
+        </label>
+
+        <button type="submit" class="submit-btn" id="anfrage-submit">Jetzt unverbindlich anfragen</button>
+        <p class="form-hint">Unverbindlich &middot; Kostenlos &middot; In unter 2 Minuten erledigt</p>
+      </form>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -1274,6 +1599,119 @@
       }
     });
   });
+
+  /* ============================================================== */
+  /*  ANFRAGE-FORMULAR — Submit an Supabase + Tracking              */
+  /* ============================================================== */
+  (function() {
+    var SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
+
+    var form = document.getElementById('anfrage-form');
+    if (!form) return;
+    var errorBox = document.getElementById('anfrage-error');
+    var successBox = document.getElementById('anfrage-success');
+    var submitBtn = document.getElementById('anfrage-submit');
+
+    // Chip-Gruppen
+    document.querySelectorAll('[data-chip-group]').forEach(function(group) {
+      var name = group.getAttribute('data-chip-group');
+      var hidden = form.querySelector('input[type="hidden"][name="' + name + '"]');
+      group.querySelectorAll('.chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          group.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
+          chip.classList.add('active');
+          if (hidden) hidden.value = chip.getAttribute('data-value');
+        });
+      });
+    });
+
+    // URL-Parameter lesen
+    function getParam(name) {
+      var m = new URLSearchParams(window.location.search);
+      return m.get(name);
+    }
+
+    // Form-Submit
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      errorBox.style.display = 'none';
+      errorBox.textContent = '';
+
+      var fd = new FormData(form);
+      var datenschutz = form.querySelector('input[name="datenschutz"]').checked;
+      if (!datenschutz) {
+        errorBox.textContent = 'Bitte stimmen Sie der Datenschutzerklaerung zu.';
+        errorBox.style.display = 'block';
+        return;
+      }
+
+      var payload = {
+        vorname: (fd.get('vorname') || '').toString().trim(),
+        nachname: (fd.get('nachname') || '').toString().trim(),
+        telefon: (fd.get('telefon') || '').toString().trim(),
+        email: ((fd.get('email') || '').toString().trim()) || null,
+        plz: (fd.get('plz') || '').toString().trim(),
+        fuer_wen: fd.get('fuer_wen') || 'angehoerigen',
+        pflegegrad: fd.get('pflegegrad') || 'unbekannt',
+        nachricht: ((fd.get('nachricht') || '').toString().trim()) || null,
+        variante: getParam('v') === 'a' ? 'a' : 'b',
+        utm_source: getParam('utm_source'),
+        utm_medium: getParam('utm_medium'),
+        utm_campaign: getParam('utm_campaign'),
+        utm_content: getParam('utm_content'),
+        referrer: document.referrer || null,
+        landing_page: window.location.pathname + window.location.search,
+        datenschutz_akzeptiert: true,
+        datenschutz_akzeptiert_am: new Date().toISOString()
+      };
+
+      if (!payload.vorname || !payload.nachname || !payload.telefon || !payload.plz) {
+        errorBox.textContent = 'Bitte fuellen Sie alle Pflichtfelder aus.';
+        errorBox.style.display = 'block';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Wird gesendet ...';
+
+      try {
+        var res = await fetch(SUPABASE_URL + '/rest/v1/care_anfragen', {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          throw new Error('Server error: ' + res.status);
+        }
+
+        // Conversion-Events (falls Tracking vorhanden)
+        try {
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'generate_lead', { variant: payload.variante });
+          }
+          if (typeof window.fbq === 'function') {
+            window.fbq('track', 'Lead', { variant: payload.variante });
+          }
+        } catch(_) {}
+
+        // UI: Form ausblenden, Success anzeigen
+        form.style.display = 'none';
+        successBox.style.display = 'block';
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (err) {
+        errorBox.textContent = 'Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder rufen Sie uns an: +49 40 18035922.';
+        errorBox.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Jetzt unverbindlich anfragen';
+      }
+    });
+  })();
 </script>
 
 </body>
