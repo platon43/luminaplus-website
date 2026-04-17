@@ -1720,6 +1720,11 @@
         // Conversion-Events (falls Tracking vorhanden)
         try {
           if (typeof window.gtag === 'function') {
+            window.gtag('event', 'conversion', {
+              send_to: 'AW-18031137216/bJJuCK6HvJ0cEMCj9ZVD',
+              value: 1.0,
+              currency: 'EUR'
+            });
             window.gtag('event', 'generate_lead', { variant: payload.variante });
           }
           if (typeof window.fbq === 'function') {
