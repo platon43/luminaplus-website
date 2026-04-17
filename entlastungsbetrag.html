@@ -1118,6 +1118,33 @@
     }
   </style>
   <script src="js/consent-banner.js"></script>
+
+  <!-- Google Ads Conversion-Tag (nur nach Consent) -->
+  <script>
+    (function() {
+      function loadGtag() {
+        if (window.__gtagLoaded) return;
+        // Consent pruefen
+        if (window.LuminaPlusConsent && !window.LuminaPlusConsent.hasExternal()) return;
+        window.__gtagLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18031137216';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'AW-18031137216', { anonymize_ip: true });
+      }
+      // Nach DOM-Ready versuchen (consent-banner.js muss zuerst laufen)
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(loadGtag, 500); });
+      } else {
+        setTimeout(loadGtag, 500);
+      }
+    })();
+  </script>
 </head>
 <body>
 
