@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Pflegeantrag nachsenden - LuminaPlus Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --navy: #08376B; --dark-blue: #2F90B0; --light-blue: #35C0ED; --green: #9AEBA6;
+    --gray: #6b7d8a; --light-gray: #e8eef1; --bg: #f7fafa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--navy); min-height: 100vh; }
+  .header { background: white; padding: 1.2rem 2rem; border-bottom: 1px solid var(--light-gray); display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 1.2rem; }
+  .header .muted { color: var(--gray); font-size: 0.85rem; }
+  .container { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
+  .login { max-width: 400px; margin: 4rem auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 20px rgba(8,55,107,0.08); }
+  .login h2 { margin-bottom: 1.2rem; }
+  input[type=password], input[type=text], input[type=email] {
+    width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--light-gray); border-radius: 8px;
+    font-family: inherit; font-size: 1rem; margin-bottom: 1rem;
+  }
+  button { background: var(--light-blue); color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 8px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.2s; font-size: 0.9rem; }
+  button:hover:not(:disabled) { background: var(--dark-blue); transform: translateY(-1px); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  button.secondary { background: white; color: var(--navy); border: 1px solid var(--light-gray); }
+  button.secondary:hover:not(:disabled) { background: var(--bg); transform: none; }
+  button.danger { background: #e74c3c; }
+  button.danger:hover:not(:disabled) { background: #c0392b; }
+  .card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(8,55,107,0.05); margin-bottom: 1rem; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 0.7rem 0.8rem; text-align: left; font-size: 0.85rem; border-bottom: 1px solid var(--light-gray); }
+  th { background: var(--bg); font-weight: 700; color: var(--navy); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.5px; }
+  tr:hover td { background: #fafcfd; }
+  .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 10px; font-size: 0.72rem; font-weight: 600; }
+  .badge.warn { background: #fff4e5; color: #b86b00; }
+  .badge.ok { background: #e8f7ee; color: #1b7a3e; }
+  .badge.err { background: #fde7e7; color: #b52020; }
+  .badge.gray { background: var(--light-gray); color: var(--gray); }
+  .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .modal-bg { position: fixed; inset: 0; background: rgba(8,55,107,0.5); display: none; align-items: center; justify-content: center; z-index: 100; padding: 1rem; }
+  .modal-bg.active { display: flex; }
+  .modal { background: white; border-radius: 12px; padding: 2rem; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
+  .modal h3 { margin-bottom: 1rem; }
+  .modal .row { margin-bottom: 1rem; font-size: 0.9rem; }
+  .modal .row strong { display: block; color: var(--gray); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.2rem; }
+  .modal label { display: block; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--gray); font-weight: 600; }
+  .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.5rem; }
+  .loading { display: inline-block; width: 12px; height: 12px; border: 2px solid var(--light-blue); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .status-log { background: var(--bg); border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem; max-height: 300px; overflow-y: auto; white-space: pre-wrap; }
+  .nav-back { color: var(--dark-blue); text-decoration: none; font-size: 0.85rem; }
+  .nav-back:hover { text-decoration: underline; }
+  .info-box { background: #e6f4ff; border-left: 3px solid var(--light-blue); padding: 1rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem; }
+  .info-box.warn { background: #fff4e5; border-color: #e89b00; }
+  .info-box.err { background: #fde7e7; border-color: #e74c3c; }
+  .info-box.ok { background: #e8f7ee; border-color: #27ae60; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Pflegeantrag nachsenden</h1>
+    <div class="muted">LuminaPlus Admin-Tool</div>
+  </div>
+  <div><a href="admin.html" class="nav-back">&larr; Zurueck zum Admin</a></div>
+</div>
+
+<!-- Login -->
+<div class="container" id="loginView">
+  <div class="login">
+    <h2>Anmeldung</h2>
+    <input type="password" id="pwInput" placeholder="Admin-Passwort" autofocus>
+    <button onclick="login()" style="width:100%;">Anmelden</button>
+    <div id="loginError" style="color:#e74c3c; font-size:0.85rem; margin-top:0.8rem; min-height:1.2em;"></div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="container" id="mainView" style="display:none;">
+  <div class="info-box">
+    <strong>Funktion:</strong> Diese Seite laedt alle eingereichten Pflegegrad-Antraege und ermoeglicht das Nachsenden per E-Mail an die Krankenkasse und/oder den Antragsteller.
+    Das PDF wird aus den gespeicherten Daten neu generiert.
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:1rem;">Eingereichte Antraege</h3>
+    <div id="submissionsList">
+      <div style="text-align:center; padding:2rem; color:var(--gray);"><span class="loading"></span>Lade Antraege...</div>
+    </div>
+  </div>
+</div>
+
+<!-- Resend Modal -->
+<div class="modal-bg" id="resendModal">
+  <div class="modal">
+    <h3>Antrag nachsenden</h3>
+    <div id="modalContent"></div>
+    <div class="modal-actions">
+      <button class="secondary" onclick="closeModal()">Abbrechen</button>
+      <button id="btnSend" onclick="doResend()">Jetzt senden</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== CONFIG =====
+  const SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
+  const ADMIN_HASH = '6c7579fdd27803f5a309ef76497f94b8275397d0f3a1d1eb89717ec455766643';
+  const COMPANY = { name: 'LuminaPlus eG', phone: '+49 40 18035922' };
+
+  let currentSubmission = null;
+
+  // ===== AUTH =====
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function login() {
+    const pw = document.getElementById('pwInput').value;
+    const hash = await sha256(pw);
+    if (hash === ADMIN_HASH) {
+      sessionStorage.setItem('pflege_resend_auth', '1');
+      showMain();
+    } else {
+      document.getElementById('loginError').textContent = 'Falsches Passwort';
+    }
+  }
+
+  document.getElementById('pwInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+  });
+
+  function showMain() {
+    document.getElementById('loginView').style.display = 'none';
+    document.getElementById('mainView').style.display = 'block';
+    loadSubmissions();
+  }
+
+  if (sessionStorage.getItem('pflege_resend_auth') === '1') {
+    showMain();
+  }
+
+  // ===== DATA =====
+  async function loadSubmissions() {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/pflegegrad_applications?select=*&order=created_at.desc`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+      });
+      const data = await res.json();
+      renderSubmissions(data);
+    } catch (e) {
+      document.getElementById('submissionsList').innerHTML = `<div class="info-box err">Fehler beim Laden: ${e.message}</div>`;
+    }
+  }
+
+  function renderSubmissions(list) {
+    if (!list || !list.length) {
+      document.getElementById('submissionsList').innerHTML = '<div style="text-align:center; padding:2rem; color:var(--gray);">Keine Antraege gefunden.</div>';
+      return;
+    }
+
+    const rows = list.map(s => {
+      const date = new Date(s.created_at).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      const kk = s.krankenkasse === 'Andere' ? (s.krankenkasse_andere || '-') : (s.krankenkasse || '-');
+      const email = s.email || (s.antragsteller_typ !== 'selbst' ? '' : '-');
+
+      // E-Mail-Status Badge
+      let statusBadge = '';
+      if (s.email_status === 'gesendet') {
+        statusBadge = `<span class="badge ok">Gesendet</span>`;
+        if (s.email_sent_at) {
+          const sentDate = new Date(s.email_sent_at).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+          statusBadge += `<br><span class="muted" style="font-size:0.7rem;">${sentDate}</span>`;
+        }
+      } else if (s.email_status === 'teilweise') {
+        statusBadge = `<span class="badge warn">Teilweise</span>`;
+      } else if (s.email_status === 'fehler') {
+        statusBadge = `<span class="badge err">Fehler</span>`;
+      } else if (s.email_status === 'keine_adresse') {
+        statusBadge = `<span class="badge err">Keine Adresse</span>`;
+      } else {
+        // Spalten existieren noch nicht oder pending
+        statusBadge = `<span class="badge gray">Offen</span>`;
+      }
+
+      return `
+        <tr>
+          <td>${date}</td>
+          <td><strong>${s.vorname || ''} ${s.nachname || ''}</strong><br><span class="muted" style="font-size:0.75rem;">Vers.-Nr.: ${s.versichertennummer || '-'}</span></td>
+          <td>${kk}</td>
+          <td>${email || '<span class="muted">-</span>'}</td>
+          <td>${s.antragsart === 'hoeherstufung' ? 'Hoeherstufung' : 'Erstantrag'}</td>
+          <td>${statusBadge}</td>
+          <td class="actions">
+            <button onclick='openModal(${JSON.stringify(s).replace(/'/g, "&#39;")})'>${s.email_status === 'gesendet' ? 'Erneut senden' : 'Nachsenden'}</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    document.getElementById('submissionsList').innerHTML = `
+      <table>
+        <thead><tr><th>Datum</th><th>Name</th><th>Krankenkasse</th><th>E-Mail</th><th>Art</th><th>E-Mail-Status</th><th>Aktion</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  // ===== MODAL =====
+  function openModal(submission) {
+    currentSubmission = submission;
+    const kk = submission.krankenkasse === 'Andere' ? (submission.krankenkasse_andere || '-') : (submission.krankenkasse || '-');
+    const name = `${submission.vorname || ''} ${submission.nachname || ''}`.trim();
+    const date = new Date(submission.created_at).toLocaleString('de-DE');
+
+    document.getElementById('modalContent').innerHTML = `
+      <div class="row"><strong>Antragsteller</strong>${name}</div>
+      <div class="row"><strong>Vers.-Nr.</strong>${submission.versichertennummer || '-'}</div>
+      <div class="row"><strong>Krankenkasse</strong>${kk}</div>
+      <div class="row"><strong>Eingereicht am</strong>${date}</div>
+      <div style="border-top: 1px solid var(--light-gray); padding-top: 1rem; margin-top: 1rem;">
+        <label>E-Mail fuer Kopie an Antragsteller (optional)</label>
+        <input type="email" id="resendEmailInput" placeholder="email@beispiel.de" value="${submission.email || ''}">
+        <div style="font-size:0.8rem; color:var(--gray); margin-top:-0.6rem; margin-bottom:1rem;">
+          Lassen Sie das Feld leer, wenn keine Kopie an den Antragsteller gesendet werden soll.
+        </div>
+        <div id="resendLog" style="display:none;"><div class="status-log" id="resendLogContent"></div></div>
+      </div>
+    `;
+    const btn = document.getElementById('btnSend');
+    btn.disabled = false;
+    btn.textContent = 'Jetzt senden';
+    btn.style.background = '';
+    btn.onclick = doResend;
+    document.getElementById('resendModal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('resendModal').classList.remove('active');
+    currentSubmission = null;
+  }
+
+  function logStatus(msg) {
+    const logEl = document.getElementById('resendLog');
+    const logContent = document.getElementById('resendLogContent');
+    logEl.style.display = 'block';
+    const ts = new Date().toLocaleTimeString('de-DE');
+    logContent.textContent += `[${ts}] ${msg}\n`;
+    logContent.scrollTop = logContent.scrollHeight;
+  }
+
+  // ===== PDF GENERATION (aus pflegegrad-antrag.html extrahiert, parameterisiert) =====
+  function formatDate(dateStr) {
+    if (!dateStr) return '-';
+    const parts = String(dateStr).split('-');
+    if (parts.length === 3) return `${parts[2]}.${parts[1]}.${parts[0]}`;
+    return dateStr;
+  }
+
+  function generatePDF(d) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    let kk = d.krankenkasse || '';
+    if (kk === 'Andere' && d.krankenkasse_andere) kk = d.krankenkasse_andere;
+
+    const leistungenMap = {
+      pflegegeld: 'Pflegegeld', sachleistung: 'Pflegesachleistung',
+      kombinationsleistung: 'Kombinationsleistung', verhinderungspflege: 'Verhinderungspflege',
+      tages_nachtpflege: 'Tages-/Nachtpflege', kurzzeitpflege: 'Kurzzeitpflege',
+      entlastungsbetrag: 'Entlastungsbetrag', pflegehilfsmittel: 'Pflegehilfsmittel',
+      wohnumfeld: 'Wohnumfeldverbesserung'
+    };
+    const leistungenArr = Array.isArray(d.leistungen) ? d.leistungen : (d.leistungen ? [d.leistungen] : []);
+    const leistungenText = leistungenArr.map(l => leistungenMap[l] || l).join(', ');
+    const today = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+    // --- Page 1: Anschreiben ---
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120);
+    const absName = d.antragsteller_typ === 'selbst'
+      ? `${d.vorname || ''} ${d.nachname || ''}`
+      : `${d.antragsteller_vorname || ''} ${d.antragsteller_nachname || ''}`;
+    const absAddr = d.antragsteller_typ === 'selbst'
+      ? `${d.strasse || ''}, ${d.plz || ''} ${d.ort || ''}`
+      : `${d.antragsteller_strasse || d.strasse || ''}, ${d.antragsteller_plz || d.plz || ''} ${d.antragsteller_ort || d.ort || ''}`;
+    doc.text(`${absName} | ${absAddr}`, 20, 25);
+
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Pflegekasse bei der ${kk}`, 20, 40);
+    doc.setFontSize(10);
+    doc.text(today, 150, 40);
+
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    const antragsartText = d.antragsart === 'hoeherstufung'
+      ? 'Antrag auf Hoeherstufung des Pflegegrades'
+      : 'Antrag auf Leistungen der Pflegeversicherung (Erstantrag)';
+    doc.text(antragsartText, 20, 60);
+
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'normal');
+    doc.text(`Versicherte/r: ${[d.anrede, d.titel, d.vorname, d.nachname].filter(Boolean).join(' ')}`, 20, 72);
+    doc.text(`Geb.: ${formatDate(d.geburtsdatum)}  |  Versichertennr.: ${d.versichertennummer || ''}`, 20, 78);
+
+    let y = 92;
+    doc.setFontSize(10);
+    const lines = [];
+    if (d.antragsart === 'erstantrag') {
+      lines.push('Sehr geehrte Damen und Herren,', '',
+        'hiermit beantrage ich fuer die o.g. versicherte Person Leistungen der',
+        'Pflegeversicherung. Ich bitte um Feststellung der Pflegebeduerftigkeit',
+        'und Zuordnung zu einem Pflegegrad gemaess SGB XI.');
+    } else {
+      lines.push('Sehr geehrte Damen und Herren,', '',
+        'hiermit beantrage ich die Hoeherstufung des bestehenden Pflegegrades',
+        `(derzeit Pflegegrad ${d.aktueller_pflegegrad || '?'}) fuer die o.g. versicherte Person,`,
+        'da sich der Pflegebedarf erheblich erhoeht hat.');
+    }
+    lines.push('');
+    if (leistungenText) {
+      const leistLines = doc.splitTextToSize(`Folgende Leistungen werden beantragt: ${leistungenText}.`, 170);
+      leistLines.forEach(l => lines.push(l));
+      lines.push('');
+    }
+    lines.push(`Die pflegebeduerftige Person lebt derzeit: ${d.wohnsituation === 'zuhause' ? 'zu Hause' : d.wohnsituation || '-'}.`);
+    if (d.pflege_vorhanden === true || d.pflege_vorhanden === 'ja') {
+      lines.push('Es wird bereits Pflege in Anspruch genommen.');
+    }
+    lines.push('');
+    lines.push(`Behandelnder Arzt: ${d.arzt_name || '-'}, ${d.arzt_anschrift || '-'}`);
+    lines.push('');
+    if (d.pflegeperson_vorname || d.pflegeperson_nachname) {
+      lines.push(`Private Pflegeperson: ${d.pflegeperson_vorname || ''} ${d.pflegeperson_nachname || ''}`);
+    }
+    if (d.pflegedienst_name) lines.push(`Ambulanter Pflegedienst: ${d.pflegedienst_name}`);
+    lines.push('');
+    lines.push('Ich entbinde hiermit die behandelnden Aerzte gegenueber dem Medizinischen');
+    lines.push('Dienst (MD) von der Schweigepflicht, soweit dies fuer die Begutachtung der');
+    lines.push('Pflegebeduerftigkeit erforderlich ist.');
+    lines.push('');
+    if (d.begutachtung_hinweis) {
+      lines.push(`Hinweis zur Begutachtung: ${d.begutachtung_hinweis}`, '');
+    }
+    lines.push('Ich bitte um zeitnahe Bearbeitung meines Antrags.', '', 'Mit freundlichen Gruessen');
+
+    lines.forEach(line => {
+      if (y > 270) { doc.addPage(); y = 20; }
+      doc.text(line, 20, y);
+      y += 5;
+    });
+
+    y += 8;
+    if (y > 260) { doc.addPage(); y = 20; }
+    doc.text('_______________________________', 20, y);
+    y += 5;
+    doc.text(`${absName}`, 20, y);
+
+    // --- Page 2: Datenblatt ---
+    doc.addPage();
+    y = 20;
+    doc.setFontSize(14);
+    doc.setTextColor(8, 55, 107);
+    doc.setFont(undefined, 'bold');
+    doc.text('Datenblatt zum Pflegegrad-Antrag', 105, y, { align: 'center' });
+    y += 6;
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120);
+    doc.setFont(undefined, 'normal');
+    doc.text(`Erstellt am ${today} | ${COMPANY.name} (nachgesendet)`, 105, y, { align: 'center' });
+    y += 10;
+
+    const sections = [
+      { title: 'Pflegebeduerftige Person', fields: [
+        ['Anrede', d.anrede || '-'], ['Titel', d.titel || '-'],
+        ['Vorname', d.vorname || '-'], ['Nachname', d.nachname || '-'],
+        ['Geburtsdatum', formatDate(d.geburtsdatum)],
+        ['Strasse', d.strasse || '-'], ['PLZ / Ort', `${d.plz || ''} ${d.ort || ''}`],
+        ['Telefon', d.telefon || '-'], ['E-Mail', d.email || '-'],
+      ]},
+      { title: 'Versicherung', fields: [
+        ['Krankenkasse', kk], ['Versichertennr.', d.versichertennummer || '-'],
+        ['Versicherungsart', d.versicherungsart || '-'],
+      ]},
+      { title: 'Antragsteller', fields: [
+        ['Typ', d.antragsteller_typ === 'selbst' ? 'Selbst' : (d.antragsteller_typ === 'angehoeriger' ? 'Angehoerige/r' : 'Betreuer')],
+        ...(d.antragsteller_typ !== 'selbst' ? [
+          ['Name', `${d.antragsteller_vorname || ''} ${d.antragsteller_nachname || ''}`],
+          ...(d.antragsteller_typ === 'angehoeriger' ? [['Verhaeltnis', d.antragsteller_verhaeltnis || '-']] : []),
+          ['Telefon', d.antragsteller_telefon || '-'],
+        ] : []),
+      ]},
+      { title: 'Pflegesituation', fields: [
+        ['Antragsart', d.antragsart === 'erstantrag' ? 'Erstantrag' : `Hoeherstufung (aktuell PG ${d.aktueller_pflegegrad || '?'})`],
+        ['Wohnsituation', d.wohnsituation || '-'],
+        ['Pflege vorhanden', (d.pflege_vorhanden === true || d.pflege_vorhanden === 'ja') ? 'Ja' : 'Nein'],
+        ['Gewuenschte Pflegeart', d.pflegeart === 'haeuslich' ? 'Haeuslich' : 'Vollstationaer'],
+        ['Leistungen', leistungenText || '-'],
+      ]},
+      { title: 'Pflegeperson & Arzt', fields: [
+        ['Pflegeperson', `${d.pflegeperson_vorname || ''} ${d.pflegeperson_nachname || ''}`.trim() || '-'],
+        ['Pflegedienst', d.pflegedienst_name || '-'],
+        ['Hausarzt', d.arzt_name || '-'],
+        ['Praxisanschrift', d.arzt_anschrift || '-'],
+      ]},
+      { title: 'Ergaenzende Angaben', fields: [
+        ['Leistungen von Dritten', (d.leistungen_dritte === true || d.leistungen_dritte === 'ja') ? `Ja: ${d.dritte_details || ''}` : 'Nein'],
+        ['Koerperverletzung', (d.koerperverletzung === true || d.koerperverletzung === 'ja') ? 'Ja' : 'Nein'],
+        ['Begutachtungs-Hinweis', d.begutachtung_hinweis || '-'],
+        ['Anmerkungen', d.anmerkungen || '-'],
+      ]},
+    ];
+
+    sections.forEach(sec => {
+      if (y > 255) { doc.addPage(); y = 20; }
+      doc.setFontSize(11);
+      doc.setTextColor(8, 55, 107);
+      doc.setFont(undefined, 'bold');
+      doc.text(sec.title, 15, y);
+      doc.setDrawColor(154, 235, 166);
+      doc.line(15, y + 1.5, 195, y + 1.5);
+      y += 7;
+      doc.setFont(undefined, 'normal');
+      doc.setFontSize(9);
+      sec.fields.forEach(([lbl, val]) => {
+        if (y > 275) { doc.addPage(); y = 20; }
+        doc.setTextColor(120, 120, 120);
+        doc.text(lbl + ':', 15, y);
+        doc.setTextColor(51, 51, 51);
+        const valStr = String(val || '-');
+        const splitVal = doc.splitTextToSize(valStr, 110);
+        doc.text(splitVal, 70, y);
+        y += splitVal.length * 4.5;
+      });
+      y += 5;
+    });
+
+    doc.setFontSize(7);
+    doc.setTextColor(180, 180, 180);
+    doc.text(`Erstellt mit dem Pflegegrad-Antragsassistenten von ${COMPANY.name}`, 105, 287, { align: 'center' });
+
+    return doc;
+  }
+
+  // ===== RESEND =====
+  async function doResend() {
+    if (!currentSubmission) return;
+    const btn = document.getElementById('btnSend');
+    btn.disabled = true;
+    btn.textContent = 'Sende...';
+    const emailKopie = document.getElementById('resendEmailInput').value.trim();
+
+    try {
+      logStatus('Generiere PDF...');
+      const pdfDoc = generatePDF(currentSubmission);
+      const pdfBlob = pdfDoc.output('blob');
+      logStatus(`PDF erstellt (${(pdfBlob.size / 1024).toFixed(1)} KB).`);
+
+      // PDF in Storage hochladen
+      logStatus('Lade PDF in Storage hoch...');
+      const pdfPath = `${currentSubmission.id}/Pflegegrad-Antrag_${currentSubmission.nachname || 'Antrag'}_nachgesendet.pdf`;
+      try {
+        const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/documents/${pdfPath}`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/pdf',
+            'x-upsert': 'true',
+          },
+          body: pdfBlob,
+        });
+        if (uploadRes.ok) {
+          logStatus('PDF erfolgreich hochgeladen.');
+        } else {
+          const errText = await uploadRes.text();
+          logStatus(`PDF-Upload fehlgeschlagen (${uploadRes.status}): ${errText.substring(0, 200)}`);
+          logStatus('(Versende trotzdem per E-Mail, da PDF nur fuer Archiv.)');
+        }
+      } catch (e) {
+        logStatus(`Storage-Upload Fehler: ${e.message}`);
+      }
+
+      // PDF zu base64
+      logStatus('Konvertiere PDF zu base64...');
+      const pdfArrayBuffer = await pdfBlob.arrayBuffer();
+      const pdfBytes = new Uint8Array(pdfArrayBuffer);
+      let binary = '';
+      for (let i = 0; i < pdfBytes.length; i++) binary += String.fromCharCode(pdfBytes[i]);
+      const pdfBase64 = btoa(binary);
+
+      // Edge Function aufrufen
+      logStatus('Rufe Edge Function send-pflegeantrag auf...');
+      const emailRes = await fetch(`${SUPABASE_URL}/functions/v1/send-pflegeantrag`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'apikey': SUPABASE_KEY,
+        },
+        body: JSON.stringify({
+          submission_id: currentSubmission.id,  // fuer DB-Status-Update
+          pdf_path: pdfPath,                     // fuer Archiv in DB
+          krankenkasse: currentSubmission.krankenkasse,
+          krankenkasse_andere: currentSubmission.krankenkasse_andere || null,
+          vorname: currentSubmission.vorname,
+          nachname: currentSubmission.nachname,
+          geburtsdatum: formatDate(currentSubmission.geburtsdatum),
+          versichertennummer: currentSubmission.versichertennummer,
+          antragsart: currentSubmission.antragsart,
+          antragsteller_email: emailKopie || null,
+          pdf_base64: pdfBase64,
+          einrichtung_name: COMPANY.name,
+          einrichtung_telefon: COMPANY.phone,
+        })
+      });
+      const result = await emailRes.json();
+      logStatus(`Antwort: ${JSON.stringify(result, null, 2)}`);
+
+      if (result.success) {
+        const pfStatus = result.results?.pflegekasse;
+        const antStatus = result.results?.antragsteller;
+        let msg = 'Erfolg!';
+        if (pfStatus === 'gesendet') msg += ` Krankenkasse: gesendet an ${result.pflegekasse_email}`;
+        if (pfStatus === 'keine_email_hinterlegt') msg += ' Krankenkasse: keine E-Mail hinterlegt (manueller Versand noetig)';
+        if (pfStatus === 'fehler') msg += ' Krankenkasse: Fehler beim Senden';
+        if (antStatus === 'gesendet') msg += ` | Antragsteller: Kopie gesendet`;
+        logStatus(msg);
+        btn.textContent = 'Fertig';
+        btn.style.background = '#27ae60';
+        btn.disabled = false;
+        btn.onclick = () => closeModal();
+      } else {
+        logStatus(`Fehler: ${result.error || 'unbekannt'}`);
+        btn.disabled = false;
+        btn.textContent = 'Erneut versuchen';
+      }
+    } catch (e) {
+      logStatus(`Unerwarteter Fehler: ${e.message}`);
+      btn.disabled = false;
+      btn.textContent = 'Erneut versuchen';
+    }
+  }
+
+  document.getElementById('resendModal').addEventListener('click', e => {
+    if (e.target.id === 'resendModal') closeModal();
+  });
+</script>
+
+</body>
+</html>

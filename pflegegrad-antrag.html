@@ -3354,9 +3354,11 @@
             const result = await res.json();
             console.log('Saved to Supabase:', result);
 
-            // Upload PDF to storage
+            // Upload PDF to storage, speichere ID + Pfad fuer spaeteren Edge-Function Aufruf
             if (result && result[0] && result[0].id) {
-              const pdfPath = `pflegegrad/${result[0].id}/Pflegegrad-Antrag_${d.nachname || 'Unbekannt'}.pdf`;
+              window.__submissionId = result[0].id;
+              const pdfPath = `${result[0].id}/Pflegegrad-Antrag_${d.nachname || 'Unbekannt'}.pdf`;
+              window.__pdfPath = pdfPath;
               await fetch(`${C.supabaseUrl}/storage/v1/object/documents/${pdfPath}`, {
                 method: 'POST',
                 headers: {
@@ -3412,8 +3414,14 @@
 
           const emailRes = await fetch(`${C.supabaseUrl}/functions/v1/send-pflegeantrag`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${C.supabaseAnonKey}`,
+              'apikey': C.supabaseAnonKey,
+            },
             body: JSON.stringify({
+              submission_id: window.__submissionId || null,
+              pdf_path: window.__pdfPath || null,
               krankenkasse: d.krankenkasse,
               krankenkasse_andere: d.krankenkasse_andere || null,
               vorname: d.vorname,
