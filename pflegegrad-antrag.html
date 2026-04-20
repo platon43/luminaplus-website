@@ -1465,22 +1465,36 @@
         <h3 style="font-family: 'Tenor Sans', serif; font-size: 1.1rem; color: #08376B; margin-bottom: 1rem;">Versand des Antrags</h3>
 
         <div class="agreement-item" style="background: rgba(53,192,237,0.06);">
-          <input type="checkbox" id="agree_email_versand" name="agree_email_versand">
+          <input type="checkbox" id="agree_email_versand" name="agree_email_versand" checked>
           <label for="agree_email_versand">
-            <strong>Antrag direkt an die Pflegekasse senden:</strong> Ich moechte, dass der Antrag in meinem Namen per E-Mail an die Pflegekasse bei meiner Krankenkasse gesendet wird. <span id="emailKasseHint" style="color:#9AEBA6; font-weight:600;"></span>
+            <strong>Antrag direkt an die Pflegekasse senden:</strong> Ich moechte, dass der Antrag in meinem Namen per E-Mail an die Pflegekasse bei meiner Krankenkasse gesendet wird. <span id="emailKasseHint" style="color:#2F90B0; font-weight:600;"></span>
           </label>
         </div>
 
-        <div class="conditional" id="condEmailKopie" style="display:none; margin-top:0;">
+        <!-- Fall A: Kasse-Versand aktiviert -> optionale Kopie an Antragsteller -->
+        <div class="conditional" id="condEmailKopie" style="display:block; margin-top:0;">
           <div class="form-group full" style="margin-top:0.75rem;">
-            <label for="antragsteller_email_versand">E-Mail fuer Kopie des Antrags</label>
-            <input type="email" id="antragsteller_email_versand" name="antragsteller_email_versand" placeholder="Ihre E-Mail-Adresse fuer eine Kopie des Antrags">
-            <div class="field-hint">Optional: Sie erhalten eine Kopie des Antrags an diese Adresse.</div>
+            <label for="antragsteller_email_versand">E-Mail fuer Kopie des Antrags <span style="color:var(--gray); font-weight:400;">(optional)</span></label>
+            <input type="email" id="antragsteller_email_versand" name="antragsteller_email_versand" placeholder="ihre.email@beispiel.de">
+            <div class="field-hint">Sie erhalten optional eine Kopie des Antrags an diese Adresse.</div>
           </div>
         </div>
 
+        <!-- Fall B: Kasse-Versand deaktiviert -> Pflicht-E-Mail an Antragsteller -->
+        <div class="conditional" id="condEmailSelbst" style="display:none; margin-top:0;">
+          <div class="info-box" style="margin-top:0.75rem; background:#fff8e1; border-left-color:#e89b00;">
+            <strong>Hinweis:</strong> Der Antrag wird nicht direkt an die Pflegekasse gesendet. Stattdessen senden wir ihn als PDF an Ihre E-Mail-Adresse, damit Sie ihn selbst an die Pflegekasse weiterleiten oder ausgedruckt per Post senden koennen.
+          </div>
+          <div class="form-group full" style="margin-top:0.75rem;">
+            <label for="antragsteller_email_selbst">Ihre E-Mail-Adresse <span style="color:#e74c3c;">*</span></label>
+            <input type="email" id="antragsteller_email_selbst" name="antragsteller_email_selbst" placeholder="ihre.email@beispiel.de" required>
+            <div class="field-hint">An diese Adresse senden wir Ihnen den fertigen Antrag als PDF.</div>
+          </div>
+        </div>
+
+        <!-- Fall C: Krankenkasse "Andere" oder keine E-Mail hinterlegt -->
         <div class="info-box" id="infoKeinEmail" style="display:none; margin-top:0.75rem;">
-          <strong>Hinweis:</strong> Fuer Ihre Krankenkasse liegt uns keine E-Mail-Adresse vor. Sie koennen den Antrag als PDF herunterladen und selbst an Ihre Pflegekasse senden.
+          <strong>Hinweis:</strong> Fuer Ihre Krankenkasse liegt uns keine E-Mail-Adresse vor. Der Antrag wird an Ihre E-Mail gesendet, damit Sie ihn selbst an die Pflegekasse weiterleiten koennen.
         </div>
       </div>
 
@@ -2460,7 +2474,32 @@
       if (versandCb) {
         versandCb.addEventListener('change', function() {
           const condKopie = document.getElementById('condEmailKopie');
-          condKopie.style.display = this.checked ? 'block' : 'none';
+          const condSelbst = document.getElementById('condEmailSelbst');
+          if (this.checked) {
+            // Kasse-Versand aktiv -> optionale Kopie-E-Mail
+            condKopie.style.display = 'block';
+            condSelbst.style.display = 'none';
+            // E-Mail-Adresse vom Pflicht-Feld in das Kopie-Feld uebernehmen
+            const selbstEmail = document.getElementById('antragsteller_email_selbst');
+            const kopieEmail = document.getElementById('antragsteller_email_versand');
+            if (selbstEmail && selbstEmail.value && kopieEmail && !kopieEmail.value) {
+              kopieEmail.value = selbstEmail.value;
+            }
+          } else {
+            // Kasse-Versand deaktiviert -> Pflicht-E-Mail an Antragsteller
+            condKopie.style.display = 'none';
+            condSelbst.style.display = 'block';
+            // E-Mail vom Kopie-Feld uebernehmen, falls vorhanden
+            const selbstEmail = document.getElementById('antragsteller_email_selbst');
+            const kopieEmail = document.getElementById('antragsteller_email_versand');
+            if (kopieEmail && kopieEmail.value && selbstEmail && !selbstEmail.value) {
+              selbstEmail.value = kopieEmail.value;
+            } else if (!selbstEmail.value) {
+              // Aus Schritt 2 (Personendaten) vorfuellen, falls leer
+              const formEmail = document.getElementById('email');
+              if (formEmail && formEmail.value) selbstEmail.value = formEmail.value;
+            }
+          }
         });
       }
     }
@@ -2845,6 +2884,31 @@
       }
     }
 
+    // --- STEP 8: Versandoptionen (E-Mail Pflicht, wenn Kasse-Versand deaktiviert) ---
+    if (step === 8) {
+      const cb = document.getElementById('agree_email_versand');
+      if (cb && !cb.checked) {
+        const selbstEmail = document.getElementById('antragsteller_email_selbst');
+        if (selbstEmail) {
+          const v = selbstEmail.value.trim();
+          if (!v) {
+            valid = false;
+            markError(selbstEmail, 'Bitte geben Sie eine E-Mail-Adresse an (der Antrag wird an diese Adresse gesendet).');
+          } else if (!isValidEmail(v)) {
+            valid = false;
+            markError(selbstEmail, 'Bitte eine gueltige E-Mail-Adresse eingeben.');
+          }
+        }
+      } else if (cb && cb.checked) {
+        // Optionale Kopie-E-Mail: nur pruefen wenn ausgefuellt
+        const kopieEmail = document.getElementById('antragsteller_email_versand');
+        if (kopieEmail && kopieEmail.value && !isValidEmail(kopieEmail.value)) {
+          valid = false;
+          markError(kopieEmail, 'Bitte eine gueltige E-Mail-Adresse eingeben.');
+        }
+      }
+    }
+
     if (!valid) {
       const firstError = stepEl.querySelector('.error, .alert-error, [style*="border-color: rgb(231, 76, 60)"]');
       if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2921,25 +2985,41 @@
     versandDiv.style.display = 'block';
     const emailHint = document.getElementById('emailKasseHint');
     const infoKein = document.getElementById('infoKeinEmail');
+    const cb = document.getElementById('agree_email_versand');
+    const condKopie = document.getElementById('condEmailKopie');
+    const condSelbst = document.getElementById('condEmailSelbst');
+    const selbstEmail = document.getElementById('antragsteller_email_selbst');
+    const kopieEmail = document.getElementById('antragsteller_email_versand');
+    const formEmail = document.getElementById('email');
     const kasseEmail = PFLEGEKASSEN_EMAILS[kk];
 
     if (kk === 'Andere' || !kasseEmail) {
+      // Kasse hat keine E-Mail: Checkbox deaktivieren + Pflicht-Versand an Antragsteller
       emailHint.textContent = '';
       infoKein.style.display = 'block';
-      document.getElementById('agree_email_versand').checked = false;
-      document.getElementById('agree_email_versand').disabled = true;
-      document.getElementById('condEmailKopie').style.display = 'none';
+      cb.checked = false;
+      cb.disabled = true;
+      condKopie.style.display = 'none';
+      condSelbst.style.display = 'block';
     } else {
+      // Kasse hat E-Mail: Checkbox aktivieren, Default checked
       emailHint.textContent = `(wird gesendet an: ${kasseEmail})`;
       infoKein.style.display = 'none';
-      document.getElementById('agree_email_versand').disabled = false;
+      cb.disabled = false;
+      // Zustand entsprechend Checkbox anzeigen
+      if (cb.checked) {
+        condKopie.style.display = 'block';
+        condSelbst.style.display = 'none';
+      } else {
+        condKopie.style.display = 'none';
+        condSelbst.style.display = 'block';
+      }
     }
 
-    // Pre-fuellen der Kopie-E-Mail aus Schritt 2
-    const formEmail = document.getElementById('email');
-    const kopieEmail = document.getElementById('antragsteller_email_versand');
-    if (formEmail && formEmail.value && kopieEmail && !kopieEmail.value) {
-      kopieEmail.value = formEmail.value;
+    // E-Mail-Felder aus Schritt 2 vorfuellen
+    if (formEmail && formEmail.value) {
+      if (kopieEmail && !kopieEmail.value) kopieEmail.value = formEmail.value;
+      if (selbstEmail && !selbstEmail.value) selbstEmail.value = formEmail.value;
     }
   }
 
@@ -3393,10 +3473,16 @@
         } catch (e) { console.log('Notification error:', e); }
       }
 
-      // E-Mail an Pflegekasse senden
+      // E-Mail senden (immer: entweder an Kasse+optional Kopie, oder nur an Antragsteller)
       let emailResult = null;
       const emailVersand = document.getElementById('agree_email_versand');
-      if (C.enableEmailToKasse && emailVersand && emailVersand.checked && C.supabaseUrl) {
+      const sendToKasse = emailVersand ? emailVersand.checked : true;
+      // Antragsteller-E-Mail: Kopie-Feld wenn Kasse-Versand aktiv, sonst Pflicht-Feld
+      const antragstellerEmail = sendToKasse
+        ? (document.getElementById('antragsteller_email_versand').value.trim() || null)
+        : (document.getElementById('antragsteller_email_selbst').value.trim() || null);
+
+      if (C.enableEmailToKasse && C.supabaseUrl) {
         try {
           btn.textContent = 'Antrag wird gesendet...';
           // PDF als base64 konvertieren
@@ -3410,7 +3496,6 @@
 
           let kk = d.krankenkasse || '';
           if (kk === 'Andere' && d.krankenkasse_andere) kk = d.krankenkasse_andere;
-          const emailKopie = document.getElementById('antragsteller_email_versand').value.trim();
 
           const emailRes = await fetch(`${C.supabaseUrl}/functions/v1/send-pflegeantrag`, {
             method: 'POST',
@@ -3422,6 +3507,7 @@
             body: JSON.stringify({
               submission_id: window.__submissionId || null,
               pdf_path: window.__pdfPath || null,
+              send_to_kasse: sendToKasse, // false wenn User Checkbox deaktiviert hat
               krankenkasse: d.krankenkasse,
               krankenkasse_andere: d.krankenkasse_andere || null,
               vorname: d.vorname,
@@ -3429,7 +3515,7 @@
               geburtsdatum: formatDate(d.geburtsdatum),
               versichertennummer: d.versichertennummer,
               antragsart: d.antragsart,
-              antragsteller_email: emailKopie || null,
+              antragsteller_email: antragstellerEmail,
               pdf_base64: pdfBase64,
               einrichtung_name: C.companyName,
               einrichtung_telefon: C.companyPhone,
