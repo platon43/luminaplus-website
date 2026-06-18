@@ -1708,13 +1708,37 @@
           headers: {
             'apikey': SUPABASE_ANON_KEY,
             'Content-Type': 'application/json',
-            'Prefer': 'return=minimal'
+            'Prefer': 'return=representation'
           },
           body: JSON.stringify(payload)
         });
 
         if (!res.ok) {
           throw new Error('Server error: ' + res.status);
+        }
+
+        // Anfrage-ID aus der Antwort lesen, damit wir die E-Mail-Benachrichtigung ausloesen koennen
+        var anfrageId = null;
+        try {
+          var inserted = await res.json();
+          if (Array.isArray(inserted) && inserted.length > 0 && inserted[0].id) {
+            anfrageId = inserted[0].id;
+          }
+        } catch(_) {}
+
+        // Benachrichtigungs-E-Mail an info@luminaplus.de + redouane.bensfia@luminaplus.de schicken
+        // Fire-and-forget: blockiert nicht das UI, Fehler werden geloggt aber nicht angezeigt
+        if (anfrageId) {
+          fetch(SUPABASE_URL + '/functions/v1/send-anfrage-notification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({ anfrage_id: anfrageId })
+          }).catch(function(err){
+            console.warn('[anfrage-notification] failed', err);
+          });
         }
 
         // Conversion-Events (falls Tracking vorhanden)
