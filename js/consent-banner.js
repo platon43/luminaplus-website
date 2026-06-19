@@ -80,7 +80,7 @@
         &#x1F36A; Wir respektieren Ihre Privatsphaere
       </h3>
       <p style="margin: 0 0 1rem; font-size: 0.88rem; line-height: 1.6; color: #4a5560;">
-        Diese Website verwendet technisch notwendige Speicherung (localStorage) und laedt externe Schriftarten von Google Fonts sowie PDF-Bibliotheken von Cloudflare. Dabei wird Ihre IP-Adresse an diese Dienste uebermittelt.
+        Diese Website verwendet technisch notwendige Speicherung (localStorage), laedt externe Schriftarten von Google Fonts sowie PDF-Bibliotheken von Cloudflare und nutzt auf einzelnen Werbeseiten Tracking-Tools von Google Ads, Meta (Facebook/Instagram) und TikTok. Dabei wird Ihre IP-Adresse an diese Dienste uebermittelt.
         Bitte waehlen Sie, womit Sie einverstanden sind:
       </p>
 
@@ -95,7 +95,7 @@
         </label>
         <label style="display:flex; align-items:flex-start; gap: 0.5rem; cursor: pointer;">
           <input type="checkbox" id="consentExternal" checked style="margin-top: 0.25rem;">
-          <span><strong>Externe Ressourcen</strong> - Google Fonts und CDN-Bibliotheken. Ohne diese werden System-Schriften verwendet und manche Features (PDF-Download) funktionieren nicht.</span>
+          <span><strong>Externe Ressourcen &amp; Marketing</strong> - Google Fonts, CDN-Bibliotheken sowie Werbe-/Tracking-Pixel (Google Ads, Meta Pixel, TikTok Pixel) auf Werbeseiten. Hilft uns, unsere Anzeigen zu optimieren. Ohne diese werden System-Schriften verwendet und einzelne Features (PDF-Download) funktionieren nicht.</span>
         </label>
       </div>
 
