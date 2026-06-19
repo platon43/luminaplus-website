@@ -1673,7 +1673,23 @@
         return;
       }
 
+      // UUID v4 clientseitig generieren, damit wir die ID OHNE return=representation kennen
+      // (anon hat nur INSERT-Recht, kein SELECT — return=representation wuerde scheitern)
+      function uuidv4() {
+        if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+          return window.crypto.randomUUID();
+        }
+        // Fallback fuer aeltere Browser
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0;
+          var v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+      var anfrageId = uuidv4();
+
       var payload = {
+        id: anfrageId,
         vorname: (fd.get('vorname') || '').toString().trim(),
         nachname: (fd.get('nachname') || '').toString().trim(),
         telefon: (fd.get('telefon') || '').toString().trim(),
@@ -1708,7 +1724,7 @@
           headers: {
             'apikey': SUPABASE_ANON_KEY,
             'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
+            'Prefer': 'return=minimal'
           },
           body: JSON.stringify(payload)
         });
@@ -1717,29 +1733,18 @@
           throw new Error('Server error: ' + res.status);
         }
 
-        // Anfrage-ID aus der Antwort lesen, damit wir die E-Mail-Benachrichtigung ausloesen koennen
-        var anfrageId = null;
-        try {
-          var inserted = await res.json();
-          if (Array.isArray(inserted) && inserted.length > 0 && inserted[0].id) {
-            anfrageId = inserted[0].id;
-          }
-        } catch(_) {}
-
         // Benachrichtigungs-E-Mail an info@luminaplus.de + redouane.bensfia@luminaplus.de schicken
         // Fire-and-forget: blockiert nicht das UI, Fehler werden geloggt aber nicht angezeigt
-        if (anfrageId) {
-          fetch(SUPABASE_URL + '/functions/v1/send-anfrage-notification', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': SUPABASE_ANON_KEY
-            },
-            body: JSON.stringify({ anfrage_id: anfrageId })
-          }).catch(function(err){
-            console.warn('[anfrage-notification] failed', err);
-          });
-        }
+        fetch(SUPABASE_URL + '/functions/v1/send-anfrage-notification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({ anfrage_id: anfrageId })
+        }).catch(function(err){
+          console.warn('[anfrage-notification] failed', err);
+        });
 
         // Conversion-Events (falls Tracking vorhanden)
         try {
