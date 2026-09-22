@@ -854,7 +854,7 @@
             <input type="text" name="weitere_beschaeftigung_1_name">
           </div>
           <div class="form-group">
-            <label>Beginn der Besch&auml;ftigung</label>
+            <label>Beginn der Besch&auml;ftigung <span style="font-weight:normal;color:var(--gray);">(bei Minijob Pflicht)</span></label>
             <input type="date" name="weitere_beschaeftigung_1_beginn">
           </div>
         </div>
@@ -881,7 +881,7 @@
             <input type="text" name="weitere_beschaeftigung_2_name">
           </div>
           <div class="form-group">
-            <label>Beginn der Besch&auml;ftigung</label>
+            <label>Beginn der Besch&auml;ftigung <span style="font-weight:normal;color:var(--gray);">(bei Minijob Pflicht)</span></label>
             <input type="date" name="weitere_beschaeftigung_2_beginn">
           </div>
         </div>
@@ -1130,6 +1130,34 @@
     return true;
   }
 
+  // RPC-Aufruf (Code-Pruefung/-Entwertung ohne direkten Tabellenzugriff)
+  async function supabaseRpc(fn, args) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(args)
+    });
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(err);
+    }
+    const text = await res.text();
+    return text ? JSON.parse(text) : null;
+  }
+
+  // UUID v4 (clientseitig, damit kein Lesezugriff nach dem Insert noetig ist)
+  function newUuid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
   let currentCode = null;
   const uploadedFiles = { ausweis: null, svausweis: null, krankenkasse: null };
   let customQualiCount = 0;
@@ -1348,8 +1376,10 @@
       ]},
       { title: 'Weitere Beschaeftigungen', fields: [
         ['Arbeitgeber 1', data.weitere_beschaeftigung_1_name],
+        ['Beginn 1', data.weitere_beschaeftigung_1_beginn ? new Date(data.weitere_beschaeftigung_1_beginn).toLocaleDateString('de-DE') : null],
         ['Art / Verdienst 1', (data.weitere_beschaeftigung_1_art || '-') + ' / ' + (data.weitere_beschaeftigung_1_verdienst || '-') + ' EUR'],
         ['Arbeitgeber 2', data.weitere_beschaeftigung_2_name],
+        ['Beginn 2', data.weitere_beschaeftigung_2_beginn ? new Date(data.weitere_beschaeftigung_2_beginn).toLocaleDateString('de-DE') : null],
         ['Art / Verdienst 2', (data.weitere_beschaeftigung_2_art || '-') + ' / ' + (data.weitere_beschaeftigung_2_verdienst || '-') + ' EUR'],
       ]},
     ];
@@ -1487,12 +1517,8 @@
       return;
     }
 
-    // For now: simple code verification (will connect to Supabase)
-    // TODO: Replace with Supabase query
     try {
-      const data = await supabaseQuery('invitation_codes', 'GET', {
-        query: `code=eq.${encodeURIComponent(code)}&used=eq.false&expires_at=gt.${new Date().toISOString()}&select=id,code,employee_name`
-      });
+      const data = await supabaseRpc('check_invitation_code', { p_code: code });
 
       if (data && data.length > 0) {
         currentCode = code;
@@ -1616,9 +1642,24 @@
         return;
       }
 
-      // Insert submission (return data to get ID)
-      const insertResult = await supabaseQuery('employee_submissions', 'POST', { body: submission, returnData: true });
-      const submissionId = insertResult[0].id;
+      // Minijob: Eintrittsdatum der weiteren Beschaeftigung(en) ist Pflicht
+      const isMinijobType = submission.employment_type === 'minijob_standard' || submission.employment_type === 'minijob_rvfrei';
+      if (isMinijobType) {
+        for (const nr of ['1', '2']) {
+          const filled = submission['weitere_beschaeftigung_' + nr + '_name'] || submission['weitere_beschaeftigung_' + nr + '_art'] || submission['weitere_beschaeftigung_' + nr + '_verdienst'];
+          if (filled && !submission['weitere_beschaeftigung_' + nr + '_beginn']) {
+            alert('Bitte geben Sie den Beginn der weiteren Beschäftigung ' + nr + ' an.\n\nBei einem Minijob ist das Eintrittsdatum weiterer Beschäftigungen für die sozialversicherungsrechtliche Beurteilung erforderlich.');
+            btn.disabled = false;
+            btn.textContent = 'Personalfragebogen absenden';
+            return;
+          }
+        }
+      }
+
+      // Insert submission (ID wird clientseitig erzeugt — kein Lesezugriff noetig)
+      const submissionId = newUuid();
+      submission.id = submissionId;
+      await supabaseQuery('employee_submissions', 'POST', { body: submission });
 
       // Upload files to Supabase Storage
       btn.textContent = 'Dokumente werden hochgeladen...';
@@ -1633,11 +1674,8 @@
       btn.textContent = 'Wird verarbeitet...';
       triggerDriveProcessing(submissionId);
 
-      // Mark code as used
-      await supabaseQuery('invitation_codes', 'PATCH', {
-        query: `code=eq.${encodeURIComponent(currentCode)}`,
-        body: { used: true, used_at: new Date().toISOString() }
-      });
+      // Mark code as used (via RPC — kein direkter Tabellenzugriff)
+      await supabaseRpc('mark_invitation_code_used', { p_code: currentCode });
 
       // Send success notification
       const fileNames = fileResults.map(f => f.fileName).join(', ') || 'Keine';
