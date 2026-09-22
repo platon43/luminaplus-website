@@ -461,23 +461,18 @@
 <script>
   const SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
-  // Admin password hash (SHA-256 of password)
-  const ADMIN_HASH = '6c7579fdd27803f5a309ef76497f94b8275397d0f3a1d1eb89717ec455766643';
+  // Admin-Login via Supabase Auth (Passwort-Pruefung serverseitig, Zugriff per RLS)
+  const ADMIN_EMAIL = 'info@luminaplus.de';
+  let adminToken = sessionStorage.getItem('admin_token') || null;
 
   let currentSubmission = null;
-
-  // Simple SHA-256
-  async function sha256(str) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-  }
 
   // Supabase query helper
   async function query(table, method, params = {}) {
     let url = `${SUPABASE_URL}/rest/v1/${table}`;
     const headers = {
       'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Authorization': `Bearer ${adminToken || SUPABASE_KEY}`,
       'Content-Type': 'application/json',
     };
     if (method === 'POST') headers['Prefer'] = 'return=representation';
@@ -486,23 +481,32 @@
     const options = { method, headers };
     if (params.body) options.body = JSON.stringify(params.body);
     const res = await fetch(url, options);
+    if (res.status === 401) { logout(); return []; }
     if (method === 'DELETE') return true;
     return res.json();
   }
 
-  // LOGIN
+  // LOGIN (Supabase Auth, Token 1h gueltig)
   async function adminLogin() {
     const pw = document.getElementById('adminPassword').value;
-    const hash = await sha256(pw);
-    if (hash === ADMIN_HASH) {
-      sessionStorage.setItem('admin', '1');
+    try {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: ADMIN_EMAIL, password: pw })
+      });
+      if (!res.ok) throw new Error('login failed');
+      const d = await res.json();
+      adminToken = d.access_token;
+      sessionStorage.setItem('admin_token', adminToken);
       showDashboard();
-    } else {
+    } catch (e) {
       document.getElementById('loginError').style.display = 'block';
     }
   }
   function logout() {
-    sessionStorage.removeItem('admin');
+    adminToken = null;
+    sessionStorage.removeItem('admin_token');
     location.reload();
   }
   function showDashboard() {
@@ -512,7 +516,7 @@
     loadCodes();
     loadNotifications();
   }
-  if (sessionStorage.getItem('admin') === '1') showDashboard();
+  if (adminToken) showDashboard();
 
   // TABS
   function switchTab(name) {
