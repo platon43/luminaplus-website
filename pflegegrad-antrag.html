@@ -3419,25 +3419,31 @@
             einrichtung: C.companyName,
           };
 
+          // ID clientseitig erzeugen (kein Lesezugriff nach dem Insert noetig)
+          const submissionId = (window.crypto && crypto.randomUUID)
+            ? crypto.randomUUID()
+            : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+                const r = Math.random() * 16 | 0;
+                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+              });
+          submission.id = submissionId;
+
           const res = await fetch(`${C.supabaseUrl}/rest/v1/${C.supabaseTable}`, {
             method: 'POST',
             headers: {
               'apikey': C.supabaseAnonKey,
               'Authorization': `Bearer ${C.supabaseAnonKey}`,
               'Content-Type': 'application/json',
-              'Prefer': 'return=representation'
+              'Prefer': 'return=minimal'
             },
             body: JSON.stringify(submission)
           });
 
           if (res.ok) {
-            const result = await res.json();
-            console.log('Saved to Supabase:', result);
-
             // Upload PDF to storage, speichere ID + Pfad fuer spaeteren Edge-Function Aufruf
-            if (result && result[0] && result[0].id) {
-              window.__submissionId = result[0].id;
-              const pdfPath = `${result[0].id}/Pflegegrad-Antrag_${d.nachname || 'Unbekannt'}.pdf`;
+            if (submissionId) {
+              window.__submissionId = submissionId;
+              const pdfPath = `${submissionId}/Pflegegrad-Antrag_${d.nachname || 'Unbekannt'}.pdf`;
               window.__pdfPath = pdfPath;
               await fetch(`${C.supabaseUrl}/storage/v1/object/documents/${pdfPath}`, {
                 method: 'POST',
