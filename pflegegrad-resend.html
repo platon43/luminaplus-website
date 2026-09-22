@@ -113,7 +113,8 @@
   // ===== CONFIG =====
   const SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
-  const ADMIN_HASH = '6c7579fdd27803f5a309ef76497f94b8275397d0f3a1d1eb89717ec455766643';
+  const ADMIN_EMAIL = 'info@luminaplus.de';
+  let adminToken = sessionStorage.getItem('pflege_resend_token') || null;
   const COMPANY = { name: 'LuminaPlus eG', phone: '+49 40 18035922' };
 
   let currentSubmission = null;
@@ -126,11 +127,18 @@
 
   async function login() {
     const pw = document.getElementById('pwInput').value;
-    const hash = await sha256(pw);
-    if (hash === ADMIN_HASH) {
-      sessionStorage.setItem('pflege_resend_auth', '1');
+    try {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: ADMIN_EMAIL, password: pw })
+      });
+      if (!res.ok) throw new Error('login');
+      const d = await res.json();
+      adminToken = d.access_token;
+      sessionStorage.setItem('pflege_resend_token', adminToken);
       showMain();
-    } else {
+    } catch (e) {
       document.getElementById('loginError').textContent = 'Falsches Passwort';
     }
   }
@@ -145,7 +153,7 @@
     loadSubmissions();
   }
 
-  if (sessionStorage.getItem('pflege_resend_auth') === '1') {
+  if (adminToken) {
     showMain();
   }
 
@@ -153,7 +161,7 @@
   async function loadSubmissions() {
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/pflegegrad_applications?select=*&order=created_at.desc`, {
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${adminToken || SUPABASE_KEY}` }
       });
       const data = await res.json();
       renderSubmissions(data);
@@ -474,7 +482,7 @@
           method: 'POST',
           headers: {
             'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Authorization': `Bearer ${adminToken || SUPABASE_KEY}`,
             'Content-Type': 'application/pdf',
             'x-upsert': 'true',
           },
@@ -505,7 +513,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Authorization': `Bearer ${adminToken || SUPABASE_KEY}`,
           'apikey': SUPABASE_KEY,
         },
         body: JSON.stringify({
