@@ -235,7 +235,22 @@
             <input type="number" id="extra_vacation" name="extra_vacation" min="0" max="60" step="1" value="0" required>
           </div>
 
-          <button type="submit" class="btn" id="submitBtn">Vertragsdaten speichern</button>
+          <!-- Vertrag jetzt erstellen? -->
+          <div class="field">
+            <label>Arbeitsvertrag jetzt erstellen? <span class="hint">erzeugt den Vertrag in Google Drive und mailt ihn an die Geschäftsführung</span></label>
+            <div class="choices">
+              <div class="choice">
+                <input type="radio" name="create_contract" id="cc_ja" value="ja" checked>
+                <label for="cc_ja">✅ Ja, Vertrag erstellen</label>
+              </div>
+              <div class="choice">
+                <input type="radio" name="create_contract" id="cc_nein" value="nein">
+                <label for="cc_nein">Nur Daten speichern</label>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" id="submitBtn">Speichern</button>
         </form>
       </div>
     </div>
@@ -404,11 +419,14 @@
           return;
         }
 
-        // Schritt 3: Vertrag erzeugen + an Geschäftsführung mailen (best effort)
+        // Schritt 3: Vertrag erzeugen + an Geschäftsführung mailen (nur wenn gewünscht)
+        const wantContract = document.querySelector('input[name="create_contract"]:checked')?.value !== 'nein';
         const name = ($('employeeName').textContent || '').trim();
-        let msg = 'Die Vertragsdaten wurden gespeichert.';
+        let msg = wantContract
+          ? 'Die Vertragsdaten wurden gespeichert.'
+          : 'Die Vertragsdaten wurden gespeichert. Es wurde noch kein Vertrag erstellt.';
         try {
-          if (sid) {
+          if (sid && wantContract) {
             btn.textContent = 'Vertrag wird erstellt …';
             const gen = await callFunction('generate-contract', { submission_id: sid, contract_data: data });
             if (gen && gen.success) {
