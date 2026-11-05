@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Vertragsdaten erfassen | LuminaPlus eG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #08376B;
+      --light-blue: #35C0ED;
+      --dark-blue: #2F90B0;
+      --green: #9AEBA6;
+      --white: #ffffff;
+      --off-white: #f7fafa;
+      --gray: #6b7d8a;
+      --light-gray: #e8eef1;
+      --red: #e74c3c;
+      --font-heading: 'Tenor Sans', serif;
+      --font-body: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-body); color: #333; line-height: 1.7; background: var(--off-white); }
+
+    .wrap { max-width: 640px; margin: 0 auto; padding: 24px 16px 64px; }
+
+    .card { background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 4px 24px rgba(8,55,107,0.08); }
+    .card-header { background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%); padding: 28px 32px; color: #fff; }
+    .card-header h1 { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 400; margin-bottom: 4px; }
+    .card-header p { font-size: 0.9rem; opacity: 0.92; }
+    .card-body { padding: 28px 32px; }
+
+    .subject { background: var(--off-white); border: 1px solid var(--light-gray); border-radius: 10px; padding: 14px 18px; margin-bottom: 24px; }
+    .subject .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray); }
+    .subject .name { font-size: 1.15rem; font-weight: 600; color: var(--navy); }
+
+    .field { margin-bottom: 20px; }
+    .field > label { display: block; font-weight: 600; color: var(--navy); font-size: 0.9rem; margin-bottom: 8px; }
+    .field .hint { font-weight: 400; color: var(--gray); font-size: 0.8rem; }
+    input[type="text"], input[type="number"], input[type="date"], select {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--light-gray); border-radius: 8px;
+      font-family: var(--font-body); font-size: 0.95rem; color: #333; background: #fff;
+    }
+    input:focus, select:focus { outline: none; border-color: var(--light-blue); box-shadow: 0 0 0 3px rgba(53,192,237,0.15); }
+
+    .choices { display: flex; gap: 10px; flex-wrap: wrap; }
+    .choice { flex: 1 1 140px; }
+    .choice input { position: absolute; opacity: 0; pointer-events: none; }
+    .choice label {
+      display: block; text-align: center; padding: 14px 12px; border: 1.5px solid var(--light-gray);
+      border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--navy);
+      transition: all 0.15s; user-select: none;
+    }
+    .choice input:checked + label { border-color: var(--light-blue); background: rgba(53,192,237,0.10); color: var(--dark-blue); }
+
+    .warn { color: var(--red); font-size: 0.82rem; margin-top: 6px; display: none; }
+    .warn.visible { display: block; }
+
+    .btn {
+      width: 100%; padding: 15px; background: var(--light-blue); color: #fff; border: none;
+      border-radius: 10px; font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+      cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 8px;
+    }
+    .btn:hover { background: var(--dark-blue); transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .state { text-align: center; padding: 48px 24px; }
+    .state .icon { font-size: 3rem; margin-bottom: 12px; }
+    .state h2 { font-family: var(--font-heading); font-weight: 400; color: var(--navy); margin-bottom: 8px; }
+    .state p { color: var(--gray); }
+
+    .hidden { display: none; }
+    .footer { text-align: center; color: var(--gray); font-size: 0.78rem; margin-top: 20px; }
+    .footer a { color: var(--dark-blue); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Ladezustand -->
+    <div id="loadingState" class="card">
+      <div class="state">
+        <div class="icon">⏳</div>
+        <p>Einen Moment, Daten werden geladen …</p>
+      </div>
+    </div>
+
+    <!-- Fehlerzustand (ungueltiger/verbrauchter Token) -->
+    <div id="errorState" class="card hidden">
+      <div class="state">
+        <div class="icon">🔒</div>
+        <h2 id="errorTitle">Link ungültig</h2>
+        <p id="errorText">Dieser Link ist ungültig oder wurde bereits verwendet.</p>
+      </div>
+    </div>
+
+    <!-- Erfolgszustand -->
+    <div id="successState" class="card hidden">
+      <div class="state">
+        <div class="icon">✅</div>
+        <h2>Vielen Dank!</h2>
+        <p>Die Vertragsdaten wurden gespeichert und der Einreichung hinzugefügt.</p>
+      </div>
+    </div>
+
+    <!-- Formular -->
+    <div id="formState" class="card hidden">
+      <div class="card-header">
+        <h1>Vertragsdaten erfassen</h1>
+        <p>Angaben für die Arbeitsvertrags-Erstellung</p>
+      </div>
+      <div class="card-body">
+        <div class="subject">
+          <div class="label">Mitarbeiter:in</div>
+          <div class="name" id="employeeName">—</div>
+        </div>
+
+        <form id="contractForm" autocomplete="off">
+
+          <!-- Vertragsart -->
+          <div class="field">
+            <label>Vertragsart</label>
+            <div class="choices" id="typeChoices">
+              <div class="choice">
+                <input type="radio" name="contract_type" id="type_fest" value="festanstellung" required>
+                <label for="type_fest">📄 Festanstellung</label>
+              </div>
+              <div class="choice">
+                <input type="radio" name="contract_type" id="type_mini" value="minijob">
+                <label for="type_mini">💼 Minijob</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Befristung (nur Festanstellung) -->
+          <div class="field hidden" id="befristungField">
+            <label>Befristung</label>
+            <div class="choices">
+              <div class="choice">
+                <input type="radio" name="befristung" id="bef_un" value="unbefristet">
+                <label for="bef_un">Unbefristet</label>
+              </div>
+              <div class="choice">
+                <input type="radio" name="befristung" id="bef_be" value="befristet">
+                <label for="bef_be">Befristet</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Befristungsdauer (nur befristet) -->
+          <div class="field hidden" id="dauerField">
+            <label for="befristung_dauer">Befristungsdauer <span class="hint">z. B. 6 Monate, 1 Jahr, 18 Monate</span></label>
+            <input type="text" id="befristung_dauer" name="befristung_dauer" placeholder="z. B. 1 Jahr">
+          </div>
+
+          <!-- Startdatum -->
+          <div class="field">
+            <label for="start_date">Startdatum / Eintrittsdatum</label>
+            <input type="date" id="start_date" name="start_date" required>
+          </div>
+
+          <!-- Position -->
+          <div class="field">
+            <label for="job_title">Berufsbezeichnung / Position</label>
+            <select id="job_title" name="job_title" required>
+              <option value="" disabled selected>Bitte wählen …</option>
+              <option>Pflegefachfrau</option>
+              <option>Pflegefachmann</option>
+              <option>Pflegefachkraft</option>
+              <option>Pflegehilfskraft</option>
+              <option>Altenpflegehilfskraft</option>
+              <option>Krankenpflegehelfer/in</option>
+              <option>Gesundheits- und Pflegeassistent/in</option>
+              <option>Bürokauffrau</option>
+              <option>Bürokaufmann</option>
+              <option>Behindertenpflege</option>
+              <option value="__other__">Andere (bitte eintippen) …</option>
+            </select>
+          </div>
+          <div class="field hidden" id="jobOtherField">
+            <label for="job_title_other">Andere Berufsbezeichnung</label>
+            <input type="text" id="job_title_other" placeholder="Berufsbezeichnung eingeben">
+          </div>
+
+          <!-- Wochenstunden -->
+          <div class="field">
+            <label for="hours_per_week">Wochenstunden <span class="hint">z. B. 10, 20, 30, 40</span></label>
+            <input type="number" id="hours_per_week" name="hours_per_week" min="1" max="60" step="0.5" required>
+          </div>
+
+          <!-- Arbeitstage pro Woche -->
+          <div class="field">
+            <label for="days_per_week">Arbeitstage pro Woche</label>
+            <select id="days_per_week" name="days_per_week" required>
+              <option value="" disabled selected>Bitte wählen …</option>
+              <option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option>
+            </select>
+          </div>
+
+          <!-- Stundenlohn (nur Minijob) -->
+          <div class="field hidden" id="hourlyRateField">
+            <label for="hourly_rate">Stundenlohn (€) <span class="hint">z. B. 16.10</span></label>
+            <input type="number" id="hourly_rate" name="hourly_rate" min="0" step="0.01" placeholder="16.10">
+            <div class="warn" id="hourlyWarn">Achtung: liegt unter dem Mindestlohn (13,90 €/Std, 2026).</div>
+          </div>
+
+          <!-- Bruttomonatsgehalt (nur Festanstellung) -->
+          <div class="field hidden" id="salaryField">
+            <label for="monthly_salary">Bruttomonatsgehalt (€) <span class="hint">z. B. 2600</span></label>
+            <input type="number" id="monthly_salary" name="monthly_salary" min="0" step="1" placeholder="2600">
+            <div class="warn" id="salaryWarn">Hinweis: Pflegemindestlohn 16,10 €/Std bei Pflegefachkräften beachten.</div>
+          </div>
+
+          <!-- Weihnachtsgeld (nur Festanstellung) -->
+          <div class="field hidden" id="weihnachtsgeldField">
+            <label>Weihnachtsgeld? <span class="hint">50 % eines Bruttomonatsgehalts, Auszahlung November</span></label>
+            <div class="choices">
+              <div class="choice">
+                <input type="radio" name="weihnachtsgeld" id="wg_ja" value="ja">
+                <label for="wg_ja">✅ Ja</label>
+              </div>
+              <div class="choice">
+                <input type="radio" name="weihnachtsgeld" id="wg_nein" value="nein" checked>
+                <label for="wg_nein">❌ Nein</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Extra-Urlaub -->
+          <div class="field">
+            <label for="extra_vacation">Extra-Urlaubstage <span class="hint">zusätzlich zum gesetzlichen Anspruch, z. B. 0, 5, 10</span></label>
+            <input type="number" id="extra_vacation" name="extra_vacation" min="0" max="60" step="1" value="0" required>
+          </div>
+
+          <button type="submit" class="btn" id="submitBtn">Vertragsdaten speichern</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">
+      LuminaPlus eG · <a href="https://www.luminaplus.de">www.luminaplus.de</a>
+    </div>
+  </div>
+
+  <script>
+    // ===== SUPABASE (nur oeffentlicher anon-Key; Zugriff ausschliesslich ueber RPCs) =====
+    const SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
+
+    async function rpc(fn, args) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(args)
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const text = await res.text();
+      return text ? JSON.parse(text) : null;
+    }
+
+    // Edge Function aufrufen (Schritt 3: Vertrag erzeugen + Mail)
+    async function callFunction(name, body) {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/${name}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      const text = await res.text();
+      let json = null; try { json = text ? JSON.parse(text) : null; } catch (_) {}
+      if (!res.ok) throw new Error((json && json.error) || text || ('HTTP ' + res.status));
+      return json;
+    }
+
+    const $ = (id) => document.getElementById(id);
+    const params = new URLSearchParams(location.search);
+    const token = params.get('token') || '';
+    const sid = params.get('sid') || '';
+
+    function show(stateId) {
+      ['loadingState', 'errorState', 'successState', 'formState'].forEach(s => {
+        $(s).classList.toggle('hidden', s !== stateId);
+      });
+    }
+    function showError(title, text) {
+      $('errorTitle').textContent = title;
+      $('errorText').textContent = text;
+      show('errorState');
+    }
+
+    // ===== Bedingte Felder =====
+    function updateVisibility() {
+      const type = document.querySelector('input[name="contract_type"]:checked')?.value;
+      const isFest = type === 'festanstellung';
+      const isMini = type === 'minijob';
+
+      $('befristungField').classList.toggle('hidden', !isFest);
+      $('salaryField').classList.toggle('hidden', !isFest);
+      $('weihnachtsgeldField').classList.toggle('hidden', !isFest);
+      $('hourlyRateField').classList.toggle('hidden', !isMini);
+
+      const bef = document.querySelector('input[name="befristung"]:checked')?.value;
+      $('dauerField').classList.toggle('hidden', !(isFest && bef === 'befristet'));
+    }
+
+    document.querySelectorAll('input[name="contract_type"]').forEach(el => el.addEventListener('change', updateVisibility));
+    document.querySelectorAll('input[name="befristung"]').forEach(el => el.addEventListener('change', updateVisibility));
+
+    $('job_title').addEventListener('change', () => {
+      $('jobOtherField').classList.toggle('hidden', $('job_title').value !== '__other__');
+    });
+
+    // ===== Live-Warnungen (blockieren nicht) =====
+    $('hourly_rate').addEventListener('input', () => {
+      const v = parseFloat($('hourly_rate').value.replace(',', '.'));
+      $('hourlyWarn').classList.toggle('visible', !isNaN(v) && v > 0 && v < 13.90);
+    });
+    $('monthly_salary').addEventListener('input', () => {
+      const salary = parseFloat($('monthly_salary').value.replace(',', '.'));
+      const hours = parseFloat(($('hours_per_week').value || '0').replace(',', '.'));
+      const job = ($('job_title').value || '').toLowerCase();
+      if (!isNaN(salary) && salary > 0 && hours > 0 && job.includes('pflegefach')) {
+        const rate = salary / (hours * 4.33);
+        $('salaryWarn').classList.toggle('visible', rate < 16.10);
+      } else {
+        $('salaryWarn').classList.remove('visible');
+      }
+    });
+
+    // ===== Datum yyyy-mm-dd -> dd.mm.yyyy (Format wie im Bot/Vertrag) =====
+    function toGermanDate(iso) {
+      const m = (iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      return m ? `${m[3]}.${m[2]}.${m[1]}` : iso;
+    }
+
+    // ===== Absenden =====
+    $('contractForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = $('submitBtn');
+      const type = document.querySelector('input[name="contract_type"]:checked')?.value;
+
+      // Zusatz-Validierung
+      if (type === 'festanstellung' && !document.querySelector('input[name="befristung"]:checked')) {
+        alert('Bitte Befristung (befristet/unbefristet) wählen.');
+        return;
+      }
+      if (type === 'minijob' && !($('hourly_rate').value || '').trim()) {
+        alert('Bitte den Stundenlohn angeben.');
+        return;
+      }
+      if (type === 'festanstellung' && !($('monthly_salary').value || '').trim()) {
+        alert('Bitte das Bruttomonatsgehalt angeben.');
+        return;
+      }
+      let jobTitle = $('job_title').value;
+      if (jobTitle === '__other__') {
+        jobTitle = ($('job_title_other').value || '').trim();
+        if (!jobTitle) { alert('Bitte die Berufsbezeichnung eingeben.'); return; }
+      }
+
+      // contract_data (gleiche Keys wie generate-contract / Bot)
+      const data = {
+        contract_type: type,
+        start_date: toGermanDate($('start_date').value),
+        job_title: jobTitle,
+        hours_per_week: String(parseFloat($('hours_per_week').value.replace(',', '.'))),
+        days_per_week: $('days_per_week').value,
+        extra_vacation: String(parseInt($('extra_vacation').value, 10) || 0)
+      };
+
+      if (type === 'festanstellung') {
+        data.befristung = document.querySelector('input[name="befristung"]:checked').value;
+        if (data.befristung === 'befristet') data.befristung_dauer = ($('befristung_dauer').value || '').trim();
+        data.monthly_salary = String(parseFloat($('monthly_salary').value.replace(',', '.')));
+        data.weihnachtsgeld = document.querySelector('input[name="weihnachtsgeld"]:checked')?.value === 'ja';
+      } else {
+        // Minijob: gleiche Defaults wie im Bot
+        data.hourly_rate = String(parseFloat($('hourly_rate').value.replace(',', '.')));
+        data.monthly_salary = '603';
+        data.weihnachtsgeld = false;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Wird gespeichert …';
+      try {
+        // Schritt 2: Vertragsdaten speichern
+        const result = await rpc('submit_contract_data', { p_token: token, p_data: data });
+        if (!result || !result.ok) {
+          if (result && result.error === 'already_submitted') {
+            showError('Bereits erledigt', 'Für diese Einreichung wurden die Vertragsdaten bereits gespeichert.');
+          } else {
+            showError('Speichern fehlgeschlagen', 'Der Link ist ungültig oder abgelaufen. Bitte fordere einen neuen an.');
+          }
+          return;
+        }
+
+        // Schritt 3: Vertrag erzeugen + an Geschäftsführung mailen (best effort)
+        const name = ($('employeeName').textContent || '').trim();
+        let msg = 'Die Vertragsdaten wurden gespeichert.';
+        try {
+          if (sid) {
+            btn.textContent = 'Vertrag wird erstellt …';
+            const gen = await callFunction('generate-contract', { submission_id: sid, contract_data: data });
+            if (gen && gen.success) {
+              const link = gen.contract_url ? `<p style="margin:12px 0;"><a href="${gen.contract_url}">Vertrag in Google Drive öffnen</a></p>` : '';
+              const folder = gen.folder_url ? `<p style="margin:12px 0;"><a href="${gen.folder_url}">Mitarbeiter-Ordner</a></p>` : '';
+              await callFunction('send-notification', {
+                subject: `Neuer Arbeitsvertrag: ${name}`,
+                message: `<h2>Arbeitsvertrag erstellt</h2><p>Für <strong>${name}</strong> wurde aus den erfassten Vertragsdaten ein Arbeitsvertrag erstellt und in Google Drive abgelegt.</p>${link}${folder}`,
+                recipient_email: 'info@luminaplus.de',
+                recipient_name: 'LuminaPlus Geschäftsführung'
+              });
+              msg = 'Vertragsdaten gespeichert. Der Arbeitsvertrag wurde erstellt und an die Geschäftsführung gesendet.';
+            }
+          }
+        } catch (e) {
+          console.error('Schritt 3 (Vertrag/Mail) fehlgeschlagen:', e);
+          // Daten sind sicher gespeichert; Vertrag/Mail nur best effort
+        }
+        const sp = document.querySelector('#successState p');
+        if (sp) sp.textContent = msg;
+        show('successState');
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Vertragsdaten speichern';
+        alert('Fehler beim Speichern. Bitte erneut versuchen.\n\n' + err.message);
+      }
+    });
+
+    // ===== Init: Token pruefen + Namen laden =====
+    (async () => {
+      if (!token) { showError('Link unvollständig', 'Es fehlt der Zugangs-Token im Link.'); return; }
+      try {
+        const info = await rpc('get_contract_prefill', { p_token: token });
+        if (info && info.ok) {
+          $('employeeName').textContent = `${info.vorname} ${info.nachname}`.trim();
+          updateVisibility();
+          show('formState');
+        } else if (info && info.error === 'already_submitted') {
+          showError('Bereits erledigt', 'Für diese Einreichung wurden die Vertragsdaten bereits gespeichert.');
+        } else {
+          showError('Link ungültig', 'Dieser Link ist ungültig oder wurde bereits verwendet.');
+        }
+      } catch (err) {
+        showError('Fehler', 'Die Daten konnten nicht geladen werden. Bitte später erneut versuchen.');
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -553,6 +553,10 @@
         <td>
           <button class="btn-sm btn-view" onclick='viewDetail(${JSON.stringify(d).replace(/'/g, "&#39;")})'>Ansehen</button>
           <button class="btn-sm btn-pdf" onclick='viewDetail(${JSON.stringify(d).replace(/'/g, "&#39;")}); setTimeout(generatePDF, 100)'>PDF</button>
+          ${d.contract_token ? (d.contract_submitted_at
+            ? '<span class="btn-sm" style="background:var(--green);color:#08376B;font-size:0.7rem;border-radius:4px;padding:3px 7px;">Vertragsdaten ✓</span>'
+            : '<a href="vertragsdaten.html?token=' + d.contract_token + '&sid=' + d.id + '" target="_blank" class="btn-sm btn-primary-sm" style="text-decoration:none;font-size:0.7rem;">Vertragsdaten erfassen</a>')
+            : ''}
         </td>
       </tr>
     `).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:2rem;">Keine Einreichungen vorhanden</td></tr>';
