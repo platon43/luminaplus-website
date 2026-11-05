@@ -1315,8 +1315,7 @@
         headers: {
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': file.type,
-          'x-upsert': 'true'
+          'Content-Type': file.type
         },
         body: file
       });
@@ -1451,8 +1450,7 @@
         headers: {
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/pdf',
-          'x-upsert': 'true'
+          'Content-Type': 'application/pdf'
         },
         body: pdfBlob
       });
