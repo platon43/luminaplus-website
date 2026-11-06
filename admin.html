@@ -659,7 +659,7 @@
 
     // Add Drive section if available
     if (d.drive_folder_url || (d.drive_files && d.drive_files.length > 0)) {
-      fields.push({ section: 'Google Drive Dokumente' });
+      fields.push({ section: 'SharePoint Dokumente' });
       if (d.drive_folder_url) {
         fields.push({ label: 'Drive-Ordner', value: `<a href="${d.drive_folder_url}" target="_blank" style="color:var(--light-blue);text-decoration:none;font-weight:600;">Ordner \u00f6ffnen \u2197</a>` });
       }
@@ -672,7 +672,7 @@
         fields.push({ label: 'Verarbeitet am', value: formatDate(d.processed_at) });
       }
     } else if (d.processed_at === null || d.processed_at === undefined) {
-      fields.push({ section: 'Google Drive' });
+      fields.push({ section: 'SharePoint' });
       fields.push({ label: 'Status', value: '<span style="color:var(--gray);">Noch nicht verarbeitet</span>' });
     }
 

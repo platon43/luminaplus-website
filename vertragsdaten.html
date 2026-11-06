@@ -237,7 +237,7 @@
 
           <!-- Vertrag jetzt erstellen? -->
           <div class="field">
-            <label>Arbeitsvertrag jetzt erstellen? <span class="hint">erzeugt den Vertrag in Google Drive und mailt ihn an die Geschäftsführung</span></label>
+            <label>Arbeitsvertrag jetzt erstellen? <span class="hint">erzeugt den Vertrag in SharePoint und mailt ihn an die Geschäftsführung</span></label>
             <div class="choices">
               <div class="choice">
                 <input type="radio" name="create_contract" id="cc_ja" value="ja" checked>
@@ -430,11 +430,11 @@
             btn.textContent = 'Vertrag wird erstellt …';
             const gen = await callFunction('generate-contract', { submission_id: sid, contract_data: data });
             if (gen && gen.success) {
-              const link = gen.contract_url ? `<p style="margin:12px 0;"><a href="${gen.contract_url}">Vertrag in Google Drive öffnen</a></p>` : '';
+              const link = gen.contract_url ? `<p style="margin:12px 0;"><a href="${gen.contract_url}">Vertrag in SharePoint öffnen</a></p>` : '';
               const folder = gen.folder_url ? `<p style="margin:12px 0;"><a href="${gen.folder_url}">Mitarbeiter-Ordner</a></p>` : '';
               await callFunction('send-notification', {
                 subject: `Neuer Arbeitsvertrag: ${name}`,
-                message: `<h2>Arbeitsvertrag erstellt</h2><p>Für <strong>${name}</strong> wurde aus den erfassten Vertragsdaten ein Arbeitsvertrag erstellt und in Google Drive abgelegt.</p>${link}${folder}`,
+                message: `<h2>Arbeitsvertrag erstellt</h2><p>Für <strong>${name}</strong> wurde aus den erfassten Vertragsdaten ein Arbeitsvertrag erstellt und in SharePoint abgelegt.</p>${link}${folder}`,
                 recipient_email: 'info@luminaplus.de',
                 recipient_name: 'LuminaPlus Geschäftsführung'
               });
