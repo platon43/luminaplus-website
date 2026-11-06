@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Mitglieds-Beitrittsformular | LuminaPlus eG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root{
+      --navy:#08376B; --light-blue:#35C0ED; --dark-blue:#2F90B0; --green:#9AEBA6;
+      --white:#fff; --off-white:#f7fafa; --gray:#6b7d8a; --light-gray:#e8eef1; --red:#e74c3c;
+      --font-heading:'Tenor Sans',serif; --font-body:'Montserrat',sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--font-body);color:#333;line-height:1.7;background:var(--off-white)}
+    .wrap{max-width:720px;margin:0 auto;padding:24px 16px 64px}
+    .card{background:var(--white);border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(8,55,107,.08)}
+    .card-header{background:linear-gradient(135deg,var(--dark-blue) 0%,var(--light-blue) 100%);padding:28px 32px;color:#fff}
+    .card-header h1{font-family:var(--font-heading);font-size:1.5rem;font-weight:400;margin-bottom:4px}
+    .card-header p{font-size:.9rem;opacity:.92}
+    .card-body{padding:28px 32px}
+    .sec{font-family:var(--font-heading);color:var(--navy);font-size:1.1rem;margin:26px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--light-gray)}
+    .sec:first-child{margin-top:0}
+    .field{margin-bottom:18px}
+    .row{display:flex;gap:14px;flex-wrap:wrap}
+    .row .field{flex:1 1 180px}
+    label{display:block;font-weight:600;color:var(--navy);font-size:.88rem;margin-bottom:7px}
+    label .hint{font-weight:400;color:var(--gray);font-size:.78rem}
+    .req{color:var(--red)}
+    input[type=text],input[type=number],input[type=date],input[type=email],input[type=tel],select{
+      width:100%;padding:12px 14px;border:1px solid var(--light-gray);border-radius:8px;
+      font-family:var(--font-body);font-size:.95rem;color:#333;background:#fff}
+    input:focus,select:focus{outline:none;border-color:var(--light-blue);box-shadow:0 0 0 3px rgba(53,192,237,.15)}
+    .choices{display:flex;gap:10px;flex-wrap:wrap}
+    .choice{flex:1 1 200px}
+    .choice input{position:absolute;opacity:0;pointer-events:none}
+    .choice label{display:block;text-align:left;padding:14px;border:1.5px solid var(--light-gray);border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;color:var(--navy);transition:all .15s}
+    .choice label small{display:block;font-weight:400;color:var(--gray);font-size:.78rem;margin-top:3px}
+    .choice input:checked+label{border-color:var(--light-blue);background:rgba(53,192,237,.10);color:var(--dark-blue)}
+    .upload{border:1.5px dashed var(--light-gray);border-radius:10px;padding:14px;background:var(--off-white)}
+    .upload input[type=file]{width:100%;font-size:.85rem}
+    .upload.ok{border-color:var(--green);background:rgba(154,235,166,.12)}
+    .check{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;font-size:.85rem;color:#444}
+    .check input{margin-top:3px}
+    .btn{width:100%;padding:15px;background:var(--light-blue);color:#fff;border:none;border-radius:10px;font-family:var(--font-body);font-weight:600;font-size:1rem;cursor:pointer;transition:background .2s,transform .15s;margin-top:10px}
+    .btn:hover{background:var(--dark-blue);transform:translateY(-1px)}
+    .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .state{text-align:center;padding:48px 24px}
+    .state .icon{font-size:3rem;margin-bottom:12px}
+    .state h2{font-family:var(--font-heading);font-weight:400;color:var(--navy);margin-bottom:8px}
+    .state p{color:var(--gray)}
+    .hidden{display:none}
+    .note{background:var(--off-white);border:1px solid var(--light-gray);border-radius:10px;padding:12px 14px;font-size:.82rem;color:var(--gray);margin-bottom:18px}
+    .footer{text-align:center;color:var(--gray);font-size:.78rem;margin-top:20px}
+    .footer a{color:var(--dark-blue);text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div id="successState" class="card hidden">
+      <div class="state">
+        <div class="icon">✅</div>
+        <h2>Vielen Dank für deinen Beitrittsantrag!</h2>
+        <p>Deine Angaben wurden übermittelt. Der Vorstand der LuminaPlus eG prüft deinen Antrag und meldet sich bei dir.</p>
+      </div>
+    </div>
+
+    <div id="formState" class="card">
+      <div class="card-header">
+        <h1>Beitritt zur LuminaPlus eG</h1>
+        <p>Beitrittsformular · investierendes Mitglied</p>
+      </div>
+      <div class="card-body">
+        <div class="note">Mit dem Beitritt zeichnest du mindestens <strong>einen Geschäftsanteil (Pflichtanteil)</strong>. Zusätzliche Anteile sind möglich. Über die Aufnahme entscheidet der Vorstand.</div>
+
+        <form id="form" autocomplete="off">
+
+          <div class="sec">Persönliche Daten</div>
+          <div class="row">
+            <div class="field" style="flex:0 1 140px">
+              <label for="anrede">Anrede <span class="req">*</span></label>
+              <select id="anrede" name="anrede" required>
+                <option value="" disabled selected>…</option>
+                <option>Frau</option><option>Herr</option><option>Divers</option>
+              </select>
+            </div>
+            <div class="field"><label for="vorname">Vorname <span class="req">*</span></label><input type="text" id="vorname" name="vorname" required></div>
+            <div class="field"><label for="nachname">Name <span class="req">*</span></label><input type="text" id="nachname" name="nachname" required></div>
+          </div>
+          <div class="field"><label for="geburtsdatum">Geburtsdatum <span class="req">*</span></label><input type="date" id="geburtsdatum" name="geburtsdatum" required></div>
+
+          <div class="sec">Adresse</div>
+          <div class="field"><label for="strasse">Straße & Hausnummer <span class="req">*</span></label><input type="text" id="strasse" name="strasse" placeholder="z. B. Angerstraße 42" required></div>
+          <div class="row">
+            <div class="field" style="flex:0 1 160px"><label for="plz">PLZ <span class="req">*</span></label><input type="text" id="plz" name="plz" inputmode="numeric" required></div>
+            <div class="field"><label for="ort">Ort <span class="req">*</span></label><input type="text" id="ort" name="ort" required></div>
+          </div>
+
+          <div class="sec">Bank & Steuer</div>
+          <div class="field"><label for="iban">IBAN <span class="req">*</span> <span class="hint">für Geschäftsanteile & Auszahlungen</span></label><input type="text" id="iban" name="iban" placeholder="DE.." required></div>
+          <div class="field"><label for="steuer_id">Steuer-Identifikationsnummer <span class="req">*</span></label><input type="text" id="steuer_id" name="steuer_id" inputmode="numeric" required></div>
+
+          <div class="sec">Kontakt</div>
+          <div class="row">
+            <div class="field"><label for="telefon">Telefon <span class="req">*</span></label><input type="tel" id="telefon" name="telefon" required></div>
+            <div class="field"><label for="email">E-Mail <span class="req">*</span></label><input type="email" id="email" name="email" required></div>
+          </div>
+
+          <div class="sec">Geschäftsanteile</div>
+          <div class="field">
+            <label for="weitere_anteile">Zahl <strong>weiterer</strong> Geschäftsanteile <span class="hint">zusätzlich zum Pflichtanteil (0 = nur Pflichtanteil)</span></label>
+            <input type="number" id="weitere_anteile" name="weitere_anteile" min="0" max="100" step="1" value="0" required>
+          </div>
+
+          <div class="sec">Personalausweis / Reisepass</div>
+          <div class="field">
+            <label>Vorderseite <span class="req">*</span></label>
+            <div class="upload" id="up_front"><input type="file" accept=".pdf,.jpg,.jpeg,.png,.heic" onchange="pickFile(this,'front')"></div>
+          </div>
+          <div class="field">
+            <label>Rückseite <span class="req">*</span></label>
+            <div class="upload" id="up_back"><input type="file" accept=".pdf,.jpg,.jpeg,.png,.heic" onchange="pickFile(this,'back')"></div>
+          </div>
+
+          <div class="sec">Bestätigung</div>
+          <label class="check"><input type="checkbox" id="c_satzung" required> Ich beantrage die Mitgliedschaft in der LuminaPlus eG und erkenne die <strong>Satzung</strong> an.</label>
+          <label class="check"><input type="checkbox" id="c_datenschutz" required> Ich habe die <a href="https://www.luminaplus.de/datenschutz" target="_blank">Datenschutzhinweise</a> gelesen und bin mit der Verarbeitung meiner Daten einverstanden.</label>
+          <label class="check"><input type="checkbox" id="c_richtig" required> Meine Angaben sind richtig und vollständig.</label>
+
+          <button type="submit" class="btn" id="submitBtn">Beitrittsantrag absenden</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer">LuminaPlus eG · <a href="https://www.luminaplus.de">www.luminaplus.de</a></div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://auaueqkhhygykbjehjpq.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXVlcWtoaHlneWtiamVoanBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNjQzMjMsImV4cCI6MjA4OTg0MDMyM30.FWNiBhDwO19OGdyMBPPDN5WbZCpKWTDmYlhJ6ujtTbQ';
+
+    const $ = (id)=>document.getElementById(id);
+    const files = { front:null, back:null };
+
+    function newUuid(){
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);});
+    }
+    function pickFile(input, which){
+      files[which] = input.files[0] || null;
+      document.getElementById(which==='front'?'up_front':'up_back').classList.toggle('ok', !!files[which]);
+    }
+
+    async function restInsert(table, body){
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+        method:'POST',
+        headers:{ 'apikey':SUPABASE_ANON_KEY, 'Authorization':`Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+        body: JSON.stringify(body)
+      });
+      if(!res.ok) throw new Error(await res.text());
+    }
+    async function uploadToStorage(id, file, labelName){
+      const safe = (file.name||'datei').replace(/[\\/]/g,'-');
+      const path = `mitglieder/${id}/${labelName} - ${safe}`;
+      const res = await fetch(`${SUPABASE_URL}/storage/v1/object/documents/${path}`, {
+        method:'POST',
+        headers:{ 'apikey':SUPABASE_ANON_KEY, 'Authorization':`Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type':file.type },
+        body:file
+      });
+      if(!res.ok) console.error('Upload fehlgeschlagen:', await res.text());
+    }
+    function buildPdf(id, d){
+      const { jsPDF } = window.jspdf; const doc = new jsPDF();
+      doc.setFontSize(16); doc.setTextColor(8,55,107); doc.text('BEITRITTSANTRAG LuminaPlus eG', 105, 18, {align:'center'});
+      doc.setFontSize(11); doc.setTextColor(51,51,51);
+      const rows = [
+        ['Mitgliedsart', d.mitglied_typ==='ordentlich'?'Ordentliches Mitglied':'Investierendes Mitglied'],
+        ['Anrede', d.anrede], ['Vorname', d.vorname], ['Name', d.nachname],
+        ['Geburtsdatum', d.geburtsdatum], ['Adresse', d.strasse+', '+d.plz+' '+d.ort],
+        ['IBAN', d.iban], ['Steuer-ID', d.steuer_id], ['Telefon', d.telefon], ['E-Mail', d.email],
+        ['Weitere Geschäftsanteile', String(d.weitere_anteile)]
+      ];
+      let y=32; doc.setFontSize(9);
+      rows.forEach(([k,v])=>{ doc.setTextColor(107,125,138); doc.text(k+':',15,y); doc.setTextColor(51,51,51); doc.text(String(v||'-'),75,y); y+=7; });
+      doc.setFontSize(7); doc.setTextColor(180,180,180);
+      doc.text('Eingereicht am '+new Date().toLocaleDateString('de-DE')+' · Code/ID: '+id, 105, 285, {align:'center'});
+      return doc.output('blob');
+    }
+
+    $('form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      if(!files.front || !files.back){ alert('Bitte Vorder- UND Rückseite des Ausweises hochladen.'); return; }
+      const btn = $('submitBtn'); btn.disabled=true; btn.textContent='Wird gesendet …';
+      const n = (v)=> (v && v.trim()!=='') ? v.trim() : null;
+      const fd = new FormData(e.target); const data = Object.fromEntries(fd.entries());
+      const id = newUuid();
+      try{
+        const submission = {
+          id,
+          mitglied_typ: 'investierend',
+          anrede: n(data.anrede),
+          vorname: n(data.vorname), nachname: n(data.nachname),
+          geburtsdatum: n(data.geburtsdatum),
+          strasse: n(data.strasse), plz: n(data.plz), ort: n(data.ort),
+          iban_encrypted: n(data.iban), steuer_id_encrypted: n(data.steuer_id),
+          telefon: n(data.telefon), email: n(data.email),
+          weitere_anteile: parseInt(data.weitere_anteile,10) || 0,
+          satzung_akzeptiert: true, datenschutz_akzeptiert: true, bestaetigung: true
+        };
+        await restInsert('mitglied_submissions', submission);
+
+        btn.textContent='Dokumente werden hochgeladen …';
+        await uploadToStorage(id, files.front, 'Ausweis Vorderseite');
+        await uploadToStorage(id, files.back, 'Ausweis Rueckseite');
+
+        btn.textContent='PDF wird erstellt …';
+        try{
+          const pdf = buildPdf(id, data);
+          await fetch(`${SUPABASE_URL}/storage/v1/object/documents/mitglieder/${id}/Beitrittsantrag_${(data.nachname||'').replace(/[^a-zA-ZäöüÄÖÜß\-]/g,'')}_${(data.vorname||'').replace(/[^a-zA-ZäöüÄÖÜß\-]/g,'')}.pdf`, {
+            method:'POST', headers:{ 'apikey':SUPABASE_ANON_KEY, 'Authorization':`Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type':'application/pdf' }, body:pdf
+          });
+        }catch(err){ console.error('PDF-Fehler:', err); }
+
+        // Dokumente nach SharePoint (Edge Function process-mitglied) – best effort
+        try{
+          await fetch(`${SUPABASE_URL}/functions/v1/process-mitglied`, {
+            method:'POST', headers:{ 'apikey':SUPABASE_ANON_KEY, 'Authorization':`Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type':'application/json' },
+            body: JSON.stringify({ submission_id:id })
+          });
+        }catch(err){ console.error('SharePoint-Trigger:', err); }
+
+        $('formState').classList.add('hidden');
+        $('successState').classList.remove('hidden');
+        window.scrollTo({top:0,behavior:'smooth'});
+      }catch(err){
+        btn.disabled=false; btn.textContent='Beitrittsantrag absenden';
+        alert('Fehler beim Absenden. Bitte erneut versuchen.\n\n'+err.message);
+      }
+    });
+  </script>
+</body>
+</html>
