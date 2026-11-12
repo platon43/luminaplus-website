@@ -434,7 +434,7 @@
               <th>Art</th>
               <th>Code</th>
               <th>Eingereicht</th>
-              <th>Drive</th>
+              <th>SharePoint</th>
               <th>Aktionen</th>
             </tr>
           </thead>
@@ -513,7 +513,7 @@
     <div class="detail-grid" id="modalContent"></div>
     <div class="modal-actions">
       <button class="btn-sm btn-pdf" onclick="generatePDF()">PDF herunterladen</button>
-      <button class="btn-sm btn-primary-sm" id="driveBtn" onclick="processDrive()" style="display:none;">Drive verarbeiten</button>
+      <button class="btn-sm btn-primary-sm" id="driveBtn" onclick="processDrive()" style="display:none;">SharePoint verarbeiten</button>
       <button class="btn-sm btn-delete" onclick="deleteSubmission()">L&ouml;schen</button>
     </div>
   </div>
@@ -610,7 +610,7 @@
         <td data-label="Art"><span class="badge-type ${d.employment_type === 'angestellter' ? 'badge-angestellt' : 'badge-minijob'}">${formatType(d.employment_type)}</span></td>
         <td data-label="Code">${d.invitation_code || '-'}</td>
         <td data-label="Eingereicht">${formatDate(d.submitted_at)}</td>
-        <td data-label="Drive">${d.drive_folder_url ? '<a href="' + d.drive_folder_url + '" target="_blank" class="btn-sm btn-primary-sm" style="text-decoration:none;font-size:0.7rem;">Drive</a>' : '<span style="color:var(--gray);font-size:0.7rem;">-</span>'}</td>
+        <td data-label="SharePoint">${d.drive_folder_url ? '<a href="' + d.drive_folder_url + '" target="_blank" class="btn-sm btn-primary-sm" style="text-decoration:none;font-size:0.7rem;">Ordner öffnen</a>' : '<span style="color:var(--gray);font-size:0.7rem;">-</span>'}</td>
         <td data-label="Aktionen" class="actions-cell">
           <button class="btn-sm btn-view" onclick='viewDetail(${JSON.stringify(d).replace(/'/g, "&#39;")})'>Ansehen</button>
           <button class="btn-sm btn-pdf" onclick='viewDetail(${JSON.stringify(d).replace(/'/g, "&#39;")}); setTimeout(generatePDF, 100)'>PDF</button>
@@ -722,7 +722,7 @@
     if (d.drive_folder_url || (d.drive_files && d.drive_files.length > 0)) {
       fields.push({ section: 'SharePoint Dokumente' });
       if (d.drive_folder_url) {
-        fields.push({ label: 'Drive-Ordner', value: `<a href="${d.drive_folder_url}" target="_blank" style="color:var(--light-blue);text-decoration:none;font-weight:600;">Ordner \u00f6ffnen \u2197</a>` });
+        fields.push({ label: 'SharePoint-Ordner', value: `<a href="${d.drive_folder_url}" target="_blank" style="color:var(--light-blue);text-decoration:none;font-weight:600;">Ordner \u00f6ffnen \u2197</a>` });
       }
       if (d.drive_files && d.drive_files.length > 0) {
         d.drive_files.forEach(f => {
@@ -767,7 +767,7 @@
       });
       const data = await res.json();
       if (data.success) {
-        alert('Drive-Ordner erstellt: ' + (data.files_uploaded || 0) + ' Datei(en) hochgeladen.');
+        alert('SharePoint-Ordner erstellt: ' + (data.files_uploaded || 0) + ' Datei(en) hochgeladen.');
         closeModal();
         loadSubmissions();
       } else {
@@ -777,7 +777,7 @@
       alert('Fehler: ' + e.message);
     }
     btn.disabled = false;
-    btn.textContent = 'Drive verarbeiten';
+    btn.textContent = 'SharePoint verarbeiten';
   }
 
   function closeModal() {
